@@ -405,6 +405,27 @@ def validate_container(
         expected_header = build_container_header(expected_container_id, expected_packages)
         if actual_header != expected_header:
             raise ValueError("Container header round-trip mismatch")
+
+        # Match FFileIoStoreReader::ReadContainerHeader(), not just the
+        # general decompression round-trip above.  UE reads this chunk as raw
+        # bytes during mount and explicitly assumes it is uncompressed.  A
+        # compressed header can therefore pass every payload check while the
+        # game never mounts the container at all.
+        header_offset, header_length = toc["offset_lengths"][header_index]
+        block_size = toc["header"]["block_size"]
+        header_block_indices = range(
+            header_offset // block_size,
+            (header_offset + header_length + block_size - 1) // block_size,
+        )
+        header_blocks = [toc["blocks"][i] for i in header_block_indices]
+        if any(block["method_index"] != 0 for block in header_blocks):
+            raise ValueError("Container header must be uncompressed for UE mount")
+        if any(block["compressed_size"] != block["uncompressed_size"] for block in header_blocks):
+            raise ValueError("Container header has a non-raw compression block")
+        cas.seek(header_blocks[0]["offset"])
+        ue_direct_header = cas.read(header_length)
+        if ue_direct_header != actual_header:
+            raise ValueError("UE-style direct container-header read mismatch")
         package_store_count = validate_package_store_header(actual_header, expected_packages, expected_container_id)
 
     return {
@@ -421,6 +442,8 @@ def validate_container(
         "roundtrip_uncompressed_bytes": checked_bytes,
         "roundtrip_payloads_byte_identical": True,
         "container_header_byte_identical": True,
+        "container_header_uncompressed_for_ue_mount": True,
+        "container_header_ue_direct_read_verified": True,
         "package_store_entries_verified": package_store_count,
         "soft_package_references_empty": True,
         "package_chunk_ids_verified": True,
@@ -455,8 +478,10 @@ BP_OutfitExplorer_SP и лицо стандартного костюма не п
 Этот вариант заменяет только Basic; он не заменяет SP/DLC-костюм.
 
 Проверка сборки: все chunk ID, BLAKE3 IoHash, контейнерный заголовок и
-распакованные payloads проверены программно. Посадку часов на правой руке
-и режим BraceletOnLeft=false следует дополнительно проверить в VR.
+распакованные payloads проверены программно. ContainerHeader специально
+оставлен несжатым — это требование раннего mount-кода UE; его прямое
+чтение также проверено. Посадку часов на правой руке и режим
+BraceletOnLeft=false следует дополнительно проверить в VR.
 
 Источники: визуальный мод Kerag (Gorka 3), реальные cooked-пакеты ITR2.
 Сборка: Gorka-For-All, tools/build_gorka_mod.py.

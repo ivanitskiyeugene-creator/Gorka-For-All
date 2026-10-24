@@ -505,11 +505,21 @@ def write_container(
             item.meta_hash = blake3(item.data).digest()[:20]
             item.meta_flags = 0
             encoded_blocks: list[tuple[bytes, int, int]] = []
+            # FFileIoStoreReader::ReadContainerHeader() reads this chunk
+            # directly, before the normal compressed-chunk decode path.  UE
+            # therefore requires the container header to be uncompressed (and
+            # in its own compression blocks).  Compressing every other chunk
+            # is fine, but compressing this one makes the container fail at
+            # mount time even though a generic IoStore round-trip succeeds.
+            allow_compression = (
+                oodle is not None
+                and item.chunk_id[11] != CONTAINER_HEADER_CHUNK_TYPE
+            )
             for start in range(0, len(item.data), block_size):
                 raw = item.data[start:start + block_size]
                 method = 0
                 encoded = raw
-                if oodle is not None:
+                if allow_compression:
                     candidate = oodle.compress(raw, compressor, compression_level)
                     if len(candidate) < len(raw):
                         encoded = candidate
