@@ -11,9 +11,9 @@
 - AssetRegistry подтверждает 4 LOD у Gorka body и 3 LOD у Gorka hands; обе модели используют общий `SK_Mannequin`, поэтому для переноса нужно сохранить cooked skinning/LOD-данные, а не искать похожую модель.
 - Посторонняя замена звука детектора не переносится в новый мод.
 
-**Сборка готова:** [`release/gorka-standard.zip`](release/gorka-standard.zip). В ней `Gorka3_For_All_P.pak/.utoc/.ucas`, русская инструкция и manifest проверки. Мод заменяет только `BP_OutfitExplorerBasic`: используются настоящие игровые `SKM_Player_Body_Gorka_01_a` и `SKM_Player_Gloves_ITR1_01_Left/Right`, поэтому cooked geometry, skinning и LOD'ы не подменяются похожей моделью. `BP_OutfitExplorer_SP` и лицо Basic не изменяются. Два detector-audio файла исключены; визуальные текстуры Kerag сохранены.
+**Исправленная сборка для корня Paks:** [`release/gorka-standard-paks.zip`](release/gorka-standard-paks.zip). В ней `Gorka3_P.pak/.utoc/.ucas`, русская инструкция и manifest проверки. Мод заменяет только `BP_OutfitExplorerBasic`: используются настоящие игровые `SKM_Player_Body_Gorka_01_a` и `SKM_Player_Gloves_ITR1_01_Left/Right`, поэтому cooked geometry, skinning и LOD'ы не подменяются похожей моделью. `BP_OutfitExplorer_SP` и лицо Basic не изменяются. Два detector-audio файла исключены; визуальные текстуры Kerag сохранены.
 
-Проверено программно: 53 файла, 54 chunks, 1338 Oodle-блоков; повторное извлечение всех payloads байт-идентично, package/chunk ID и BLAKE3 IoHash верны, container header и 27 package-store записей разобраны независимо. VR-проверка посадки часов, особенно `BraceletOnLeft=false`, остаётся финальным ручным этапом.
+В предыдущих архивах найдена реальная ошибка mount: builder сжимал `ContainerHeader` Oodle, а `FFileIoStoreReader::ReadContainerHeader()` в UE читает этот chunk напрямую как несжатый. Теперь header всегда записывается raw; добавлена проверка прямого чтения по алгоритму UE. Проверено программно: 53 файла, 54 chunks, 1338 блоков; повторное извлечение всех payloads байт-идентично, package/chunk ID и BLAKE3 IoHash верны, container header и 27 package-store записей разобраны независимо. Это устраняет доказанный дефект контейнера, но не заменяет финальную проверку загрузки и посадки часов в игре/VR.
 
 Исходная минимальная выборка: **57 файлов / 28 504 571 байт**. Она включает meshes, `.ubulk`, материалы, скелет, стандартные модели для посадки часов и только те базовые текстуры, которых нет в исходном моде. Для её локального извлечения без загрузки 13-гигабайтного UCAS подготовлен [`tools/extract_gorka.ps1`](tools/extract_gorka.ps1); инструкция — [`tools/GORKA_EXTRACTION_RU.md`](tools/GORKA_EXTRACTION_RU.md).
 
@@ -32,9 +32,9 @@ PYTHONPATH=work/tools/pydeps:. python3 tools/build_gorka_mod.py \
 
 На Windows укажите путь к `oo2core_9_win64.dll`. `--no-compression` создаёт диагностический несжатый контейнер без Oodle. `tools/zen_asset.py` читает Zen package maps, а `tools/iostore_write.py` записывает UTOC/UCAS, package store, directory index и perfect hash. Build manifest сохраняет хеши и результаты round-trip.
 
-### Диагностика установки в корень Paks
+### Сборка варианта для корня Paks
 
-Для проверки совместимости с исходным именем контейнера можно пересобрать тот же Basic-патч как `Gorka3_P` с исходным container ID. Полезные payloads при этом не меняются; это диагностический вариант, а не доказанное исправление загрузки в игре:
+Вариант `Gorka3_P` сохраняет исходные basename/container ID для совместимости с уже известной схемой установки. Все сборки, включая эту, используют несжатый `ContainerHeader`; это обязательное требование mount-кода UE, а не настройка приоритета:
 
 ```bash
 PYTHONPATH=work/tools/pydeps:. python3 tools/build_gorka_mod.py \
