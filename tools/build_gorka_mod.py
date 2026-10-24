@@ -55,6 +55,15 @@ DETECTOR_AUDIO_STEM = "Sound/SFX/Detector_MS/Detector_ITR1/A_SFX_Detector_Click_
 WATCH_PACKAGE = "/Game/ITR2/BPs/Player/BPC_PlayerBracelet"
 PLAYER_PACKAGE = "/Game/ITR2/BPs/Player/BP_RadiusPlayerCharacter_Gameplay"
 MANNEQUIN_SKELETON = "/Game/_VRE/Core/Character/Mannequins/Meshes/SK_Mannequin"
+BRACELET_MATERIAL = "/Game/ITR2/Art/Characters/Player/Hand/Hand_ITR1/Materials/BraceletMaterial_ITR1"
+BRACELET_MATERIAL_INSTANCE = BRACELET_MATERIAL + "_inst"
+WATCH_INDICATOR_PARAMETERS = {
+    "Health_Percent",
+    "Hunger_Percent",
+    "Energy_Percent",  # in-game stamina
+    "Armor_index1",
+    "Armor_index2",
+}
 
 BODY_OLD = "/Game/ITR2/Art/Characters/Player/Body/Body_01/Male_Body_Test_01"
 BODY_NEW = "/Game/ITR2/Art/Characters/Player/Body/Body_Gorka_01/SKM_Player_Body_Gorka_01_a"
@@ -262,8 +271,9 @@ def validate_watch_runtime_contract(
     right_glove = package_from_source(game_asset_path(game_root, RIGHT_NEW))
     left_glove = package_from_source(game_asset_path(game_root, LEFT_NEW))
     mannequin = package_from_source(game_asset_path(game_root, MANNEQUIN_SKELETON))
+    bracelet_material = package_from_source(game_asset_path(game_root, BRACELET_MATERIAL_INSTANCE))
 
-    bracelet_symbols = {
+    bracelet_symbols = WATCH_INDICATOR_PARAMETERS | {
         "BraceletMesh",
         "BraceletOnLeft",
         "SetLeftOrRight",
@@ -274,6 +284,9 @@ def validate_watch_runtime_contract(
         "UpdateArmor",
         "UpdateAllIndicators",
         "UpdateWatchDistortionData",
+        "OnPlayerHealthChangeLocal",
+        "OnPlayerHungerChange",
+        "OnStaminaChange",
     }
     player_symbols = {
         "InitBracelet",
@@ -293,10 +306,23 @@ def validate_watch_runtime_contract(
         or right_glove.package_name != RIGHT_NEW
         or left_glove.package_name != LEFT_NEW
         or mannequin.package_name != MANNEQUIN_SKELETON
+        or bracelet_material.package_name != BRACELET_MATERIAL_INSTANCE
     ):
         raise ValueError("Unexpected source package name in watch/player/Gorka skeleton assets")
     if WATCH_PACKAGE not in player.imported_package_names:
         raise ValueError("Player blueprint no longer imports BPC_PlayerBracelet")
+    if BRACELET_MATERIAL not in bracelet_material.imported_package_names:
+        raise ValueError("ITR1 watch material instance no longer derives from its base material")
+    if not WATCH_INDICATOR_PARAMETERS <= set(bracelet_material.names):
+        missing = sorted(WATCH_INDICATOR_PARAMETERS - set(bracelet_material.names))
+        raise ValueError(f"ITR1 watch material is missing live-data parameters: {missing}")
+    if (
+        BRACELET_MATERIAL_INSTANCE not in right_glove.imported_package_names
+        or BRACELET_MATERIAL_INSTANCE not in left_glove.imported_package_names
+        or "Bracelet" not in right_glove.names
+        or "Bracelet" not in left_glove.names
+    ):
+        raise ValueError("Both Gorka gloves must reference the dynamic ITR1 bracelet material")
     if (
         MANNEQUIN_SKELETON not in right_glove.imported_package_names
         or MANNEQUIN_SKELETON not in left_glove.imported_package_names
@@ -331,6 +357,9 @@ def validate_watch_runtime_contract(
         "shared_skeleton_package": MANNEQUIN_SKELETON,
         "right_wrist_bone_and_watch_socket_verified": True,
         "left_wrist_bone_and_watch_socket_verified": True,
+        "watch_material_instance": BRACELET_MATERIAL_INSTANCE,
+        "both_gloves_reference_dynamic_watch_material": True,
+        "health_hunger_stamina_armor_parameters_found": sorted(WATCH_INDICATOR_PARAMETERS),
         "native_watch_symbols_found": sorted(bracelet_symbols),
         "player_setup_symbols_found": sorted(player_symbols),
         "player_and_watch_blueprints_overridden": False,
@@ -589,8 +618,9 @@ BPC_PlayerBracelet и логику игрока, а также подставл�
 распакованные payloads проверены программно. ContainerHeader специально
 оставлен несжатым — это требование раннего mount-кода UE; его прямое
 чтение также проверено. Отдельно проверены обе Gorka-перчатки, общие
-wrist bones/sockets и сохранность штатных watch/player Blueprint-пакетов;
-это не заменяет проверку функций часов в игре/VR.
+wrist bones/sockets, ссылка на ITR1 watch material и наличие каналов HP,
+голода, выносливости и брони; штатные watch/player Blueprints не заменены.
+Эта структурная проверка не заменяет проверку обновления данных в игре/VR.
 
 Источники: визуальный мод Kerag (Gorka 3), реальные cooked-пакеты ITR2.
 Сборка: Gorka-For-All, tools/build_gorka_mod.py.
