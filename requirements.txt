@@ -1,0 +1,2 @@
+# Oodle/Kraken-family decompression for tools/iostore_extract.py
+kraken-decompressor==0.2.1
