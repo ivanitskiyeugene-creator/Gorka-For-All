@@ -9,11 +9,28 @@
 - Мод: IoStore TOC v8, Oodle, без шифрования; 54 файла — только 26 текстур и один звук детектора. **SkeletalMesh/StaticMesh в нём отсутствуют.**
 - В основном игровом контейнере найдены оригинальные `SKM_Player_Body_Gorka_01_a`, `SKM_Player_Gloves_ITR1_01_Left/Right`, стандартные UNPSC body/hands, общий Skeleton и outfit/bracelet-логика.
 - AssetRegistry подтверждает 4 LOD у Gorka body и 3 LOD у Gorka hands; обе модели используют общий `SK_Mannequin`, поэтому для переноса нужно сохранить cooked skinning/LOD-данные, а не искать похожую модель.
-- Посторонняя замена звука детектора не будет переноситься в новый мод.
+- Посторонняя замена звука детектора не переносится в новый мод.
 
-Составлена минимальная выборка: **57 файлов / 28 504 571 байт**. Она включает meshes, `.ubulk`, материалы, скелет, стандартные модели для посадки часов и только те базовые текстуры, которых нет в исходном моде. Для её локального извлечения без загрузки 13-гигабайтного UCAS подготовлен [`tools/extract_gorka.ps1`](tools/extract_gorka.ps1); инструкция — [`tools/GORKA_EXTRACTION_RU.md`](tools/GORKA_EXTRACTION_RU.md).
+**Сборка готова:** [`release/gorka-standard.zip`](release/gorka-standard.zip). В ней `Gorka3_For_All_P.pak/.utoc/.ucas`, русская инструкция и manifest проверки. Мод заменяет только `BP_OutfitExplorerBasic`: используются настоящие игровые `SKM_Player_Body_Gorka_01_a` и `SKM_Player_Gloves_ITR1_01_Left/Right`, поэтому cooked geometry, skinning и LOD'ы не подменяются похожей моделью. `BP_OutfitExplorer_SP` и лицо Basic не изменяются. Два detector-audio файла исключены; визуальные текстуры Kerag сохранены.
 
-Подробности: [`docs/RESEARCH.md`](docs/RESEARCH.md).
+Проверено программно: 53 файла, 54 chunks, 1338 Oodle-блоков; повторное извлечение всех payloads байт-идентично, package/chunk ID и BLAKE3 IoHash верны, container header и 27 package-store записей разобраны независимо. VR-проверка посадки часов, особенно `BraceletOnLeft=false`, остаётся финальным ручным этапом.
+
+Исходная минимальная выборка: **57 файлов / 28 504 571 байт**. Она включает meshes, `.ubulk`, материалы, скелет, стандартные модели для посадки часов и только те базовые текстуры, которых нет в исходном моде. Для её локального извлечения без загрузки 13-гигабайтного UCAS подготовлен [`tools/extract_gorka.ps1`](tools/extract_gorka.ps1); инструкция — [`tools/GORKA_EXTRACTION_RU.md`](tools/GORKA_EXTRACTION_RU.md).
+
+Подробности и результаты проверок: [`docs/RESEARCH.md`](docs/RESEARCH.md).
+
+## Сборка мода
+
+Готовые cooked-файлы должны находиться в `work/extracted_gorka` (исходный мод) и `work/user_assets` (проверенная выборка игры). Для повторной сборки с официальной Oodle 2.9.10:
+
+```bash
+python3 -m pip install -r requirements.txt
+PYTHONPATH=work/tools/pydeps:. python3 tools/build_gorka_mod.py \
+  --oodle-library work/tools/oodle/liboo2corelinux64.so.9 \
+  --output-dir release/gorka-standard --zip
+```
+
+На Windows укажите путь к `oo2core_9_win64.dll`. `--no-compression` создаёт диагностический несжатый контейнер без Oodle. `tools/zen_asset.py` читает Zen package maps, а `tools/iostore_write.py` записывает UTOC/UCAS, package store, directory index и perfect hash. Build manifest сохраняет хеши и результаты round-trip.
 
 ## Распаковщик IoStore
 
