@@ -1,2 +1,6 @@
 # Oodle/Kraken-family decompression for tools/iostore_extract.py
 kraken-decompressor==0.2.1
+
+# IoStore package IDs, FName hashes, and chunk IoHashes for the mod builder
+cityhash==0.4.10
+blake3==1.0.11
