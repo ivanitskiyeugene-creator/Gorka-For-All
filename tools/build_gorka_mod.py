@@ -52,6 +52,9 @@ MOUNT_POINT = "../../../ITR2_Gorka3/Content/"
 MOD_BASENAME = "Gorka3_For_All_P"
 BASIC_PACKAGE = "/Game/ITR2/BPs/Items/Outfits/BP_OutfitExplorerBasic"
 DETECTOR_AUDIO_STEM = "Sound/SFX/Detector_MS/Detector_ITR1/A_SFX_Detector_Click_B3"
+WATCH_PACKAGE = "/Game/ITR2/BPs/Player/BPC_PlayerBracelet"
+PLAYER_PACKAGE = "/Game/ITR2/BPs/Player/BP_RadiusPlayerCharacter_Gameplay"
+MANNEQUIN_SKELETON = "/Game/_VRE/Core/Character/Mannequins/Meshes/SK_Mannequin"
 
 BODY_OLD = "/Game/ITR2/Art/Characters/Player/Body/Body_01/Male_Body_Test_01"
 BODY_NEW = "/Game/ITR2/Art/Characters/Player/Body/Body_Gorka_01/SKM_Player_Body_Gorka_01_a"
@@ -239,6 +242,100 @@ def make_basic_patch(game_root: Path) -> tuple[SourceFile, PackageStoreInfo, dic
         "changes": hash_changes,
     }
     return source, store, details
+
+
+def validate_watch_runtime_contract(
+    game_root: Path,
+    patched_basic: SourceFile,
+    mod_files: Iterable[SourceFile],
+) -> dict:
+    """Check that the replacement still feeds the game's native watch path.
+
+    The costume patch changes only outfit mesh imports.  The watch itself is
+    driven by the game's player/bracelet blueprints and the independent
+    BraceletOnLeft setting, so it is important not to silently replace either
+    of those packages while adding Gorka meshes.
+    """
+    basic = parse_package(patched_basic.data)
+    bracelet = package_from_source(game_asset_path(game_root, WATCH_PACKAGE))
+    player = package_from_source(game_asset_path(game_root, PLAYER_PACKAGE))
+    right_glove = package_from_source(game_asset_path(game_root, RIGHT_NEW))
+    left_glove = package_from_source(game_asset_path(game_root, LEFT_NEW))
+    mannequin = package_from_source(game_asset_path(game_root, MANNEQUIN_SKELETON))
+
+    bracelet_symbols = {
+        "BraceletMesh",
+        "BraceletOnLeft",
+        "SetLeftOrRight",
+        "SetupWatchNumbers",
+        "UpdateClock",
+        "UpdateCompass",
+        "UpdateDistortionTimer",
+        "UpdateArmor",
+        "UpdateAllIndicators",
+        "UpdateWatchDistortionData",
+    }
+    player_symbols = {
+        "InitBracelet",
+        "CallFunc_BraceletOnLeft_ReturnValue",
+        "SetLeftOrRight",
+    }
+    missing_bracelet = sorted(bracelet_symbols - set(bracelet.names))
+    missing_player = sorted(player_symbols - set(player.names))
+    if missing_bracelet or missing_player:
+        raise ValueError(
+            "Game watch contract changed: "
+            f"missing bracelet symbols={missing_bracelet}, player symbols={missing_player}"
+        )
+    if (
+        bracelet.package_name != WATCH_PACKAGE
+        or player.package_name != PLAYER_PACKAGE
+        or right_glove.package_name != RIGHT_NEW
+        or left_glove.package_name != LEFT_NEW
+        or mannequin.package_name != MANNEQUIN_SKELETON
+    ):
+        raise ValueError("Unexpected source package name in watch/player/Gorka skeleton assets")
+    if WATCH_PACKAGE not in player.imported_package_names:
+        raise ValueError("Player blueprint no longer imports BPC_PlayerBracelet")
+    if (
+        MANNEQUIN_SKELETON not in right_glove.imported_package_names
+        or MANNEQUIN_SKELETON not in left_glove.imported_package_names
+    ):
+        raise ValueError("Both Gorka gloves must retain the shared mannequin skeleton")
+    if "lowerarm_twist_01_r" not in right_glove.names or "hand_r" not in right_glove.names:
+        raise ValueError("Right Gorka glove is missing its right wrist/hand bones")
+    if "lowerarm_twist_01_l" not in left_glove.names or "hand_l" not in left_glove.names:
+        raise ValueError("Left Gorka glove is missing its left wrist/hand bones")
+    if (
+        "Bracelet_Socket_R" not in mannequin.names
+        or "lowerarm_twist_01_r" not in mannequin.names
+        or "Bracelet_Socket_L" not in mannequin.names
+        or "lowerarm_twist_01_l" not in mannequin.names
+    ):
+        raise ValueError("Shared skeleton is missing bracelet sockets or wrist bones")
+
+    imported_basic_packages = set(basic.imported_package_names)
+    if RIGHT_NEW not in imported_basic_packages or LEFT_NEW not in imported_basic_packages:
+        raise ValueError("Patched Basic must retain both real Gorka ITR1 glove imports")
+    overridden = sorted({item.package_name for item in mod_files} & {WATCH_PACKAGE, PLAYER_PACKAGE})
+    if overridden:
+        raise ValueError(f"Costume-only mod must not override player/watch logic: {overridden}")
+
+    return {
+        "component_package": WATCH_PACKAGE,
+        "player_setup_package": PLAYER_PACKAGE,
+        "setting": "BraceletOnLeft",
+        "right_hand_value": False,
+        "right_hand_setting_respected_not_forced": True,
+        "both_gorka_glove_sides_referenced": True,
+        "shared_skeleton_package": MANNEQUIN_SKELETON,
+        "right_wrist_bone_and_watch_socket_verified": True,
+        "left_wrist_bone_and_watch_socket_verified": True,
+        "native_watch_symbols_found": sorted(bracelet_symbols),
+        "player_setup_symbols_found": sorted(player_symbols),
+        "player_and_watch_blueprints_overridden": False,
+        "runtime_watch_behavior_verified_in_game": False,
+    }
 
 
 def read_chunk_payload(toc: dict, cas, chunk_index: int) -> bytes:
@@ -477,11 +574,23 @@ BP_OutfitExplorer_SP и лицо стандартного костюма не п
 с одинаковым именем {mod_basename} и что игра была полностью перезапущена.
 Этот вариант заменяет только Basic; он не заменяет SP/DLC-костюм.
 
+ЧАСЫ НА ПРАВОЙ РУКЕ
+Часы не заменяются статичной текстурой: мод оставляет штатные игровые
+BPC_PlayerBracelet и логику игрока, а также подставляет настоящие правую
+и левую Gorka/ITR1-перчатки. Сторона часов выбирается отдельной настройкой
+игры. Для правой руки установите положение браслета/часов «справа» — в
+параметре игры это BraceletOnLeft=false. Это не то же самое, что режим
+левши. Мод не принудительно меняет пользовательскую настройку.
+Штатный компонент игры отвечает за экран часов, компас и индикаторы;
+проверка статичного изображения сама по себе не подтверждает обновление
+экрана или поведение в VR. Проверьте часы на правой руке в игре.
+
 Проверка сборки: все chunk ID, BLAKE3 IoHash, контейнерный заголовок и
 распакованные payloads проверены программно. ContainerHeader специально
 оставлен несжатым — это требование раннего mount-кода UE; его прямое
-чтение также проверено. Посадку часов на правой руке и режим
-BraceletOnLeft=false следует дополнительно проверить в VR.
+чтение также проверено. Отдельно проверены обе Gorka-перчатки, общие
+wrist bones/sockets и сохранность штатных watch/player Blueprint-пакетов;
+это не заменяет проверку функций часов в игре/VR.
 
 Источники: визуальный мод Kerag (Gorka 3), реальные cooked-пакеты ITR2.
 Сборка: Gorka-For-All, tools/build_gorka_mod.py.
@@ -529,6 +638,7 @@ def main() -> None:
     original_files, original_store, original_hashes = collect_original_visuals(args.original_extracted)
     basic, basic_store, basic_details = make_basic_patch(args.game_assets)
     files = original_files + [basic]
+    watch_compatibility = validate_watch_runtime_contract(args.game_assets, basic, files)
     packages = original_store + [basic_store]
     args.output_dir.mkdir(parents=True, exist_ok=True)
     output_base = args.output_dir / args.mod_basename
@@ -560,6 +670,7 @@ def main() -> None:
         "original_visual_file_count": len(original_files),
         "original_visual_sha256": original_hashes,
         "basic_patch": basic_details,
+        "watch_compatibility": watch_compatibility,
     })
     manifest_path = args.output_dir / "build-manifest.json"
     manifest_path.write_text(json.dumps(validation, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
