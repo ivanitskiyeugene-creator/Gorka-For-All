@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from collections import OrderedDict
 from fnmatch import fnmatchcase
+from functools import lru_cache
 import hashlib
 import json
 import os
@@ -209,26 +210,70 @@ def sha256_file(path: Path) -> str:
 
 def safe_output_path(root: Path, logical_path: str) -> Path:
     pure = PurePosixPath(logical_path)
-    if pure.is_absolute() or ".." in pure.parts:
+    # Retail IoStore directory indexes commonly contain a conventional leading
+    # ".." root below the mount point. Strip only that leading mount syntax;
+    # reject traversal anywhere else and never allow absolute paths.
+    parts = list(pure.parts)
+    while parts and parts[0] == "..":
+        parts.pop(0)
+    if pure.is_absolute() or not parts or ".." in parts:
         raise ValueError(f"Unsafe logical path: {logical_path}")
-    out = root.joinpath(*pure.parts)
+    out = root.joinpath(*parts)
     if os.path.commonpath((str(root.resolve()), str(out.resolve()))) != str(root.resolve()):
         raise ValueError(f"Unsafe output path: {out}")
     return out
+
+
+@lru_cache(maxsize=1)
+def load_oodle_library(library_path: str):
+    import ctypes
+
+    resolved_path = str(Path(library_path).expanduser().resolve())
+    library = ctypes.CDLL(resolved_path)
+    decompress = library.OodleLZ_Decompress
+    decompress.restype = ctypes.c_ssize_t
+    decompress.argtypes = [
+        ctypes.c_void_p, ctypes.c_size_t, ctypes.c_void_p, ctypes.c_size_t,
+        ctypes.c_uint32, ctypes.c_uint32, ctypes.c_uint32, ctypes.c_uint64,
+        ctypes.c_size_t, ctypes.c_uint64, ctypes.c_uint64, ctypes.c_void_p,
+        ctypes.c_size_t, ctypes.c_uint32,
+    ]
+    # Keep the CDLL alive for as long as its function pointer is cached.
+    return library, decompress
+
+
+def oodle_decompress_native(compressed: bytes, expected: int, library_path: str) -> bytes:
+    """Decompress with an official Oodle shared library supplied by the user."""
+    import ctypes
+
+    _library, decompress = load_oodle_library(library_path)
+    output = ctypes.create_string_buffer(expected)
+    result = decompress(
+        compressed, len(compressed), output, expected,
+        1, 1, 0, 0, 0, 0, 0, None, 0, 3,
+    )
+    if result != expected:
+        raise ValueError(f"Oodle returned {result}, expected {expected}")
+    return output.raw[:expected]
 
 
 def decompress_block(method: str, compressed: bytes, expected: int) -> bytes:
     if method == "None":
         out = compressed
     elif method == "Oodle":
-        try:
-            from kraken_decompressor import decompress as oodle_decompress
-        except ImportError as exc:
-            raise RuntimeError(
-                "Oodle extraction requires: python3 -m pip install "
-                "kraken-decompressor==0.2.1"
-            ) from exc
-        out = oodle_decompress(compressed, expected)
+        native_library = os.environ.get("OODLE_LIBRARY")
+        if native_library:
+            out = oodle_decompress_native(compressed, expected, native_library)
+        else:
+            try:
+                from kraken_decompressor import decompress as oodle_decompress
+            except ImportError as exc:
+                raise RuntimeError(
+                    "Oodle extraction requires: python3 -m pip install "
+                    "kraken-decompressor==0.2.1, or OODLE_LIBRARY pointing "
+                    "to an official Oodle shared library"
+                ) from exc
+            out = oodle_decompress(compressed, expected)
     elif method == "Zlib":
         out = zlib.decompress(compressed)
     elif method == "Zstd":
@@ -269,6 +314,16 @@ def main() -> None:
         help="Select paths by case-insensitive substring or glob; repeatable.",
     )
     parser.add_argument(
+        "--filter-file",
+        type=Path,
+        help="Read additional filters from a UTF-8 text file, one per line; # starts a comment.",
+    )
+    parser.add_argument(
+        "--oodle-library",
+        type=Path,
+        help="Official Oodle shared library (for example oo2core_9_win64.dll).",
+    )
+    parser.add_argument(
         "--list-all",
         action="store_true",
         help="Print every selected entry instead of the first 200.",
@@ -279,6 +334,13 @@ def main() -> None:
         help="Hash UCAS files above 512 MiB too (can take a long time).",
     )
     args = parser.parse_args()
+    if args.filter_file:
+        for line in args.filter_file.read_text(encoding="utf-8-sig").splitlines():
+            pattern = line.split("#", 1)[0].strip()
+            if pattern:
+                args.filter.append(pattern)
+    if args.oodle_library:
+        os.environ["OODLE_LIBRARY"] = str(args.oodle_library)
     utoc = args.utoc
     ucas = args.ucas or utoc.with_suffix(".ucas")
     toc = parse_toc(utoc.read_bytes())
@@ -289,6 +351,8 @@ def main() -> None:
     ]
     if args.output and not entries:
         parser.error("No entries matched --filter; nothing would be extracted")
+    if args.output and not ucas.is_file():
+        parser.error(f"UCAS file not found: {ucas}")
 
     ucas_size = ucas.stat().st_size if ucas.exists() else None
     should_hash_ucas = (

@@ -36,6 +36,7 @@ SHA-256 компонентов после извлечения ZIP:
 ## 2. Что найдено в открытых источниках
 
 - [`trumank/retoc`](https://github.com/trumank/retoc): reference-инструмент для IoStore и Zen ↔ Legacy conversion.
+- [`WorkingRobot/OodleUE`](https://github.com/WorkingRobot/OodleUE): distribution официальной Oodle, которую также использует `repak`; применена для новых блоков PAK.
 - [`powzix/ooz`](https://github.com/powzix/ooz): открытый декомпрессор семейства Kraken/Mermaid/Selkie/Leviathan.
 - [`domdfcoding/kraken-decompressor`](https://github.com/domdfcoding/kraken-decompressor): готовые Python wheels; использован для независимой распаковки UCAS.
 - [`ITR-MOD/CommunityResources`](https://github.com/ITR-MOD/CommunityResources): общая карта старых pakchunk-контейнеров и mappings для ITR2 0.12.x.
@@ -63,15 +64,35 @@ SHA-256 компонентов после извлечения ZIP:
 7. Проверить повторной распаковкой: пути, размеры, хеши, зависимости и отсутствие ссылок на отсутствующие assets.
 8. Финальная VR-проверка пользователем: первая/третья персона, обе руки, стандартный костюм, повороты и сгибы запястья, LOD в кооперативе, удаление/повторное надевание формы.
 
-## 4. Какие входные данные нужны
+## 4. Что дали игровые контейнеры и AssetRegistry
 
-Сначала — список файлов `IntoTheRadius2/Content/Paks` с размерами и версия игры. По списку выбираются минимальные контейнеры; вся установка не нужна.
+Пользователь передал `Paks.rar` с шестью небольшими файлами; многогигабайтные UCAS остались на его ПК.
 
-Если передаются экспортированные assets вместо контейнеров, обязательны cooked `.uasset/.uexp/.ubulk`, а не только FBX/PNG:
+- `pakchunk0-Windows.utoc`: TOC v8, 47 387 chunks, 41 063 файла в directory index, 112 709 блоков по 512 KiB, Oodle, flags 9, без шифрования.
+- `pakchunk0optional-Windows.utoc`: только 22 ресурса `.uptnl` для освещения и растительности; для костюма не нужен.
+- `pakchunk0-Windows.pak`: PAK v11, 1 693 файла. Из него извлечён `AssetRegistry.bin` размером 93 581 508 байт. Registry version 17 содержит 32 400 assets; разбор выполнен до конца файла без ошибок.
 
-- `Body_Gorka_01` meshes и зависимости;
-- `Hand_ITR1` meshes и зависимости;
-- стандартные UNPSC body/hands/watch;
-- связанные Skeletons и Blueprint/item assets.
+Ключевые cooked assets и подтверждённые registry-теги:
 
-Эти данные нужны для автономного мода и точной посадки часов; одними текстурами из исходного архива выполнить задачу невозможно.
+| Назначение | Asset | Bones / LOD |
+| --- | --- | --- |
+| Gorka body | `SKM_Player_Body_Gorka_01_a` | 165 / 4 |
+| Gorka hands | `SKM_Player_Gloves_ITR1_01_Left`, `..._Right` | 165 / 3 |
+| Стандартный UNPSC body | `Male_Body_Test_01` | 164 / 4 |
+| Стандартные UNPSC hands | `SKM_Player_Gloves_02`, `SKM_Player_Gloves_Left_02` | 162 / 3 |
+
+Все эти skeletal meshes ссылаются на `/Game/_VRE/Core/Character/Mannequins/Meshes/SK_Mannequin` и `/Game/ITR2/BPs/Player/Mannequins/Rigs/PA_Mannequin`. Различие 164/165 и 162/165 костей — ещё одна причина не переносить настройки часов или трансформации вслепую: нужно читать фактические reference skeletons и mesh data.
+
+Также находятся в основном контейнере: `BP_OutfitExplorerBasic`, `BP_OutfitExplorer_SP`, `BPA_OutfitItemBase`, `BPC_AS_Outfit`, `BPC_BodyController`, `BPC_PlayerBracelet`, `DA_PlayerConfig` и `DT_GeneralItemInfos`.
+
+Сравнение путей показало, что исходный мод уже содержит все изменённые Gorka body/hands-текстуры, кроме трёх оставшихся базовых наборов: `T_Balaclav_02_a_C`, `T_Character_Gloves_01_e` и `T_Character_Gloves_Interface_01_c`. Поэтому повторно извлекать около 140 МиБ базовых текстур не требуется.
+
+PAK использует Oodle-блоки, которые `kraken-decompressor` не декодирует. Официальная Oodle 2.9.10 из distribution, используемого `repak`, успешно распаковала контрольные файлы и весь AssetRegistry; хеши PAK index и stored data проверены. `iostore_extract.py` теперь поддерживает как Python-декодер, так и официальную DLL/shared library. Контрольная распаковка исходного мода через официальную библиотеку дала 54/54 байт-идентичных файла.
+
+## 5. Минимальный следующий набор
+
+Подготовлены `tools/gorka-assets.filters` и `tools/extract_gorka.ps1`. Фильтр проверен на настоящем UTOC: **57 файлов, 28 504 571 байт**, включая все перечисленные meshes/`.ubulk`, материалы, общий скелет, стандартные модели для сравнения и outfit/bracelet-логику.
+
+PowerShell читает только нужные блоки локального `pakchunk0-Windows.ucas`, использует `oo2core_9_win64.dll` из игры, проверяет количество результатов и создаёт `gorka-assets.zip`. Загружать нужно только этот ZIP; большие UCAS по-прежнему не нужны.
+
+После получения набора следующий этап — разобрать package imports/exports, фактические material slots, reference skeletons и transforms кисти/предплечья, затем выбрать способ переноса стандартного outfit без потери cooked skinning и LODs.

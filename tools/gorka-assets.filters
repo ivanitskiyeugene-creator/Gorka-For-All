@@ -1,0 +1,36 @@
+# ITR2 Gorka-for-standard-costume research set.
+# Case-insensitive glob filters; matching is OR. Expected: 57 files / 28,504,571 bytes.
+
+# Original Gorka skeletal body, store mesh, materials, and the one base texture
+# whose pixels are not supplied by the original Gorka 3 mod.
+*/ITR2/Art/Characters/Player/Body/Body_Gorka_01/Materials/*
+*/ITR2/Art/Characters/Player/Body/Body_Gorka_01/SKM_Player_Body_Gorka_01_a.*
+*/ITR2/Art/Characters/Player/Body/Body_Gorka_01/SM_Props_Gorka_Set_01_a.uasset
+*/ITR2/Art/Characters/Player/Body/Body_Gorka_01/Textures/T_Balaclav_02_a_C.*
+
+# Original ITR1/Gorka hands with integrated bracelet, materials, and base-only textures.
+*/ITR2/Art/Characters/Player/Hand/Hand_ITR1/Materials/*
+*/ITR2/Art/Characters/Player/Hand/Hand_ITR1/SKM_Player_Gloves_ITR1_01_Left.*
+*/ITR2/Art/Characters/Player/Hand/Hand_ITR1/SKM_Player_Gloves_ITR1_01_Right.*
+*/ITR2/Art/Characters/Player/Hand/Hand_ITR1/Textures/T_Character_Gloves_01_e.*
+*/ITR2/Art/Characters/Player/Hand/Hand_ITR1/Textures/T_Character_Gloves_Interface_01_c.*
+
+# Standard UNPSC body/hands and bracelet materials for reference and watch fitting.
+*/ITR2/Art/Characters/Player/Body/Body_01/Male_Body_Test_01.*
+*/ITR2/Art/Characters/Player/Body/Body_01/Material/BaseMaterial*.uasset
+*/ITR2/Art/Characters/Player/Hand/Hand_01/SKM_Player_Gloves_02.*
+*/ITR2/Art/Characters/Player/Hand/Hand_01/SKM_Player_Gloves_Left_02.*
+*/ITR2/Art/Characters/Player/Hand/Hand_01/Material/*
+
+# Shared skeleton and physics asset.
+*/_VRE/Core/Character/Mannequins/Meshes/SK_Mannequin.uasset
+*/ITR2/BPs/Player/Mannequins/Rigs/PA_Mannequin.uasset
+
+# Outfit selection and player/bracelet logic.
+*/ITR2/BPs/Items/Outfits/*
+*/ITR2/BPs/Player/BP_RadiusPlayerCharacter_Gameplay.uasset
+*/ITR2/BPs/Player/BPC_PlayerBracelet.uasset
+*/ITR2/BPs/Player/BPC_AS_Outfit.uasset
+*/ITR2/BPs/Player/BPC_BodyController.uasset
+*/ITR2/Configurations/DA_PlayerConfig.uasset
+*/ITR2/Configurations/Infos/DT_GeneralItemInfos.uasset
