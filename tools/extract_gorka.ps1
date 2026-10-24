@@ -43,16 +43,19 @@ try {
     if (-not $OodleLibrary) {
         # Paks is normally IntoTheRadius2\Content\Paks.
         $GameRoot = [System.IO.Path]::GetFullPath((Join-Path $Paks '..\..'))
+        $InstallRoot = [System.IO.Path]::GetFullPath((Join-Path $GameRoot '..'))
         $Candidates = @(
             (Join-Path $GameRoot 'Binaries\Win64\oo2core_9_win64.dll'),
-            (Join-Path $GameRoot 'Binaries\ThirdParty\Oodle\oo2core_9_win64.dll')
+            (Join-Path $GameRoot 'Binaries\ThirdParty\Oodle\oo2core_9_win64.dll'),
+            (Join-Path $InstallRoot 'Engine\Binaries\ThirdParty\Oodle\oo2core_9_win64.dll'),
+            (Join-Path $InstallRoot 'Engine\Binaries\Win64\oo2core_9_win64.dll')
         )
         $OodleLibrary = $Candidates |
             Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } |
             Select-Object -First 1
 
-        if (-not $OodleLibrary -and (Test-Path -LiteralPath $GameRoot)) {
-            $OodleLibrary = Get-ChildItem -LiteralPath $GameRoot `
+        if (-not $OodleLibrary -and (Test-Path -LiteralPath $InstallRoot)) {
+            $OodleLibrary = Get-ChildItem -LiteralPath $InstallRoot `
                 -Filter 'oo2core_9_win64.dll' -File -Recurse -ErrorAction SilentlyContinue |
                 Select-Object -First 1 -ExpandProperty FullName
         }

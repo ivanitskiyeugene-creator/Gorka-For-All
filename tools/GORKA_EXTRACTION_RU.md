@@ -32,10 +32,16 @@ powershell -ExecutionPolicy Bypass -File .\extract_gorka.ps1 -Paks "D:\SteamLibr
 .\extract_gorka.ps1 -Paks "C:\full\path\to\Paks"
 ```
 
-Скрипт сам найдёт DLL Oodle. Если появится ошибка поиска DLL, укажите её вручную:
+Скрипт сам найдёт DLL Oodle, в том числе в папке `Engine` рядом с внутренней папкой `IntoTheRadius2`. Если появится ошибка поиска DLL, укажите её вручную:
 
 ```powershell
 .\extract_gorka.ps1 -Paks "C:\full\path\to\Paks" -OodleLibrary "C:\full\path\to\oo2core_9_win64.dll"
+```
+
+В стандартной установке Steam DLL обычно находится здесь:
+
+```text
+IntoTheRadius2\Engine\Binaries\ThirdParty\Oodle\oo2core_9_win64.dll
 ```
 
 ## Что отправить
