@@ -1,0 +1,12 @@
+# Downloaded source archives and game/mod containers
+google_drive/
+
+# Extraction, research, and intermediate build data
+work/
+
+# Generated mod packages (kept out of Git; release files remain in the workspace)
+release/
+
+# Python
+__pycache__/
+*.py[cod]
