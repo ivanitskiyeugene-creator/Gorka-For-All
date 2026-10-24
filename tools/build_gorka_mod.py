@@ -428,8 +428,8 @@ def validate_container(
     }
 
 
-def write_readme(output_dir: Path) -> Path:
-    text = """Gorka 3 — стандартный костюм исследователя (ITR2)
+def write_readme(output_dir: Path, mod_basename: str = MOD_BASENAME) -> Path:
+    text = f"""Gorka 3 — стандартный костюм исследователя (ITR2)
 ====================================================
 
 Заменяет BP_OutfitExplorerBasic (обычный, не DLC Classic Explorer Suit)
@@ -441,13 +441,18 @@ def write_readme(output_dir: Path) -> Path:
 мода Kerag сохранены. DLC Classic Explorer Kit для этой замены не нужен.
 BP_OutfitExplorer_SP и лицо стандартного костюма не перезаписываются.
 
-УСТАНОВКА
-1. Удалите старый Gorka3_P.* из папки модов, чтобы не было двух замен.
-2. Скопируйте Gorka3_For_All_P.pak, .utoc и .ucas в:
-   IntoTheRadius2\\IntoTheRadius2\\Content\\Paks\\~mods\\
-   (если папки ~mods нет, создайте её; некоторые установки используют
-   Content\\Paks\\Mods — используйте папку, где уже работают ваши моды).
-3. Запустите игру и выберите обычный стандартный костюм исследователя.
+УСТАНОВКА (корень Paks, без ~mods)
+1. Закройте игру. Удалите старые Gorka3_P.* и Gorka3_For_All_P.* из
+   IntoTheRadius2\\Content\\Paks, чтобы не было двух замен.
+2. Скопируйте все три файла {mod_basename}.pak, .utoc и .ucas прямо в:
+   IntoTheRadius2\\Content\\Paks\\
+   Не создавайте для этой проверки подпапку ~mods.
+3. Запустите игру и выберите обычный стандартный костюм исследователя
+   (BP_OutfitExplorerBasic), не SP и не DLC Classic Explorer Suit.
+
+Если изменения нет, проверьте, что в Paks лежат именно три новых файла
+с одинаковым именем {mod_basename} и что игра была полностью перезапущена.
+Этот вариант заменяет только Basic; он не заменяет SP/DLC-костюм.
 
 Проверка сборки: все chunk ID, BLAKE3 IoHash, контейнерный заголовок и
 распакованные payloads проверены программно. Посадку часов на правой руке
@@ -461,12 +466,12 @@ BP_OutfitExplorer_SP и лицо стандартного костюма не п
     return path
 
 
-def write_deterministic_zip(output_dir: Path, zip_path: Path) -> None:
+def write_deterministic_zip(output_dir: Path, zip_path: Path, mod_basename: str = MOD_BASENAME) -> None:
     """Create a release ZIP whose hash does not depend on file mtimes."""
     names = [
-        f"{MOD_BASENAME}.pak",
-        f"{MOD_BASENAME}.ucas",
-        f"{MOD_BASENAME}.utoc",
+        f"{mod_basename}.pak",
+        f"{mod_basename}.ucas",
+        f"{mod_basename}.utoc",
         "ReadMe_RU.txt",
         "build-manifest.json",
     ]
@@ -484,6 +489,8 @@ def main() -> None:
     parser.add_argument("--game-assets", type=Path, default=Path("work/user_assets"))
     parser.add_argument("--pak-stub", type=Path, default=Path("work/original_mod/Gorka3_P.pak"))
     parser.add_argument("--output-dir", type=Path, default=Path("release/gorka-standard"))
+    parser.add_argument("--mod-basename", default=MOD_BASENAME, help="Shared .pak/.utoc/.ucas basename; use Gorka3_P for the root-Paks compatibility diagnostic")
+    parser.add_argument("--container-id", type=lambda value: int(value, 0), help="Optional explicit IoStore container ID (decimal or 0x-prefixed hex)")
     parser.add_argument("--oodle-library", type=Path)
     parser.add_argument("--no-compression", action="store_true")
     parser.add_argument("--zip", action="store_true", help="Also create a ZIP beside the output directory")
@@ -499,22 +506,23 @@ def main() -> None:
     files = original_files + [basic]
     packages = original_store + [basic_store]
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    output_base = args.output_dir / MOD_BASENAME
+    output_base = args.output_dir / args.mod_basename
+    container_id = container_id_from_name(args.mod_basename) if args.container_id is None else args.container_id
     oodle = None if args.no_compression else OodleCompressor(args.oodle_library)
     written = write_container(
         output_base,
         [Chunk(make_chunk_id(item.package_name, item.chunk_type), item.data, item.relative_path) for item in files],
         packages,
         mount_point=MOUNT_POINT,
-        container_id=container_id_from_name(MOD_BASENAME),
+        container_id=container_id,
         oodle=oodle,
     )
-    pak_path = args.output_dir / f"{MOD_BASENAME}.pak"
+    pak_path = args.output_dir / f"{args.mod_basename}.pak"
     shutil.copyfile(args.pak_stub, pak_path)
-    readme = write_readme(args.output_dir)
+    readme = write_readme(args.output_dir, args.mod_basename)
     validation = validate_container(written.utoc, written.ucas, files, packages, written.container_id)
     validation.update({
-        "mod": MOD_BASENAME,
+        "mod": args.mod_basename,
         "container_id": f"{written.container_id:016x}",
         "compression": "stored" if args.no_compression else "Oodle Kraken Normal",
         "pak_sha256": sha256_file(pak_path),
@@ -536,7 +544,7 @@ def main() -> None:
     print(f"Manifest: {manifest_path}")
     if args.zip:
         zip_path = args.output_dir.with_suffix(".zip")
-        write_deterministic_zip(args.output_dir, zip_path)
+        write_deterministic_zip(args.output_dir, zip_path, args.mod_basename)
         print(f"ZIP: {zip_path} ({zip_path.stat().st_size} bytes)")
 
 
