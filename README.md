@@ -32,6 +32,21 @@ PYTHONPATH=work/tools/pydeps:. python3 tools/build_gorka_mod.py \
 
 На Windows укажите путь к `oo2core_9_win64.dll`. `--no-compression` создаёт диагностический несжатый контейнер без Oodle. `tools/zen_asset.py` читает Zen package maps, а `tools/iostore_write.py` записывает UTOC/UCAS, package store, directory index и perfect hash. Build manifest сохраняет хеши и результаты round-trip.
 
+### Диагностика установки в корень Paks
+
+Для проверки совместимости с исходным именем контейнера можно пересобрать тот же Basic-патч как `Gorka3_P` с исходным container ID. Полезные payloads при этом не меняются; это диагностический вариант, а не доказанное исправление загрузки в игре:
+
+```bash
+PYTHONPATH=work/tools/pydeps:. python3 tools/build_gorka_mod.py \
+  --oodle-library work/tools/oodle/liboo2corelinux64.so.9 \
+  --output-dir release/gorka-standard-paks \
+  --mod-basename Gorka3_P \
+  --container-id 0x50e3aad13e3f236d \
+  --zip
+```
+
+Полученные `Gorka3_P.pak`, `.utoc` и `.ucas` копируются вместе прямо в `IntoTheRadius2\\Content\\Paks` (без `~mods`), после удаления старых `Gorka3_P.*` и `Gorka3_For_All_P.*`. В игре нужно выбрать обычный Basic/standard costume, не SP/DLC. Реальная загрузка UE5.5 и визуальная проверка в VR ещё не подтверждены.
+
 ## Распаковщик IoStore
 
 `tools/iostore_extract.py` умеет показывать directory index и извлекать файлы из незашифрованных `.utoc/.ucas` с блоками None/Oodle/Zlib (Zstd/LZ4 — при установке соответствующих Python-пакетов).
