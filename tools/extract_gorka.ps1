@@ -3,7 +3,7 @@ param(
     [Parameter(Mandatory = $true, HelpMessage = 'Path to IntoTheRadius2\Content\Paks')]
     [string]$Paks,
 
-    [string]$Output = (Join-Path $PSScriptRoot 'gorka-assets'),
+    [string]$Output = '',
 
     [string]$OodleLibrary = ''
 )
@@ -21,6 +21,9 @@ function Resolve-Python {
 }
 
 try {
+    if (-not $Output) {
+        $Output = Join-Path $PSScriptRoot 'gorka-assets'
+    }
     $Paks = (Resolve-Path -LiteralPath $Paks).Path
     $Utoc = Join-Path $Paks 'pakchunk0-Windows.utoc'
     $Ucas = Join-Path $Paks 'pakchunk0-Windows.ucas'
@@ -92,7 +95,7 @@ try {
         throw "Expected 57 selected assets, got $($Selection.selected_entry_count). The game container version may differ; do not upload a partial set."
     }
 
-    $Zip = "$Output.zip"
+    $Zip = "${Output}.zip"
     Compress-Archive -Path (Join-Path $Output '*') -DestinationPath $Zip -Force
     $SizeMiB = [math]::Round((Get-Item -LiteralPath $Zip).Length / 1MB, 2)
     Write-Host ''
