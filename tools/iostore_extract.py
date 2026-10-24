@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import argparse
+from collections import OrderedDict
+from fnmatch import fnmatchcase
 import hashlib
 import json
 import os
@@ -242,40 +244,92 @@ def decompress_block(method: str, compressed: bytes, expected: int) -> bytes:
     return out
 
 
+def entry_matches(path: str, pattern: str) -> bool:
+    """Match a case-insensitive substring, or a glob when wildcards are present."""
+    normalized_path = path.replace("\\", "/").casefold()
+    normalized_pattern = pattern.replace("\\", "/").casefold()
+    if any(char in normalized_pattern for char in "*?["):
+        return fnmatchcase(normalized_path, normalized_pattern)
+    return normalized_pattern in normalized_path
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description="Inspect and selectively extract an unencrypted Unreal IoStore container."
+    )
     parser.add_argument("utoc", type=Path)
     parser.add_argument("--ucas", type=Path)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--manifest", type=Path)
+    parser.add_argument(
+        "--filter",
+        action="append",
+        default=[],
+        metavar="TEXT_OR_GLOB",
+        help="Select paths by case-insensitive substring or glob; repeatable.",
+    )
+    parser.add_argument(
+        "--list-all",
+        action="store_true",
+        help="Print every selected entry instead of the first 200.",
+    )
+    parser.add_argument(
+        "--hash-large-files",
+        action="store_true",
+        help="Hash UCAS files above 512 MiB too (can take a long time).",
+    )
     args = parser.parse_args()
     utoc = args.utoc
     ucas = args.ucas or utoc.with_suffix(".ucas")
     toc = parse_toc(utoc.read_bytes())
+    entries = [
+        entry
+        for entry in toc["entries"]
+        if not args.filter or any(entry_matches(entry["path"], pattern) for pattern in args.filter)
+    ]
+    if args.output and not entries:
+        parser.error("No entries matched --filter; nothing would be extracted")
+
+    ucas_size = ucas.stat().st_size if ucas.exists() else None
+    should_hash_ucas = (
+        ucas_size is not None
+        and (args.hash_large_files or ucas_size <= 512 * 1024 * 1024)
+    )
     summary = {
         "utoc": str(utoc),
         "ucas": str(ucas),
         "utoc_sha256": sha256_file(utoc),
-        "ucas_sha256": sha256_file(ucas) if ucas.exists() else None,
+        "ucas_size": ucas_size,
+        "ucas_sha256": sha256_file(ucas) if should_hash_ucas else None,
+        "ucas_hash_skipped": ucas_size is not None and not should_hash_ucas,
         "header": toc["header"],
         "methods": toc["methods"],
-        "entries": toc["entries"],
+        "filters": args.filter,
+        "total_entry_count": len(toc["entries"]),
+        "selected_entry_count": len(entries),
+        "entries": entries,
         "trailing_size": len(toc["trailing"]),
     }
     print(json.dumps({k: v for k, v in summary.items() if k != "entries"}, indent=2))
-    print(f"\nEntries ({len(toc['entries'])}):")
-    for entry in toc["entries"]:
-        print(f"{entry['length']:12,d}  chunk {entry['chunk_index']:3d}  {entry['path']}")
+    print(f"\nEntries ({len(entries)} selected out of {len(toc['entries'])}):")
+    displayed = entries if args.list_all else entries[:200]
+    for entry in displayed:
+        print(f"{entry['length']:12,d}  chunk {entry['chunk_index']:6d}  {entry['path']}")
+    if len(displayed) != len(entries):
+        print(f"... {len(entries) - len(displayed)} more; use --list-all or narrow --filter")
     if args.manifest:
         args.manifest.parent.mkdir(parents=True, exist_ok=True)
         args.manifest.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     if not args.output:
         return
+
     args.output.mkdir(parents=True, exist_ok=True)
-    block_cache: dict[int, bytes] = {}
+    block_size = toc["header"]["block_size"]
+    # Bound the shared-block cache to about 256 MiB while retaining adjacent chunks.
+    max_cached_blocks = max(1, min(512, (256 * 1024 * 1024) // block_size))
+    block_cache: OrderedDict[int, bytes] = OrderedDict()
     with ucas.open("rb") as stream:
-        for entry in toc["entries"]:
-            block_size = toc["header"]["block_size"]
+        for entry in entries:
             first = entry["offset"] // block_size
             end = (entry["offset"] + entry["length"] + block_size - 1) // block_size
             parts = []
@@ -287,7 +341,13 @@ def main() -> None:
                     if len(compressed) != block["compressed_size"]:
                         raise ValueError(f"Truncated UCAS at block {index}")
                     method = toc["methods"][block["method_index"]]
-                    block_cache[index] = decompress_block(method, compressed, block["uncompressed_size"])
+                    block_cache[index] = decompress_block(
+                        method, compressed, block["uncompressed_size"]
+                    )
+                    if len(block_cache) > max_cached_blocks:
+                        block_cache.popitem(last=False)
+                else:
+                    block_cache.move_to_end(index)
                 parts.append(block_cache[index])
             start = entry["offset"] % block_size
             payload = b"".join(parts)[start:start + entry["length"]]
