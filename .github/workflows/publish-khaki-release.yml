@@ -1,0 +1,45 @@
+name: Publish Khaki_A Release
+
+on:
+  push:
+    branches:
+      - arena/fff81d6f-gorka-for-all
+    paths:
+      - release/Gorka3_For_All_Khaki_A.zip
+      - .github/workflows/publish-khaki-release.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: arena/fff81d6f-gorka-for-all
+          lfs: false
+
+      - name: Upload Khaki_A to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: gorka-brown-a-fixed-v2
+          name: Gorka Brown A Fixed v2
+          body: "Khaki_A — верх #634F3C, штаны #806546, перчатки #323831 (полнопальцевые, фикс 12742x85)"
+          files: release/Gorka3_For_All_Khaki_A.zip
+          fail_on_unmatched_files: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Also publish as Khaki_A tag
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: khaki-a-v1
+          name: Gorka For All - Khaki_A v1
+          body: "Khaki_A — верх #634F3C, штаны #806546, перчатки #323831. Фикс вылета 12742x85 (inline mip offset)."
+          files: |
+            release/Gorka3_For_All_Khaki_A.zip
+            release/Gorka3_For_All_Khaki_A_NO_GLOVES.zip
+          fail_on_unmatched_files: false
+          token: ${{ secrets.GITHUB_TOKEN }}
