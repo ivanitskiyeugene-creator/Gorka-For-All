@@ -84,9 +84,9 @@ A_DARK_LIFT_CAP = 0.50
 GAUSSIAN_RADIUS_AT_2048 = 20.0
 
 VARIANTS = {
-    "A": {
-        "title": "Верх #634F3C, штаны #806546, перчатки #323831",
-        "zip_name": "Gorka3_For_All_Brown_A.zip",
+    "Khaki_A": {
+        "title": "Khaki_A — верх #634F3C, штаны #806546, перчатки #323831",
+        "zip_name": "Gorka3_For_All_Khaki_A.zip",
     },
 }
 
