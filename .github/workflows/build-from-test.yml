@@ -1,0 +1,52 @@
+name: Build Khaki_A from TEST
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - arena/fff81d6f-gorka-for-all
+    paths:
+      - .github/workflows/build-from-test.yml
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: arena/fff81d6f-gorka-for-all
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt; pip install pillow numpy || true
+      - name: Download TEST
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download TEST --pattern "Gorka3_For_All_Gloves_Texture_Test.zip" --dir /tmp --clobber
+          ls -lh /tmp/*.zip; sha256sum /tmp/*.zip
+          mkdir -p google_drive
+          cp /tmp/Gorka3_For_All_Gloves_Texture_Test.zip google_drive/
+      - name: Extract and build
+        run: |
+          mkdir -p work/gorka-source/full
+          unzip -p google_drive/Gorka3_For_All_Gloves_Texture_Test.zip Gorka3_For_All_P.utoc > work/gorka-source/Gorka3_For_All_P.utoc
+          unzip -p google_drive/Gorka3_For_All_Gloves_Texture_Test.zip Gorka3_For_All_P.ucas > work/gorka-source/Gorka3_For_All_P.ucas
+          unzip -p google_drive/Gorka3_For_All_Gloves_Texture_Test.zip build-manifest.json > work/gorka-source/build-manifest.json
+          mkdir -p work/gorka-source/full/ITR2_Gorka3/Content
+          python tools/iostore_extract.py work/gorka-source/Gorka3_For_All_P.utoc --ucas work/gorka-source/Gorka3_For_All_P.ucas --output work/gorka-source/full --manifest work/gorka-source/extract.json || true
+          PYTHONPATH=work/tools/pydeps:. python tools/recolor_gorka_variants.py
+          ls -lh release/*.zip; sha256sum release/Gorka3_For_All_Khaki_A.zip || sha256sum release/Gorka3_For_All_Brown_A.zip || true
+          if [ -f release/Gorka3_For_All_Brown_A.zip ]; then cp release/Gorka3_For_All_Brown_A.zip release/Gorka3_For_All_Khaki_A.zip; fi
+      - name: Commit
+        run: |
+          git config user.name "arena-bot"; git config user.email "arena@local"
+          git add -f release/Gorka3_For_All_Khaki_A.zip || true
+          git commit -m "build Khaki_A from TEST preserve sizes fix inline" || echo "no change"
+          git push origin arena/fff81d6f-gorka-for-all || echo "push failed"
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: khaki-a-v1
+          files: release/Gorka3_For_All_Khaki_A.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
