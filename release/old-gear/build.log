@@ -1,4 +1,4 @@
-=== DIAG HEAD=e47c8166f576add41954622f80906e37b6197465 ===
+=== DIAG HEAD=ca1acf7caab7c65bfea43445e233871152930288 ===
 #!/usr/bin/env python3
 """Build Old Gear IoStore container from extracted assets (debug/standalone)."""
 import argparse, json, shutil, sys
@@ -49,7 +49,38 @@ collected 519 files, 339 package store entries
   file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a
   file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD
   file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a
-filtered 144 files, 95 pkgs for variant pouch_knife_detector
+ remap ITR2/Art/Characters/Player/Detector_ITR1/MI_Detector_ITR1_01_a.uasset -> ITR2/Art/Characters/Player/Detector/MI_Detector_01_a.uasset
+ remap ITR2/Art/Characters/Player/Detector_ITR1/PA_Detector_IR1_01_a.uasset -> ITR2/Art/Characters/Player/Detector/PA_Detector_IR1_01_a.uasset
+ remap ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a.uasset -> ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a.uasset
+ remap ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1.uasset -> ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1.uasset
+ remap ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1.ubulk -> ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1.ubulk
+ remap ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C.uasset -> ITR2/Art/Characters/Player/Detector/T_Detector_01_C.uasset
+ remap ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C.ubulk -> ITR2/Art/Characters/Player/Detector/T_Detector_01_C.ubulk
+ remap ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E.uasset -> ITR2/Art/Characters/Player/Detector/T_Detector_01_E.uasset
+ remap ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E.ubulk -> ITR2/Art/Characters/Player/Detector/T_Detector_01_E.ubulk
+ remap ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N.uasset -> ITR2/Art/Characters/Player/Detector/T_Detector_01_N.uasset
+ remap ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N.ubulk -> ITR2/Art/Characters/Player/Detector/T_Detector_01_N.ubulk
+ remap ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_ORM.uasset -> ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM.uasset
+ remap ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_ORM.ubulk -> ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM.ubulk
+ remap ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector_ITR1.uasset -> ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector.uasset
+ remap ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector_ITR1.ubulk -> ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector.ubulk
+ remap ITR2/BPs/Items/Artefacts/BP_Detector_ITR1.uasset -> ITR2/BPs/Items/Artefacts/BP_Detector.uasset
+ remap Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.uasset -> Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.uasset
+ remap Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.ubulk -> Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.ubulk
+ remap Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.uasset -> Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.uasset
+ remap Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.ubulk -> Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.ubulk
+ remap Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03.uasset -> Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03.uasset
+ remap Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03.ubulk -> Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03.ubulk
+ remap Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04.uasset -> Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04.uasset
+ remap Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04.ubulk -> Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04.ubulk
+ remap Sound/SFX/Detector_MS/Detector_ITR1/A_SFX_Detector_Click_B3.uasset -> Sound/SFX/Detector_MS/Detector/A_SFX_Detector_Click_B3.uasset
+ remap Sound/SFX/Detector_MS/Detector_ITR1/A_SFX_Detector_Click_B3.ubulk -> Sound/SFX/Detector_MS/Detector/A_SFX_Detector_Click_B3.ubulk
+ remap Sound/SFX/Detector_MS/Detector_ITR1/cargeUP.uasset -> Sound/SFX/Detector_MS/Detector/cargeUP.uasset
+ remap Sound/SFX/Detector_MS/Detector_ITR1/cargeUP.ubulk -> Sound/SFX/Detector_MS/Detector/cargeUP.ubulk
+ remap Sound/SFX/Detector_MS/MS_Detector_ITR1.uasset -> Sound/SFX/Detector_MS/MS_Detector.uasset
+ remap Sound/SFX/Detector_MS/MS_Detector_ITR1_ART_Detection.uasset -> Sound/SFX/Detector_MS/MS_Detector_ART_Detection.uasset
+ remap Sound/Sounds_ITR1/Detector/Sounds/Attenuation/Att_Detector.uasset -> Sound/Sounds_ITR1/Detector/Sounds/Attenuation/Att_Detector.uasset
+remapped filtered 140 files, 92 pkgs (ITR1->vanilla)
  keep ITR2/Art/Characters/Player/Detector/ABP_Detector_01.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/ABP_Detector_01
  keep ITR2/Art/Characters/Player/Detector/Animation/A_Activate.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Animation/A_Activate
  keep ITR2/Art/Characters/Player/Detector/Animation/A_Deactivate.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Animation/A_Deactivate
@@ -89,29 +120,29 @@ filtered 144 files, 95 pkgs for variant pouch_knife_detector
  keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_02_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_02_C
  keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_03_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_03_C
  keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_03_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_03_C
- keep ITR2/Art/Characters/Player/Detector_ITR1/MI_Detector_ITR1_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/MI_Detector_ITR1_01_a
- keep ITR2/Art/Characters/Player/Detector_ITR1/PA_Detector_IR1_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/PA_Detector_IR1_01_a
- keep ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a
- keep ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1
- keep ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1
- keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C
- keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C
- keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E
- keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E
- keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N
- keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N
+ keep ITR2/Art/Characters/Player/Detector/MI_Detector_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/MI_Detector_01_a
+ keep ITR2/Art/Characters/Player/Detector/PA_Detector_IR1_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/PA_Detector_IR1_01_a
+ keep ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a
+ keep ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1
+ keep ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1
+ keep ITR2/Art/Characters/Player/Detector/T_Detector_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_C
+ keep ITR2/Art/Characters/Player/Detector/T_Detector_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_C
+ keep ITR2/Art/Characters/Player/Detector/T_Detector_01_E.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_E
+ keep ITR2/Art/Characters/Player/Detector/T_Detector_01_E.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_E
+ keep ITR2/Art/Characters/Player/Detector/T_Detector_01_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_N
+ keep ITR2/Art/Characters/Player/Detector/T_Detector_01_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_N
 mod=OldProbe_Detector_P container_id=00376b21b4e2d1e5
-write_container done: utoc=release/old-gear/OldProbe_Detector_P.utoc ucas=release/old-gear/OldProbe_Detector_P.ucas chunks=145
+write_container done: utoc=release/old-gear/OldProbe_Detector_P.utoc ucas=release/old-gear/OldProbe_Detector_P.ucas chunks=141
 no pak stub found, wrote empty pak at release/old-gear/OldProbe_Detector_P.pak
-validate OK utoc=4ab751b2aca6 ucas=ab9ea51aa760 chunks=145
+validate OK utoc=e0c86efd3817 ucas=17dfa42f42cd chunks=141
 wrote release/old-gear/ReadMe_RU.txt
 replaced empty pak with Gorka3_For_All_P.pak from release/Gorka3_For_All_Brown_A_NO_GLOVES.zip size=339
 also copied to release/OldGear_Pouch_Knife_Detector.zip
-ZIP release/OldProbe_Detector.zip size=32467980 sha=af4bf8d47d0d087120af89ab356cf0cc346798877ff685e6af12b05d985c9993
+ZIP release/OldProbe_Detector.zip size=32431819 sha=bdb97ac1157dbc74695f132944ffdb47cd85799a034292a8083b7dfed6be0cd2
 output dir listing:
   OldProbe_Detector_P.pak 339 bytes
-  OldProbe_Detector_P.ucas 117698560 bytes
-  OldProbe_Detector_P.utoc 38161 bytes
+  OldProbe_Detector_P.ucas 117473048 bytes
+  OldProbe_Detector_P.utoc 37458 bytes
   ReadMe_RU.txt 297 bytes
   build-manifest.json 866 bytes
   build.log 15589 bytes
@@ -120,20 +151,20 @@ output dir listing:
 DONE
 === BUILD END ===
 total 113M
--rw-r--r-- 1 runner runner  339 Oct 29 20:21 OldProbe_Detector_P.pak
--rw-r--r-- 1 runner runner 113M Oct 29 20:21 OldProbe_Detector_P.ucas
--rw-r--r-- 1 runner runner  38K Oct 29 20:21 OldProbe_Detector_P.utoc
--rw-r--r-- 1 runner runner  297 Oct 29 20:21 ReadMe_RU.txt
--rw-r--r-- 1 runner runner  866 Oct 29 20:21 build-manifest.json
--rw-r--r-- 1 runner runner  16K Oct 29 20:21 build.log
--rw-r--r-- 1 runner runner  731 Oct 29 20:21 checkout-diag.log
--rw-r--r-- 1 runner runner  906 Oct 29 20:21 upload.log
--rw-r--r-- 1 runner runner 42M Oct 29 20:21 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
--rw-r--r-- 1 runner runner 45M Oct 29 20:21 release/Gorka3_For_All_Brown_A_fixed.zip
--rw-r--r-- 1 runner runner 45M Oct 29 20:21 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
--rw-r--r-- 1 runner runner 45M Oct 29 20:21 release/Gorka3_For_All_Khaki_A.zip
--rw-r--r-- 1 runner runner 45M Oct 29 20:21 release/Gorka3_For_All_Khaki_V2.zip
--rw-r--r-- 1 runner runner 45M Oct 29 20:21 release/Gorka3_For_All_Khaki_V3.zip
--rw-r--r-- 1 runner runner 45M Oct 29 20:21 release/Gorka3_For_All_Khaki_V4.zip
--rw-r--r-- 1 runner runner 31M Oct 29 20:21 release/OldGear_Pouch_Knife_Detector.zip
--rw-r--r-- 1 runner runner 31M Oct 29 20:21 release/OldProbe_Detector.zip
+-rw-r--r-- 1 runner runner  339 Oct 29 20:25 OldProbe_Detector_P.pak
+-rw-r--r-- 1 runner runner 113M Oct 29 20:25 OldProbe_Detector_P.ucas
+-rw-r--r-- 1 runner runner  37K Oct 29 20:25 OldProbe_Detector_P.utoc
+-rw-r--r-- 1 runner runner  297 Oct 29 20:25 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner  866 Oct 29 20:25 build-manifest.json
+-rw-r--r-- 1 runner runner  16K Oct 29 20:25 build.log
+-rw-r--r-- 1 runner runner  731 Oct 29 20:25 checkout-diag.log
+-rw-r--r-- 1 runner runner  906 Oct 29 20:25 upload.log
+-rw-r--r-- 1 runner runner 42M Oct 29 20:25 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 20:25 release/Gorka3_For_All_Brown_A_fixed.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 20:25 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 20:25 release/Gorka3_For_All_Khaki_A.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 20:25 release/Gorka3_For_All_Khaki_V2.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 20:25 release/Gorka3_For_All_Khaki_V3.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 20:25 release/Gorka3_For_All_Khaki_V4.zip
+-rw-r--r-- 1 runner runner 31M Oct 29 20:25 release/OldGear_Pouch_Knife_Detector.zip
+-rw-r--r-- 1 runner runner 31M Oct 29 20:25 release/OldProbe_Detector.zip
