@@ -6,6 +6,7 @@ on:
       - arena/fff81d6f-gorka-for-all
     paths:
       - .github/workflows/build-old-gear.yml
+      - tools/build_old_gear.py
 permissions:
   contents: write
 jobs:
@@ -15,25 +16,42 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: arena/fff81d6f-gorka-for-all
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          pip install -r requirements.txt
+          pip install pillow numpy blake3 cityhash kraken-decompressor || true
       - name: Download old-assets rar
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release download old-assets-debug --pattern "gorka-assets.rar" --dir /tmp --clobber
           ls -lh /tmp/*.rar
-          sha256sum /tmp/*.rar || true
-      - name: Extract rar and inspect
-        run: |
-          sudo apt-get update && sudo apt-get install -y unrar
           mkdir -p /tmp/old-assets
-          unrar x /tmp/gorka-assets.rar /tmp/old-assets/ || unrar e /tmp/gorka-assets.rar /tmp/old-assets/ || 7z x /tmp/gorka-assets.rar -o/tmp/old-assets
-          find /tmp/old-assets -type f | head -100
-          ls -lh /tmp/old-assets | head -40
-          echo "--- count ---"
+          sudo apt-get update && sudo apt-get install -y unrar
+          unrar x /tmp/gorka-assets.rar /tmp/old-assets/ || 7z x /tmp/gorka-assets.rar -o/tmp/old-assets
           find /tmp/old-assets -type f | wc -l
-      - name: Publish inspect log
+          ls -R /tmp/old-assets | head -120
+      - name: Build OldPouch+Knife+Detector mod
         run: |
-          gh release upload old-assets-debug /tmp/gorka-assets.rar --clobber || true
-          echo "inspect done"
+          python tools/build_old_gear.py --source /tmp/old-assets --variant pouch_knife_detector --output release/old-gear
+          ls -lh release/old-gear/ || true
+          sha256sum release/old-gear/*.zip 2>/dev/null | head -20 || true
+          ls -lh release/*.zip | head -20
+      - name: Commit and publish Old Gear
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "arena-bot"; git config user.email "arena@local"
+          git add -f release/old-gear/*.zip release/old-gear/*.pak release/old-gear/*.utoc release/old-gear/*.ucas 2>&1 | head -20 || true
+          git commit -m "build OldBag_Knife_Detector from old-assets-debug (519 files)" || echo "no change"
+          git push origin arena/fff81d6f-gorka-for-all || echo "push failed"
+          gh release upload old-gear-mod release/old-gear/*.zip --clobber || gh release upload old-gear-mod release/old-gear/*.pak --clobber || true
+          gh release upload old-gear-mod release/old-gear/*.zip --clobber
+      - name: Build Old Vest separate (debug)
+        run: |
+          python tools/build_old_gear.py --source /tmp/old-assets --variant vest_old --output release/old-vest
+          ls -lh release/old-vest/ || true
