@@ -130,9 +130,40 @@ def main():
         return True
 
     filt=[f for f in files if keep(f)]
+    # --- РЕМАП: старый ванильный ITR2 должен стать старым: ITR1 -> ваниль ---
+    # Для Detector: старые файлы лежат в Detector_ITR1, но игра грузит Detector
+    # Поэтому перезаписываем новые пакеты старыми данными (переименовываем путь и package_name)
+    remapped = {}
+    for f in filt:
+        new_rel = f.relative_path.replace("Detector_ITR1", "Detector").replace("Probe_Sack_ITR1", "Probe_Sack")
+        # package_name is like /Game/ITR2/.../Detector_ITR1/... -> need replace there too
+        new_pkg = f.package_name.replace("Detector_ITR1", "Detector").replace("Probe_Sack_ITR1", "Probe_Sack")
+        # Keep only remapped entry; if duplicate (old+new map to same), old wins because we iterate sorted and old ITR1 files come after?
+        # Ensure old overwrites new: prioritize files where original contained _ITR1
+        is_old = "_ITR1" in f.relative_path or "_ITR1" in f.package_name
+        key = new_rel
+        if key not in remapped or is_old:
+            # Need to create new SourceFile with new paths but old data
+            # For package store, we need updated PackageStoreInfo as well
+            remapped[key] = SourceFile(relative_path=new_rel, package_name=new_pkg, chunk_type=f.chunk_type, data=f.data)
+            if is_old:
+                print(f" remap {f.relative_path} -> {new_rel}", flush=True)
+    filt = list(remapped.values())
+    # Rebuild filt_pkgs to match new package names (remapped)
     keep_names=set(f.package_name for f in filt)
-    filt_pkgs=[p for p in pkgs if p.package_name in keep_names]
-    print(f"filtered {len(filt)} files, {len(filt_pkgs)} pkgs for variant {args.variant}", flush=True)
+    # For imports, also remap _ITR1 in imported names where needed
+    filt_pkgs=[]
+    for p in pkgs:
+        if p.package_name.replace("Detector_ITR1","Detector").replace("Probe_Sack_ITR1","Probe_Sack") in keep_names:
+            # Remap imported names similarly
+            new_imports = [imp.replace("Detector_ITR1","Detector").replace("Probe_Sack_ITR1","Probe_Sack") for imp in p.imported_package_names]
+            filt_pkgs.append(PackageStoreInfo(p.package_name.replace("Detector_ITR1","Detector").replace("Probe_Sack_ITR1","Probe_Sack"), new_imports))
+    # Deduplicate pkgs by package_name
+    uniq = {}
+    for p in filt_pkgs:
+        uniq[p.package_name] = p
+    filt_pkgs = list(uniq.values())
+    print(f"remapped filtered {len(filt)} files, {len(filt_pkgs)} pkgs (ITR1->vanilla)", flush=True)
     for f in filt[:50]:
         print(f" keep {f.relative_path} pkg={f.package_name}", flush=True)
     if not filt:
