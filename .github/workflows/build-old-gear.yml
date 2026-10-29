@@ -9,45 +9,30 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          clean: true
-      - name: Hard-refresh builder from origin (bypass checkout cache)
+      - name: Manual checkout (bypass actions/checkout cache)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Local HEAD before: $(git rev-parse HEAD 2>&1) $(git log --oneline -1 2>&1)"
           echo "GITHUB_SHA=$GITHUB_SHA"
           echo "GITHUB_REF=$GITHUB_REF"
-          # Fetch latest directly from origin
-          git fetch origin arena/fff81d6f-gorka-for-all || true
-          echo "origin branch: $(git rev-parse origin/arena/fff81d6f-gorka-for-all 2>&1)"
-          git reset --hard origin/arena/fff81d6f-gorka-for-all || git reset --hard $GITHUB_SHA || true
-          echo "Local HEAD after: $(git rev-parse HEAD 2>&1) $(git log --oneline -1 2>&1)"
-          echo "--- builder head after reset ---"
-          head -10 tools/build_old_gear.py || echo "builder missing after reset"
-          # If still stale (line 5 is old import), download directly via API
-          if head -6 tools/build_old_gear.py | grep -q "from tools.build_gorka_mod"; then
-            echo "STALE DETECTED — downloading fresh builder via raw.githubusercontent"
-            # Use gh api to get file content
-            gh api repos/ivanitskiyeugene-creator/Gorka-For-All/contents/tools/build_old_gear.py --jq .content 2>&1 | base64 -d > /tmp/fresh_builder.py || true
-            if head -10 /tmp/fresh_builder.py 2>&1 | grep -q "sys.path"; then
-              cp /tmp/fresh_builder.py tools/build_old_gear.py
-              echo "restored via gh api"
-            else
-              echo "gh api failed, trying curl raw"
-              curl -fsSL -H "Authorization: Bearer $GH_TOKEN" "https://raw.githubusercontent.com/ivanitskiyeugene-creator/Gorka-For-All/arena/fff81d6f-gorka-for-all/tools/build_old_gear.py" -o tools/build_old_gear.py 2>&1 | head -5 || true
-              curl -fsSL "https://raw.githubusercontent.com/ivanitskiyeugene-creator/Gorka-For-All/arena/fff81d6f-gorka-for-all/tools/build_old_gear.py" -o /tmp/curl_builder.py 2>&1 | head -5 || true
-              head -5 /tmp/curl_builder.py 2>&1 || true
-              cp /tmp/curl_builder.py tools/build_old_gear.py 2>&1 || true
-            fi
-            # Also restore __init__.py
-            gh api repos/ivanitskiyeugene-creator/Gorka-For-All/contents/tools/__init__.py --jq .content 2>&1 | base64 -d > tools/__init__.py || echo "" > tools/__init__.py
-            head -10 tools/build_old_gear.py
-          fi
+          # Nuke any cached checkout
+          rm -rf /tmp/fresh-repo
+          git clone --branch arena/fff81d6f-gorka-for-all https://x-access-token:${GH_TOKEN}@github.com/ivanitskiyeugene-creator/Gorka-For-All.git /tmp/fresh-repo
+          cd /tmp/fresh-repo
+          git rev-parse HEAD
+          git log --oneline -3
+          head -10 tools/build_old_gear.py
+          ls -lh tools/__init__.py || echo "no init"
+          # Replace workspace with fresh clone
+          rm -rf $GITHUB_WORKSPACE/.git $GITHUB_WORKSPACE/tools $GITHUB_WORKSPACE/.github
+          cp -a /tmp/fresh-repo/.git $GITHUB_WORKSPACE/
+          cp -a /tmp/fresh-repo/tools $GITHUB_WORKSPACE/
+          cp -a /tmp/fresh-repo/.github $GITHUB_WORKSPACE/
+          cd $GITHUB_WORKSPACE
+          git rev-parse HEAD
+          head -10 tools/build_old_gear.py
           mkdir -p release/old-gear
-          echo "=== checkout-diag $(git rev-parse HEAD) ===" > release/old-gear/checkout-diag.log
+          echo "manual-checkout HEAD=$(git rev-parse HEAD)" > release/old-gear/checkout-diag.log
           git log --oneline -3 >> release/old-gear/checkout-diag.log 2>&1
           head -10 tools/build_old_gear.py >> release/old-gear/checkout-diag.log 2>&1
           cat release/old-gear/checkout-diag.log
@@ -77,7 +62,6 @@ jobs:
           {
             echo "=== DIAG HEAD=$(git rev-parse HEAD) ==="
             head -10 tools/build_old_gear.py
-            python -c "import sys; print(sys.path[:5])" 2>&1
             python -c "import tools.build_gorka_mod; print('import ok')" 2>&1 || echo "import failed"
             echo "=== BUILD START ==="
             python tools/build_old_gear.py --source /tmp/old-assets --variant pouch_knife_detector --output release/old-gear --verbose 2>&1 || echo "builder exit $?"
@@ -87,7 +71,6 @@ jobs:
             ls -lh release/*.zip 2>&1 | head -20
           } 2>&1 | tee /tmp/build.log
           cp /tmp/build.log release/old-gear/build.log || true
-          cp /tmp/build.log release/old-gear/build-full.log || true
           cat /tmp/build.log | tail -30
       - name: Commit and publish Old Gear
         if: always()
@@ -95,7 +78,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "arena-bot"; git config user.email "arena@local"
-          git add -f release/old-gear/checkout-diag.log release/old-gear/build.log release/old-gear/build-full.log 2>&1 | head -20 || true
+          git add -f release/old-gear/checkout-diag.log release/old-gear/build.log 2>&1 | head -20 || true
           git add -f release/old-gear/*.pak release/old-gear/*.utoc release/old-gear/*.ucas 2>&1 | head -20 || true
           git add -f release/OldGear_Pouch_Knife_Detector.zip 2>&1 | head -20 || true
           git add -f release/old-gear/build-manifest.json 2>&1 | head -20 || true
