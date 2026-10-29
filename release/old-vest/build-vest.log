@@ -1,0 +1,88 @@
+START variant=vest_old src=/tmp/old-assets out=release/old-vest verbose=True
+src top: [PosixPath('/tmp/old-assets/gorka-assets')]
+ walk /tmp/old-assets: dirs=['gorka-assets'] files=[]
+ walk /tmp/old-assets/gorka-assets: dirs=['IntoTheRadius2'] files=[]
+ walk /tmp/old-assets/gorka-assets/IntoTheRadius2: dirs=['Content'] files=[]
+ walk /tmp/old-assets/gorka-assets/IntoTheRadius2/Content: dirs=['Sound', 'ITR2'] files=[]
+[find_content_root] src=/tmp/old-assets exists=True is_dir=True
+rglob Content candidates: [PosixPath('/tmp/old-assets/gorka-assets/IntoTheRadius2/Content')]
+selected Content with ITR2: /tmp/old-assets/gorka-assets/IntoTheRadius2/Content
+Content root = /tmp/old-assets/gorka-assets/IntoTheRadius2/Content
+collect: found 339 .uasset under /tmp/old-assets/gorka-assets/IntoTheRadius2/Content
+collect: total rglob * = 632
+collected 519 files, 339 package store entries
+  file ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_01_a.uasset pkg=/Game/ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_01_a
+  file ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_02_a.uasset pkg=/Game/ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_02_a
+  file ITR2/Art/Characters/Backpack/Material/MI_WeighterVest.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Material/MI_WeighterVest
+  file ITR2/Art/Characters/Backpack/Material/MI_WeighterVest_02.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Material/MI_WeighterVest_02
+  file ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker
+  file ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker_03_2_A1855E60.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker_03_2_A1855E60
+  file ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker_03_2_A1855E60.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker_03_2_A1855E60
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_C.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_C
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_C.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_C
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_E.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_E
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_E.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_E
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_N.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_N
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_N.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_N
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_ORM.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_ORM
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_ORM
+  file ITR2/Art/Characters/Backpack/Textures/T_WeighterVest_C.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeighterVest_C
+  file ITR2/Art/Characters/Backpack/Textures/T_WeighterVest_C.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeighterVest_C
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Material/Vest.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Material/Vest
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/SM_Vest_Base_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/SM_Vest_Base_01_a
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_C
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_C
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_N
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_N
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_ORM.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_ORM
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_ORM
+  file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a
+  file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a_LOD.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a_LOD
+  file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a
+  file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD
+  file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a
+filtered 291 files, 186 pkgs for variant vest_old
+ keep ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_01_a.uasset pkg=/Game/ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_01_a
+ keep ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_02_a.uasset pkg=/Game/ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_02_a
+ keep ITR2/Art/Characters/Backpack/Material/MI_WeighterVest.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Material/MI_WeighterVest
+ keep ITR2/Art/Characters/Backpack/Material/MI_WeighterVest_02.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Material/MI_WeighterVest_02
+ keep ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker
+ keep ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker_03_2_A1855E60.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker_03_2_A1855E60
+ keep ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker_03_2_A1855E60.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker_03_2_A1855E60
+ keep ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_C.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_C
+ keep ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_C.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_C
+ keep ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_E.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_E
+ keep ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_E.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_E
+ keep ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_N.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_N
+ keep ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_N.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_N
+ keep ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_ORM.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_ORM
+ keep ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_ORM
+ keep ITR2/Art/Characters/Backpack/Textures/T_WeighterVest_C.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeighterVest_C
+ keep ITR2/Art/Characters/Backpack/Textures/T_WeighterVest_C.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeighterVest_C
+ keep ITR2/Art/Characters/Player/Body/Vest_Base_01/Material/Vest.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Material/Vest
+ keep ITR2/Art/Characters/Player/Body/Vest_Base_01/SM_Vest_Base_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/SM_Vest_Base_01_a
+ keep ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_C
+ keep ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_C
+ keep ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_N
+ keep ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_N
+ keep ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_ORM.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_ORM
+ keep ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_ORM
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a_LOD.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a_LOD
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a
+mod=OldVest_P container_id=80bb7883e86626aa
+Traceback (most recent call last):
+  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 220, in <module>
+    main()
+  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 150, in main
+    written=write_container(base, chunks, filt_pkgs, mount_point=MOUNT_POINT, container_id=cid, oodle=None)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/iostore_write.py", line 496, in write_container
+    header_data = build_container_header(container_id, packages)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/iostore_write.py", line 136, in build_container_header
+    raise ValueError(f"Duplicate imported package ID in {item.package_name}")
+ValueError: Duplicate imported package ID in /Game/Sound/Player/Footsteps/Vest/A_Player_VestBase_Movement
+total 0
