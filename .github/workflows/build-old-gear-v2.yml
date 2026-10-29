@@ -36,10 +36,10 @@ jobs:
           mkdir -p release/old-gear
           {
             echo "=== DIAG HEAD=$(git rev-parse HEAD) ==="
-            head -5 tools/build_old_gear.py
+            head -5 tools/build_old_gear_proper.py || head -5 tools/build_old_gear.py
             python -c "import tools.build_gorka_mod; print('import ok')" 2>&1 || echo "import check failed"
-            echo "=== BUILD START ==="
-            python tools/build_old_gear.py --source /tmp/old-assets --variant pouch_knife_detector --output release/old-gear --verbose 2>&1 || echo "builder exit $?"
+            echo "=== BUILD START (proper patched) ==="
+            python tools/build_old_gear_proper.py --source /tmp/old-assets --output release/old-gear --verbose 2>&1 || echo "builder exit $?"
             echo "=== BUILD END ==="
             ls -lh release/old-gear/ 2>&1
             ls -lh release/*.zip 2>&1 | head -20
