@@ -13,15 +13,24 @@ jobs:
         with:
           fetch-depth: 0
           clean: true
-      - name: Debug checkout
+      - name: Force checkout to triggering commit
         run: |
+          echo "BEFORE: $(git rev-parse HEAD) $(git log --oneline -1)"
           echo "GITHUB_SHA=$GITHUB_SHA"
-          git rev-parse HEAD
-          git log --oneline -3
-          echo "--- tools/build_old_gear.py head ---"
+          git fetch origin arena/fff81d6f-gorka-for-all --prune || true
+          git reset --hard $GITHUB_SHA || git reset --hard origin/arena/fff81d6f-gorka-for-all || true
+          echo "AFTER: $(git rev-parse HEAD) $(git log --oneline -1)"
           head -20 tools/build_old_gear.py
-          echo "--- has __init__.py ---"
-          ls -lh tools/__init__.py || echo "no __init__.py"
+          ls -lh tools/__init__.py && echo "__init__ ok" || echo "no __init__"
+          mkdir -p release/old-gear
+          {
+            echo "=== FORCE-CHECKOUT DIAG ==="
+            git rev-parse HEAD
+            git log --oneline -2
+            head -20 tools/build_old_gear.py
+            ls -lh tools/__init__.py 2>&1
+          } > release/old-gear/checkout-diag.log 2>&1
+          cat release/old-gear/checkout-diag.log
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -41,14 +50,13 @@ jobs:
           echo "=== FIND Content ==="; find /tmp/old-assets -type d -name Content | head -20
           echo "=== FIND ITR2 ==="; find /tmp/old-assets -type d -name ITR2 | head -20
           echo "=== COUNT ==="; find /tmp/old-assets -type f | wc -l
-          find /tmp/old-assets -type f | head -40
+          find /tmp/old-assets -type f | head -80
       - name: Build OldPouch+Knife+Detector mod
         run: |
           mkdir -p release/old-gear
           {
             echo "=== DIAG HEAD=$(git rev-parse HEAD) ==="
             head -20 tools/build_old_gear.py
-            ls -lh tools/__init__.py 2>&1
             python -c "import sys; print(sys.path[:5])" 2>&1
             python -c "import tools.build_gorka_mod; print('import ok')" 2>&1 || echo "import failed"
             echo "=== BUILD START ==="
@@ -59,14 +67,14 @@ jobs:
             ls -lh release/*.zip 2>&1 | head -20
           } 2>&1 | tee /tmp/build.log
           cp /tmp/build.log release/old-gear/build.log || true
-          cat /tmp/build.log | tail -20
+          cat /tmp/build.log | tail -30
       - name: Commit and publish Old Gear
         if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "arena-bot"; git config user.email "arena@local"
-          git add -f release/old-gear/build.log 2>&1 | head -20 || true
+          git add -f release/old-gear/checkout-diag.log release/old-gear/build.log 2>&1 | head -20 || true
           git add -f release/old-gear/*.pak release/old-gear/*.utoc release/old-gear/*.ucas 2>&1 | head -20 || true
           git add -f release/OldGear_Pouch_Knife_Detector.zip 2>&1 | head -20 || true
           git add -f release/old-gear/build-manifest.json 2>&1 | head -20 || true
