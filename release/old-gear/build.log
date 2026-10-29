@@ -1,4 +1,4 @@
-=== DIAG HEAD=87870157c9809e897753bdd9244d7310d35cea33 ===
+=== DIAG HEAD=5c8c97d2f1cdb2bddb128a54234e588d145850ed ===
 #!/usr/bin/env python3
 """Build Old Gear IoStore container from extracted assets (debug/standalone)."""
 import argparse, json, shutil, sys
@@ -95,21 +95,23 @@ output dir listing:
   build-manifest.json 858 bytes
   build.log 12357 bytes
   checkout-diag.log 731 bytes
+  upload.log 1022 bytes
 DONE
 === BUILD END ===
 total 253M
--rw-r--r-- 1 runner runner  339 Oct 29 19:04 OldGear_P.pak
--rw-r--r-- 1 runner runner 253M Oct 29 19:04 OldGear_P.ucas
--rw-r--r-- 1 runner runner  85K Oct 29 19:04 OldGear_P.utoc
--rw-r--r-- 1 runner runner  278 Oct 29 19:04 ReadMe_RU.txt
--rw-r--r-- 1 runner runner  858 Oct 29 19:04 build-manifest.json
--rw-r--r-- 1 runner runner  13K Oct 29 19:04 build.log
--rw-r--r-- 1 runner runner  731 Oct 29 19:04 checkout-diag.log
--rw-r--r-- 1 runner runner 42M Oct 29 19:03 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:03 release/Gorka3_For_All_Brown_A_fixed.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:03 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:03 release/Gorka3_For_All_Khaki_A.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:03 release/Gorka3_For_All_Khaki_V2.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:03 release/Gorka3_For_All_Khaki_V3.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:04 release/Gorka3_For_All_Khaki_V4.zip
--rw-r--r-- 1 runner runner 83M Oct 29 19:04 release/OldGear_Pouch_Knife_Detector.zip
+-rw-r--r-- 1 runner runner  339 Oct 29 19:06 OldGear_P.pak
+-rw-r--r-- 1 runner runner 253M Oct 29 19:06 OldGear_P.ucas
+-rw-r--r-- 1 runner runner  85K Oct 29 19:06 OldGear_P.utoc
+-rw-r--r-- 1 runner runner  278 Oct 29 19:06 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner  858 Oct 29 19:06 build-manifest.json
+-rw-r--r-- 1 runner runner  13K Oct 29 19:06 build.log
+-rw-r--r-- 1 runner runner  731 Oct 29 19:06 checkout-diag.log
+-rw-r--r-- 1 runner runner 1022 Oct 29 19:06 upload.log
+-rw-r--r-- 1 runner runner 42M Oct 29 19:06 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:06 release/Gorka3_For_All_Brown_A_fixed.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:06 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:06 release/Gorka3_For_All_Khaki_A.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:06 release/Gorka3_For_All_Khaki_V2.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:06 release/Gorka3_For_All_Khaki_V3.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:06 release/Gorka3_For_All_Khaki_V4.zip
+-rw-r--r-- 1 runner runner 83M Oct 29 19:06 release/OldGear_Pouch_Knife_Detector.zip
