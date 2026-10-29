@@ -9,13 +9,11 @@ permissions:
 jobs:
   inspect:
     runs-on: ubuntu-latest
-    env:
-      PYTHONPATH: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - name: Download Artefacts
+      - name: Download and inspect
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -23,17 +21,31 @@ jobs:
           ls -lh /tmp/*.rar
           sudo apt-get update -qq && sudo apt-get install -y -qq unrar 2>&1 | tail -3
           mkdir -p /tmp/artefacts
-          unrar x /tmp/Artefacts.rar /tmp/artefacts/ || 7z x /tmp/Artefacts.rar -o/tmp/artefacts || bsdtar -xf /tmp/Artefacts.rar -C /tmp/artefacts || true
-          echo "=== TREE ==="
-          find /tmp/artefacts -type f | head -100
-          echo "=== COUNT ==="
-          find /tmp/artefacts -type f | wc -l
-          ls -R /tmp/artefacts | head -300
-          # Also check gorka-assets for probe list
-          echo "=== PROBE SACK FILES IN GORKA-ASSETS ==="
+          unrar x /tmp/Artefacts.rar /tmp/artefacts/ || 7z x /tmp/Artefacts.rar -o/tmp/artefacts || true
+          mkdir -p /tmp/inspect
+          echo "=== Artefacts TREE ===" > /tmp/inspect/artefacts.txt
+          find /tmp/artefacts -type f | head -200 >> /tmp/inspect/artefacts.txt
+          echo "COUNT $(find /tmp/artefacts -type f | wc -l)" >> /tmp/inspect/artefacts.txt
+          ls -R /tmp/artefacts | head -500 >> /tmp/inspect/artefacts.txt
+          echo "=== Artefacts ls -R ===" >> /tmp/inspect/artefacts.txt
+          # Also gorka-assets content list
           gh release download old-assets-debug --pattern "gorka-assets.rar" --dir /tmp --clobber 2>&1 | tail -3 || true
           mkdir -p /tmp/old-assets2
-          unrar x /tmp/gorka-assets.rar /tmp/old-assets2/ 2>&1 | tail -3 || 7z x /tmp/gorka-assets.rar -o/tmp/old-assets2 2>&1 | tail -3 || true
-          find /tmp/old-assets2 -type f | xargs grep -l "Probe" 2>/dev/null | head -20 || find /tmp/old-assets2 -type d -iname "*probe*" 2>&1 | head -20
-          find /tmp/old-assets2 -type f | wc -l
-          ls /tmp/old-assets2/gorka-assets/IntoTheRadius2/Content/ 2>&1 | head -20
+          unrar x /tmp/gorka-assets.rar /tmp/old-assets2/ 2>&1 | tail -3 || true
+          echo "=== gorka-assets TREE ===" >> /tmp/inspect/artefacts.txt
+          find /tmp/old-assets2 -type f | head -200 >> /tmp/inspect/artefacts.txt
+          echo "=== gorka-assets Content ===" >> /tmp/inspect/artefacts.txt
+          ls -R /tmp/old-assets2 2>&1 | head -100 >> /tmp/inspect/artefacts.txt
+          cat /tmp/inspect/artefacts.txt | head -800
+          mkdir -p gorka-assets-debug
+          cp /tmp/inspect/artefacts.txt gorka-assets-debug/artefacts-inspect.txt
+          ls -lh gorka-assets-debug/
+      - name: Commit inspect
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "inspect-bot"; git config user.email "inspect@local"
+          git add -f gorka-assets-debug/artefacts-inspect.txt 2>&1 | head -10 || true
+          git commit -m "inspect Artefacts" || echo "no change"
+          git push origin arena/fff81d6f-gorka-for-all 2>&1 | head -10 || echo "push failed"
