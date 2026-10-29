@@ -20,14 +20,20 @@ jobs:
           git fetch origin arena/fff81d6f-gorka-for-all --prune || true
           git reset --hard $GITHUB_SHA || git reset --hard origin/arena/fff81d6f-gorka-for-all || true
           echo "AFTER: $(git rev-parse HEAD) $(git log --oneline -1)"
-          head -20 tools/build_old_gear.py
+          echo "--- builder head BEFORE restore ---"
+          head -5 tools/build_old_gear.py || echo "no file"
+          # Force restore builder from git object store (bypass checkout cache)
+          git show HEAD:tools/build_old_gear.py > /tmp/fresh_builder.py 2>&1 && cp /tmp/fresh_builder.py tools/build_old_gear.py && echo "restored builder from git show"
+          git show HEAD:tools/__init__.py > tools/__init__.py 2>&1 && echo "restored __init__.py" || echo "no __init__ in git"
+          echo "--- builder head AFTER restore ---"
+          head -5 tools/build_old_gear.py
           ls -lh tools/__init__.py && echo "__init__ ok" || echo "no __init__"
           mkdir -p release/old-gear
           {
             echo "=== FORCE-CHECKOUT DIAG ==="
             git rev-parse HEAD
             git log --oneline -2
-            head -20 tools/build_old_gear.py
+            head -5 tools/build_old_gear.py
             ls -lh tools/__init__.py 2>&1
           } > release/old-gear/checkout-diag.log 2>&1
           cat release/old-gear/checkout-diag.log
