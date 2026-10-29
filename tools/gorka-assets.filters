@@ -34,3 +34,17 @@
 */ITR2/BPs/Player/BPC_BodyController.uasset
 */ITR2/Configurations/DA_PlayerConfig.uasset
 */ITR2/Configurations/Infos/DT_GeneralItemInfos.uasset
+
+# --- OLD GEAR debug set: pouch/casings + knife + detector + vest ---
+*/Pouch*/*
+*/AmmoPouch*/*
+*/CartridgePouch*/*
+*/Shell*/*
+*/Casings*/*
+*/Knife*/*
+*/Detector*/*
+*/Geiger*/*
+*/Vest*/*
+*/Armor*/*
+*/PlateCarrier*/*
+*/BodyArmor*/*
