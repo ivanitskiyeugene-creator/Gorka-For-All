@@ -1,4 +1,4 @@
-=== DIAG HEAD=9c48af0070594575fd1a46cf801618dd850d394d ===
+=== DIAG HEAD=a6c2fd3ca4712375f18b93801f91b9630f0eb4f0 ===
 #!/usr/bin/env python3
 """Build Old Gear IoStore container from extracted assets (debug/standalone)."""
 import argparse, json, shutil, sys
@@ -80,6 +80,120 @@ filtered 144 files, 95 pkgs for variant pouch_knife_detector
  keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_C
  keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_C
  keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_E2.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_E2
+ keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_E2.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_E2
+ keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_N
+ keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_N
+ keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_ORM.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_ORM
+ keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_ORM
+ keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_02_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_02_C
+ keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_02_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_02_C
+ keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_03_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_03_C
+ keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_03_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_03_C
+ keep ITR2/Art/Characters/Player/Detector_ITR1/MI_Detector_ITR1_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/MI_Detector_ITR1_01_a
+ keep ITR2/Art/Characters/Player/Detector_ITR1/PA_Detector_IR1_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/PA_Detector_IR1_01_a
+ keep ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a
+ keep ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1
+ keep ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1
+ keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C
+ keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C
+ keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E
+ keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E
+ keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N
+ keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N
+ keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_ORM.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_ORM
+ keep ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_ORM
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Materials/MI_Quest_Portal_Detector_01_Dmage.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Materials/MI_Quest_Portal_Detector_01_Dmage
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Materials/MI_Quest_Portal_Detector_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Materials/MI_Quest_Portal_Detector_01_a
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Materials/MI_Quest_Portal_Detector_02_Damage.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Materials/MI_Quest_Portal_Detector_02_Damage
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Materials/MI_Quest_Portal_Detector_02_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Materials/MI_Quest_Portal_Detector_02_a
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Mesh/SM_Quest_Portal_Detector_01_Damage.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Mesh/SM_Quest_Portal_Detector_01_Damage
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Mesh/SM_Quest_Portal_Detector_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Mesh/SM_Quest_Portal_Detector_01_a
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Mesh/SM_Quest_Portal_Detector_01_b.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Mesh/SM_Quest_Portal_Detector_01_b
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Mesh/SM_Quest_Portal_Detector_02_Damage.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Mesh/SM_Quest_Portal_Detector_02_Damage
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Mesh/SM_Quest_Portal_Detector_02_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Mesh/SM_Quest_Portal_Detector_02_a
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Mesh/SM_Quest_Portal_Detector_02_b.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Mesh/SM_Quest_Portal_Detector_02_b
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_C
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_C
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_E.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_E
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_E.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_E
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_N
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_N
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_ORM.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_ORM
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_01_ORM
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_C
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_C
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_E.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_E
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_E.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_E
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_N
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_N
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_ORM.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_ORM
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_02_ORM
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_01_C
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_01_C
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_01_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_01_N
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_01_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_01_N
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_01_ORM.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_01_ORM
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_01_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_01_ORM
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_02_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_02_C
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_02_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_02_C
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_02_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_02_N
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_02_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_02_N
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_02_ORM.uasset pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_02_ORM
+ keep ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_02_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Quest_Portal_Detector/Textures/T_Quest_Portal_Detector_DMG_02_ORM
+ keep ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector.uasset pkg=/Game/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector
+ keep ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector.ubulk pkg=/Game/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector
+ keep ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector_ITR1.uasset pkg=/Game/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector_ITR1
+ keep ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector_ITR1.ubulk pkg=/Game/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector_ITR1
+ keep ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector_Lvl2.uasset pkg=/Game/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector_Lvl2
+ keep ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector_Lvl2.ubulk pkg=/Game/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector_Lvl2
+ keep ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Note_ArtifactDetector_lvl2.uasset pkg=/Game/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Note_ArtifactDetector_lvl2
+ keep ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Note_ArtifactDetector_lvl2.ubulk pkg=/Game/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Note_ArtifactDetector_lvl2
+ keep ITR2/Art/VFX/LightCone/MI_LightCone_Detector.uasset pkg=/Game/ITR2/Art/VFX/LightCone/MI_LightCone_Detector
+ keep ITR2/BPs/Items/Artefacts/BP_Detector.uasset pkg=/Game/ITR2/BPs/Items/Artefacts/BP_Detector
+ keep ITR2/BPs/Items/Artefacts/BP_Detector_Child.uasset pkg=/Game/ITR2/BPs/Items/Artefacts/BP_Detector_Child
+ keep ITR2/BPs/Items/Artefacts/BP_Detector_ITR1.uasset pkg=/Game/ITR2/BPs/Items/Artefacts/BP_Detector_ITR1
+ keep ITR2/BPs/Items/Artefacts/BP_Detector_Lvl2.uasset pkg=/Game/ITR2/BPs/Items/Artefacts/BP_Detector_Lvl2
+ keep ITR2/BPs/LevelObjects/Store/BPA_StoreShelf_Detector_1.uasset pkg=/Game/ITR2/BPs/LevelObjects/Store/BPA_StoreShelf_Detector_1
+ keep ITR2/BPs/LevelObjects/Store/BPA_StoreShelf_Detector_2.uasset pkg=/Game/ITR2/BPs/LevelObjects/Store/BPA_StoreShelf_Detector_2
+ keep ITR2/BPs/Misc/Notes/ItemInstruction/BP_Note_ArtifactDetector_lvl1.uasset pkg=/Game/ITR2/BPs/Misc/Notes/ItemInstruction/BP_Note_ArtifactDetector_lvl1
+ keep ITR2/BPs/Misc/Notes/ItemInstruction/BP_Note_ArtifactDetector_lvl2.uasset pkg=/Game/ITR2/BPs/Misc/Notes/ItemInstruction/BP_Note_ArtifactDetector_lvl2
+ keep ITR2/BPs/UI/Note/T_Detector_LVL01_InstructionNote.uasset pkg=/Game/ITR2/BPs/UI/Note/T_Detector_LVL01_InstructionNote
+ keep ITR2/BPs/UI/Note/T_Detector_LVL02_InstructionNote.uasset pkg=/Game/ITR2/BPs/UI/Note/T_Detector_LVL02_InstructionNote
+ keep Sound/Attenuation/Att_Detector.uasset pkg=/Game/Sound/Attenuation/Att_Detector
+ keep Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.uasset pkg=/Game/Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01
+ keep Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.ubulk pkg=/Game/Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01
+ keep Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.uasset pkg=/Game/Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02
+ keep Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.ubulk pkg=/Game/Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02
+ keep Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03.uasset pkg=/Game/Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03
+ keep Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03.ubulk pkg=/Game/Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03
+ keep Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04.uasset pkg=/Game/Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04
+ keep Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04.ubulk pkg=/Game/Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04
+ keep Sound/SFX/Detector_MS/Detector_ITR1/A_SFX_Detector_Click_B3.uasset pkg=/Game/Sound/SFX/Detector_MS/Detector_ITR1/A_SFX_Detector_Click_B3
+ keep Sound/SFX/Detector_MS/Detector_ITR1/A_SFX_Detector_Click_B3.ubulk pkg=/Game/Sound/SFX/Detector_MS/Detector_ITR1/A_SFX_Detector_Click_B3
+ keep Sound/SFX/Detector_MS/Detector_ITR1/cargeUP.uasset pkg=/Game/Sound/SFX/Detector_MS/Detector_ITR1/cargeUP
+ keep Sound/SFX/Detector_MS/Detector_ITR1/cargeUP.ubulk pkg=/Game/Sound/SFX/Detector_MS/Detector_ITR1/cargeUP
+ keep Sound/SFX/Detector_MS/Detector_Sounds/A_SFX_Detector_Click_Beep.uasset pkg=/Game/Sound/SFX/Detector_MS/Detector_Sounds/A_SFX_Detector_Click_Beep
+ keep Sound/SFX/Detector_MS/Detector_Sounds/A_SFX_Detector_Click_Beep.ubulk pkg=/Game/Sound/SFX/Detector_MS/Detector_Sounds/A_SFX_Detector_Click_Beep
+ keep Sound/SFX/Detector_MS/Detector_Sounds/A_SFX_Detector_Click_Mech.uasset pkg=/Game/Sound/SFX/Detector_MS/Detector_Sounds/A_SFX_Detector_Click_Mech
+ keep Sound/SFX/Detector_MS/Detector_Sounds/A_SFX_Detector_Click_Mech.ubulk pkg=/Game/Sound/SFX/Detector_MS/Detector_Sounds/A_SFX_Detector_Click_Mech
+ keep Sound/SFX/Detector_MS/L2/A_SFX_Detector_Artefact_Detection_01.uasset pkg=/Game/Sound/SFX/Detector_MS/L2/A_SFX_Detector_Artefact_Detection_01
+ keep Sound/SFX/Detector_MS/L2/A_SFX_Detector_Artefact_Detection_01.ubulk pkg=/Game/Sound/SFX/Detector_MS/L2/A_SFX_Detector_Artefact_Detection_01
+ keep Sound/SFX/Detector_MS/L2/A_SFX_Detector_Artefact_Detection_02.uasset pkg=/Game/Sound/SFX/Detector_MS/L2/A_SFX_Detector_Artefact_Detection_02
+ keep Sound/SFX/Detector_MS/L2/A_SFX_Detector_Artefact_Detection_02.ubulk pkg=/Game/Sound/SFX/Detector_MS/L2/A_SFX_Detector_Artefact_Detection_02
+ keep Sound/SFX/Detector_MS/L2/A_SFX_Detector_Artefact_Detection_03.uasset pkg=/Game/Sound/SFX/Detector_MS/L2/A_SFX_Detector_Artefact_Detection_03
+ keep Sound/SFX/Detector_MS/L2/A_SFX_Detector_Artefact_Detection_03.ubulk pkg=/Game/Sound/SFX/Detector_MS/L2/A_SFX_Detector_Artefact_Detection_03
+ keep Sound/SFX/Detector_MS/MS_Detector.uasset pkg=/Game/Sound/SFX/Detector_MS/MS_Detector
+ keep Sound/SFX/Detector_MS/MS_Detector_ITR1.uasset pkg=/Game/Sound/SFX/Detector_MS/MS_Detector_ITR1
+ keep Sound/SFX/Detector_MS/MS_Detector_ITR1_ART_Detection.uasset pkg=/Game/Sound/SFX/Detector_MS/MS_Detector_ITR1_ART_Detection
+ keep Sound/SFX/Detector_MS/MS_Detector_L2.uasset pkg=/Game/Sound/SFX/Detector_MS/MS_Detector_L2
+ keep Sound/SFX/Detector_MS/MS_Detector_L2_ART_Detection.uasset pkg=/Game/Sound/SFX/Detector_MS/MS_Detector_L2_ART_Detection
+ keep Sound/SFX/Detector_MS/V2/A_SFX_Detector_ART_Detection_L2_02.uasset pkg=/Game/Sound/SFX/Detector_MS/V2/A_SFX_Detector_ART_Detection_L2_02
+ keep Sound/SFX/Detector_MS/V2/A_SFX_Detector_ART_Detection_L2_02.ubulk pkg=/Game/Sound/SFX/Detector_MS/V2/A_SFX_Detector_ART_Detection_L2_02
+ keep Sound/SFX/Detector_MS/V2/A_SFX_Detector_Beep.uasset pkg=/Game/Sound/SFX/Detector_MS/V2/A_SFX_Detector_Beep
+ keep Sound/SFX/Detector_MS/V2/A_SFX_Detector_Beep.ubulk pkg=/Game/Sound/SFX/Detector_MS/V2/A_SFX_Detector_Beep
+ keep Sound/SFX/Detector_MS/V2/A_SFX_Detector_Beep_L2.uasset pkg=/Game/Sound/SFX/Detector_MS/V2/A_SFX_Detector_Beep_L2
+ keep Sound/SFX/Detector_MS/V2/A_SFX_Detector_Beep_L2.ubulk pkg=/Game/Sound/SFX/Detector_MS/V2/A_SFX_Detector_Beep_L2
+ keep Sound/Sounds_ITR1/Detector/Sounds/Attenuation/Att_Detector.uasset pkg=/Game/Sound/Sounds_ITR1/Detector/Sounds/Attenuation/Att_Detector
 mod=OldProbe_Detector_P container_id=00376b21b4e2d1e5
 write_container done: utoc=release/old-gear/OldProbe_Detector_P.utoc ucas=release/old-gear/OldProbe_Detector_P.ucas chunks=145
 no pak stub found, wrote empty pak at release/old-gear/OldProbe_Detector_P.pak
@@ -100,20 +214,20 @@ output dir listing:
 DONE
 === BUILD END ===
 total 113M
--rw-r--r-- 1 runner runner  339 Oct 29 19:48 OldProbe_Detector_P.pak
--rw-r--r-- 1 runner runner 113M Oct 29 19:48 OldProbe_Detector_P.ucas
--rw-r--r-- 1 runner runner  38K Oct 29 19:48 OldProbe_Detector_P.utoc
--rw-r--r-- 1 runner runner  297 Oct 29 19:48 ReadMe_RU.txt
--rw-r--r-- 1 runner runner  866 Oct 29 19:48 build-manifest.json
--rw-r--r-- 1 runner runner  13K Oct 29 19:48 build.log
--rw-r--r-- 1 runner runner  731 Oct 29 19:48 checkout-diag.log
--rw-r--r-- 1 runner runner  906 Oct 29 19:48 upload.log
--rw-r--r-- 1 runner runner 42M Oct 29 19:48 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:48 release/Gorka3_For_All_Brown_A_fixed.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:48 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:48 release/Gorka3_For_All_Khaki_A.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:48 release/Gorka3_For_All_Khaki_V2.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:48 release/Gorka3_For_All_Khaki_V3.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:48 release/Gorka3_For_All_Khaki_V4.zip
--rw-r--r-- 1 runner runner 31M Oct 29 19:49 release/OldGear_Pouch_Knife_Detector.zip
--rw-r--r-- 1 runner runner 31M Oct 29 19:49 release/OldProbe_Detector.zip
+-rw-r--r-- 1 runner runner  339 Oct 29 20:01 OldProbe_Detector_P.pak
+-rw-r--r-- 1 runner runner 113M Oct 29 20:01 OldProbe_Detector_P.ucas
+-rw-r--r-- 1 runner runner  38K Oct 29 20:01 OldProbe_Detector_P.utoc
+-rw-r--r-- 1 runner runner  297 Oct 29 20:01 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner  866 Oct 29 20:01 build-manifest.json
+-rw-r--r-- 1 runner runner  13K Oct 29 20:01 build.log
+-rw-r--r-- 1 runner runner  731 Oct 29 20:01 checkout-diag.log
+-rw-r--r-- 1 runner runner  906 Oct 29 20:01 upload.log
+-rw-r--r-- 1 runner runner 42M Oct 29 20:01 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 20:01 release/Gorka3_For_All_Brown_A_fixed.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 20:01 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 20:01 release/Gorka3_For_All_Khaki_A.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 20:01 release/Gorka3_For_All_Khaki_V2.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 20:01 release/Gorka3_For_All_Khaki_V3.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 20:01 release/Gorka3_For_All_Khaki_V4.zip
+-rw-r--r-- 1 runner runner 31M Oct 29 20:01 release/OldGear_Pouch_Knife_Detector.zip
+-rw-r--r-- 1 runner runner 31M Oct 29 20:01 release/OldProbe_Detector.zip

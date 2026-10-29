@@ -1,20 +1,20 @@
 === UPLOAD DIAG ===
 total 113M
--rw-r--r-- 1 runner runner  339 Oct 29 19:48 OldProbe_Detector_P.pak
--rw-r--r-- 1 runner runner 113M Oct 29 19:48 OldProbe_Detector_P.ucas
--rw-r--r-- 1 runner runner  38K Oct 29 19:48 OldProbe_Detector_P.utoc
--rw-r--r-- 1 runner runner  297 Oct 29 19:48 ReadMe_RU.txt
--rw-r--r-- 1 runner runner  866 Oct 29 19:48 build-manifest.json
--rw-r--r-- 1 runner runner  13K Oct 29 19:49 build.log
--rw-r--r-- 1 runner runner  731 Oct 29 19:48 checkout-diag.log
--rw-r--r-- 1 runner runner  906 Oct 29 19:48 upload.log
--rw-r--r-- 1 runner runner 31M Oct 29 19:49 release/OldGear_Pouch_Knife_Detector.zip
+-rw-r--r-- 1 runner runner  339 Oct 29 20:01 OldProbe_Detector_P.pak
+-rw-r--r-- 1 runner runner 113M Oct 29 20:01 OldProbe_Detector_P.ucas
+-rw-r--r-- 1 runner runner  38K Oct 29 20:01 OldProbe_Detector_P.utoc
+-rw-r--r-- 1 runner runner  297 Oct 29 20:01 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner  866 Oct 29 20:01 build-manifest.json
+-rw-r--r-- 1 runner runner  30K Oct 29 20:01 build.log
+-rw-r--r-- 1 runner runner  731 Oct 29 20:01 checkout-diag.log
+-rw-r--r-- 1 runner runner  906 Oct 29 20:01 upload.log
+-rw-r--r-- 1 runner runner 31M Oct 29 20:01 release/OldGear_Pouch_Knife_Detector.zip
 release assets before:
 build.log
 OldGear_Pouch_Knife_Detector.zip
 uploading zip to old-gear-mod...
 upload exit code 0
--rw-r--r-- 1 runner runner 31M Oct 29 19:49 release/OldGear_Pouch_Knife_Detector.zip
+-rw-r--r-- 1 runner runner 31M Oct 29 20:01 release/OldGear_Pouch_Knife_Detector.zip
 release assets after:
 build.log 12357
 OldGear_Pouch_Knife_Detector.zip 32467980
