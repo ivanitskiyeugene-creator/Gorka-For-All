@@ -101,3 +101,4 @@ jobs:
           git add -f release/old-vest/build-vest.log 2>&1 | head -10 || true
           git commit -m "build OldVest_P from old-assets-debug" || echo "no change"
           git push origin arena/fff81d6f-gorka-for-all 2>&1 | head -10 || echo "push failed"
+# trigger upload after delete
