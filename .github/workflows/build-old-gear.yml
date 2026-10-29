@@ -3,10 +3,6 @@ on:
   push:
     branches:
       - arena/fff81d6f-gorka-for-all
-    paths:
-      - .github/workflows/build-old-gear.yml
-      - tools/build_old_gear.py
-      - tools/__init__.py
 permissions:
   contents: write
 jobs:
@@ -17,6 +13,7 @@ jobs:
         with:
           ref: arena/fff81d6f-gorka-for-all
           fetch-depth: 0
+          clean: true
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
