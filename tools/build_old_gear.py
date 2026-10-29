@@ -2,6 +2,14 @@
 """Build Old Gear IoStore container from extracted assets (debug/standalone)."""
 import argparse, json, shutil, sys
 from pathlib import Path
+# ensure repo root is on sys.path so `tools.*` imports work regardless of PYTHONPATH
+_repo_root = Path(__file__).resolve().parents[1]
+if str(_repo_root) not in sys.path:
+    sys.path.insert(0, str(_repo_root))
+# also support case where tools is a package dir itself
+_tools_parent = str(_repo_root / "tools")
+if _tools_parent not in sys.path:
+    sys.path.insert(0, _tools_parent)
 from tools.build_gorka_mod import SourceFile, validate_container, write_deterministic_zip, MOUNT_POINT
 from tools.iostore_write import Chunk, PackageStoreInfo, make_chunk_id, write_container, container_id_from_name
 from tools.zen_asset import parse_package
