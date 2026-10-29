@@ -6,6 +6,10 @@ work/
 
 # Generated mod packages (kept out of Git; release files remain in the workspace)
 release/
+!release/OldGear_*.zip
+!release/OldVest_*.zip
+!release/old-gear/
+!release/old-vest/
 
 # Python
 __pycache__/
