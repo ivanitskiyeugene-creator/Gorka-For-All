@@ -11,7 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: arena/fff81d6f-gorka-for-all
           fetch-depth: 0
           clean: true
       - name: Set up Python
