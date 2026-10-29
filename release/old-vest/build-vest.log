@@ -74,9 +74,9 @@ filtered 291 files, 186 pkgs for variant vest_old
  keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a
 mod=OldVest_P container_id=80bb7883e86626aa
 Traceback (most recent call last):
-  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 220, in <module>
+  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 232, in <module>
     main()
-  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 150, in main
+  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 155, in main
     written=write_container(base, chunks, filt_pkgs, mount_point=MOUNT_POINT, container_id=cid, oodle=None)
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/iostore_write.py", line 496, in write_container
@@ -86,4 +86,4 @@ Traceback (most recent call last):
     raise ValueError(f"Duplicate imported package ID in {item.package_name}")
 ValueError: Duplicate imported package ID in /Game/Sound/Player/Footsteps/Vest/A_Player_VestBase_Movement
 total 12K
--rw-r--r-- 1 runner runner 11K Oct 29 19:06 build-vest.log
+-rw-r--r-- 1 runner runner 11K Oct 29 19:46 build-vest.log
