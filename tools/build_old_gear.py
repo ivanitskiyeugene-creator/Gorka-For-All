@@ -132,7 +132,7 @@ def main():
     keep_names=set(f.package_name for f in filt)
     filt_pkgs=[p for p in pkgs if p.package_name in keep_names]
     print(f"filtered {len(filt)} files, {len(filt_pkgs)} pkgs for variant {args.variant}", flush=True)
-    for f in filt[:30]:
+    for f in filt:
         print(f" keep {f.relative_path} pkg={f.package_name}", flush=True)
     if not filt:
         print("NO FILES MATCHED FILTER - dumping all relative paths (first 100):", flush=True)
