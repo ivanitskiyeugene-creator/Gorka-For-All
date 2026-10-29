@@ -1,4 +1,4 @@
-name: Build Old Gear from old-assets-debug
+name: Build Old Gear from old-assets-debug # v2 gh-api refresh
 on:
   push:
     branches:
@@ -9,32 +9,33 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Manual checkout (bypass actions/checkout cache)
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Refresh builder from origin (fix stale checkout)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "GITHUB_SHA=$GITHUB_SHA"
-          echo "GITHUB_REF=$GITHUB_REF"
-          # Nuke any cached checkout
-          rm -rf /tmp/fresh-repo
-          git clone --branch arena/fff81d6f-gorka-for-all https://x-access-token:${GH_TOKEN}@github.com/ivanitskiyeugene-creator/Gorka-For-All.git /tmp/fresh-repo
-          cd /tmp/fresh-repo
-          git rev-parse HEAD
-          git log --oneline -3
+          echo "HEAD=$(git rev-parse HEAD) $(git log --oneline -1)"
+          echo "Before builder:"
+          head -5 tools/build_old_gear.py || echo "missing"
+          gh api repos/ivanitskiyeugene-creator/Gorka-For-All/contents/tools/build_old_gear.py --jq .content | base64 -d > /tmp/fresh_builder.py 2>&1 || echo "gh api failed"
+          if head -5 /tmp/fresh_builder.py 2>&1 | grep -q "sys.path"; then
+            cp /tmp/fresh_builder.py tools/build_old_gear.py
+            echo "restored builder via gh api"
+          else
+            echo "gh api try fetch"
+            git fetch origin arena/fff81d6f-gorka-for-all --depth=1 || true
+            git show origin/arena/fff81d6f-gorka-for-all:tools/build_old_gear.py > tools/build_old_gear.py 2>&1 || true
+          fi
+          gh api repos/ivanitskiyeugene-creator/Gorka-For-All/contents/tools/__init__.py --jq .content 2>&1 | base64 -d > tools/__init__.py || echo "" > tools/__init__.py
+          echo "After builder:"
           head -10 tools/build_old_gear.py
-          ls -lh tools/__init__.py || echo "no init"
-          # Replace workspace with fresh clone
-          rm -rf $GITHUB_WORKSPACE/.git $GITHUB_WORKSPACE/tools $GITHUB_WORKSPACE/.github
-          cp -a /tmp/fresh-repo/.git $GITHUB_WORKSPACE/
-          cp -a /tmp/fresh-repo/tools $GITHUB_WORKSPACE/
-          cp -a /tmp/fresh-repo/.github $GITHUB_WORKSPACE/
-          cd $GITHUB_WORKSPACE
-          git rev-parse HEAD
-          head -10 tools/build_old_gear.py
+          ls -lh tools/__init__.py
           mkdir -p release/old-gear
-          echo "manual-checkout HEAD=$(git rev-parse HEAD)" > release/old-gear/checkout-diag.log
-          git log --oneline -3 >> release/old-gear/checkout-diag.log 2>&1
-          head -10 tools/build_old_gear.py >> release/old-gear/checkout-diag.log 2>&1
+          echo "refresh HEAD=$(git rev-parse HEAD)" > release/old-gear/checkout-diag.log
+          git log --oneline -1 >> release/old-gear/checkout-diag.log 2>&1
+          head -5 tools/build_old_gear.py >> release/old-gear/checkout-diag.log 2>&1
           cat release/old-gear/checkout-diag.log
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -67,7 +68,7 @@ jobs:
             python tools/build_old_gear.py --source /tmp/old-assets --variant pouch_knife_detector --output release/old-gear --verbose 2>&1 || echo "builder exit $?"
             echo "=== BUILD END ==="
             ls -lh release/old-gear/ 2>&1
-            cat release/old-gear/build-manifest.json 2>&1 | head -40 || echo "no manifest"
+            cat release/old-gear/build-manifest.json 2>&1 | head -60 || echo "no manifest"
             ls -lh release/*.zip 2>&1 | head -20
           } 2>&1 | tee /tmp/build.log
           cp /tmp/build.log release/old-gear/build.log || true
