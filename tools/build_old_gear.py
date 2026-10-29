@@ -119,7 +119,9 @@ def main():
         n=f.package_name.lower()
         hay = s + " " + n
         if args.variant=="pouch_knife_detector":
-            keys=["pouch","knife","detector","geiger","ammunition","probe_sack","holster","closablepouch","drop_pouch","ammopouch","magpouch","sack","drop_pouch","pouches"]
+            # Узкий: probe_sack = мешок для гильз (аналог болтов), detector/geiger = детектор
+            # knife оставляем только если явно нужен, иначе только эти два
+            keys=["probe_sack", "detector", "geiger"]
             return any(k in hay for k in keys)
         if args.variant=="vest_old":
             keys=["vest","armor","platecarrier","bodyarmor","vest_base","vest_module"]
@@ -143,6 +145,9 @@ def main():
         sys.exit(1)
 
     mod="OldGear_P" if args.variant=="pouch_knife_detector" else "OldVest_P"
+    # отдельный id для узкого варианта чтоб не конфликтовал со старым 87М
+    if args.variant=="pouch_knife_detector":
+        mod="OldProbe_Detector_P"
     cid=container_id_from_name(mod)
     print(f"mod={mod} container_id={cid:016x}", flush=True)
     base=out/mod
@@ -205,10 +210,17 @@ def main():
             # fallback: write minimal pak header (UE pak magic)
             pak_dst.write_bytes(b"\x50\x41\x4B\x00" + b"\x00"*100)
             print(f"wrote minimal pak stub size={pak_dst.stat().st_size}", flush=True)
-    zipname="OldGear_Pouch_Knife_Detector.zip" if args.variant=="pouch_knife_detector" else "OldVest_P.zip"
+    zipname="OldProbe_Detector.zip" if args.variant=="pouch_knife_detector" else "OldVest_P.zip"
     zpath=Path("release")/zipname
     zpath.parent.mkdir(parents=True, exist_ok=True)
     write_deterministic_zip(out, zpath, mod)
+    # также сохранить как OldGear для совместимости имени
+    if args.variant=="pouch_knife_detector":
+        alt = Path("release")/"OldGear_Pouch_Knife_Detector.zip"
+        if alt != zpath and zpath.exists():
+            import shutil as _sh
+            _sh.copyfile(zpath, alt)
+            print(f"also copied to {alt}", flush=True)
     from tools.iostore_extract import sha256_file
     print(f"ZIP {zpath} size={zpath.stat().st_size} sha={sha256_file(zpath)}", flush=True)
     print(f"output dir listing:", flush=True)
