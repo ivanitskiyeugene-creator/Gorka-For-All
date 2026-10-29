@@ -13,6 +13,15 @@ jobs:
         with:
           fetch-depth: 0
           clean: true
+      - name: Debug checkout
+        run: |
+          echo "GITHUB_SHA=$GITHUB_SHA"
+          git rev-parse HEAD
+          git log --oneline -3
+          echo "--- tools/build_old_gear.py head ---"
+          head -20 tools/build_old_gear.py
+          echo "--- has __init__.py ---"
+          ls -lh tools/__init__.py || echo "no __init__.py"
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -38,12 +47,9 @@ jobs:
           mkdir -p release/old-gear
           {
             echo "=== DIAG HEAD=$(git rev-parse HEAD) ==="
-            echo "=== DIAG builder head ==="
             head -20 tools/build_old_gear.py
-            echo "=== DIAG has __init__.py ==="
             ls -lh tools/__init__.py 2>&1
-            echo "=== DIAG import test ==="
-            python -c "import sys; print(sys.path[:3])" 2>&1
+            python -c "import sys; print(sys.path[:5])" 2>&1
             python -c "import tools.build_gorka_mod; print('import ok')" 2>&1 || echo "import failed"
             echo "=== BUILD START ==="
             python tools/build_old_gear.py --source /tmp/old-assets --variant pouch_knife_detector --output release/old-gear --verbose 2>&1 || echo "builder exit $?"
@@ -53,7 +59,7 @@ jobs:
             ls -lh release/*.zip 2>&1 | head -20
           } 2>&1 | tee /tmp/build.log
           cp /tmp/build.log release/old-gear/build.log || true
-          echo "=== TAIL ==="; tail -30 /tmp/build.log
+          cat /tmp/build.log | tail -20
       - name: Commit and publish Old Gear
         if: always()
         env:
@@ -64,8 +70,9 @@ jobs:
           git add -f release/old-gear/*.pak release/old-gear/*.utoc release/old-gear/*.ucas 2>&1 | head -20 || true
           git add -f release/OldGear_Pouch_Knife_Detector.zip 2>&1 | head -20 || true
           git add -f release/old-gear/build-manifest.json 2>&1 | head -20 || true
-          git status
-          git commit -m "build OldBag_Knife_Detector from old-assets-debug" || echo "no change"
+          git status --short
+          git diff --cached --stat
+          git commit -m "build OldBag_Knife_Detector from old-assets-debug" || echo "no change to commit"
           git push origin arena/fff81d6f-gorka-for-all || echo "push failed"
           gh release upload old-gear-mod release/OldGear_Pouch_Knife_Detector.zip --clobber 2>&1 | head -20 || echo "upload zip failed"
           gh release upload old-gear-mod release/old-gear/build.log --clobber 2>&1 | head -20 || echo "upload log failed"
