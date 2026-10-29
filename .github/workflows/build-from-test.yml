@@ -45,21 +45,22 @@ jobs:
           ls -R work/gorka-source/full | head -100
           PYTHONPATH=. python tools/recolor_gorka_variants.py
           ls -lh release/*.zip || true
-          if [ -f release/Gorka3_For_All_Brown_A.zip ]; then cp release/Gorka3_For_All_Brown_A.zip release/Gorka3_For_All_Khaki_A.zip; fi
-          ls -lh release/ && sha256sum release/Gorka3_For_All_Khaki_A.zip || true
+          ls -lh release/ && sha256sum release/Gorka3_For_All_Khaki_A.zip release/Gorka3_For_All_Khaki_V2.zip || true
       - name: Commit built
         run: |
           git config user.name "arena-bot"; git config user.email "arena@local"
-          git add -f release/Gorka3_For_All_Khaki_A.zip || true
+          git add -f release/Gorka3_For_All_Khaki_A.zip release/Gorka3_For_All_Khaki_V2.zip || true
           git add -f release/gorka-brown/*.zip 2>&1 | head -5 || true
           git status --porcelain | head -20
-          git commit -m "build Khaki_A from TEST preserve sizes fix inline" || echo "no change"
+          git commit -m "build Khaki_A and Khaki_V2 from TEST preserve sizes fix inline (exact screenshot shade)" || echo "no change"
           git push origin arena/fff81d6f-gorka-for-all || echo "push failed"
       - name: Publish to Releases
         uses: softprops/action-gh-release@v2
         with:
           tag_name: khaki-a-v1
           name: Gorka For All - Khaki_A v1
-          body: "Khaki_A from TEST — верх #634F3C, штаны #806546, перчатки #323831. Фикс 12742x85 (header+cooked+serial), размеры сохранены."
-          files: release/Gorka3_For_All_Khaki_A.zip
+          body: "Khaki_A #634F3C/#806546/#323831 и Khaki_V2 #63513A/#806546/#232928 (точный оттенок со скрина). Собрано из TEST, размеры сохранены, фикс 12742x85."
+          files: |
+            release/Gorka3_For_All_Khaki_A.zip
+            release/Gorka3_For_All_Khaki_V2.zip
           token: ${{ secrets.GITHUB_TOKEN }}
