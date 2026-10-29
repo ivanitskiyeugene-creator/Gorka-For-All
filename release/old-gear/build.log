@@ -1,0 +1,144 @@
+=== DIAG HEAD=677712990f1167a8cd5848fe75266cc8a9c07017 ===
+#!/usr/bin/env python3
+"""Build Old Gear IoStore container from extracted assets (debug/standalone)."""
+import argparse, json, shutil, sys
+from pathlib import Path
+# ensure repo root is on sys.path so `tools.*` imports work regardless of PYTHONPATH
+_repo_root = Path(__file__).resolve().parents[1]
+if str(_repo_root) not in sys.path:
+    sys.path.insert(0, str(_repo_root))
+# also support case where tools is a package dir itself
+_tools_parent = str(_repo_root / "tools")
+import ok
+=== BUILD START ===
+START variant=pouch_knife_detector src=/tmp/old-assets out=release/old-gear verbose=True
+src top: [PosixPath('/tmp/old-assets/gorka-assets')]
+ walk /tmp/old-assets: dirs=['gorka-assets'] files=[]
+ walk /tmp/old-assets/gorka-assets: dirs=['IntoTheRadius2'] files=[]
+ walk /tmp/old-assets/gorka-assets/IntoTheRadius2: dirs=['Content'] files=[]
+ walk /tmp/old-assets/gorka-assets/IntoTheRadius2/Content: dirs=['Sound', 'ITR2'] files=[]
+[find_content_root] src=/tmp/old-assets exists=True is_dir=True
+rglob Content candidates: [PosixPath('/tmp/old-assets/gorka-assets/IntoTheRadius2/Content')]
+selected Content with ITR2: /tmp/old-assets/gorka-assets/IntoTheRadius2/Content
+Content root = /tmp/old-assets/gorka-assets/IntoTheRadius2/Content
+collect: found 339 .uasset under /tmp/old-assets/gorka-assets/IntoTheRadius2/Content
+collect: total rglob * = 632
+collected 519 files, 339 package store entries
+  file ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_01_a.uasset pkg=/Game/ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_01_a
+  file ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_02_a.uasset pkg=/Game/ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_02_a
+  file ITR2/Art/Characters/Backpack/Material/MI_WeighterVest.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Material/MI_WeighterVest
+  file ITR2/Art/Characters/Backpack/Material/MI_WeighterVest_02.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Material/MI_WeighterVest_02
+  file ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker
+  file ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker_03_2_A1855E60.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker_03_2_A1855E60
+  file ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker_03_2_A1855E60.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Mesh/SM_VestWeightTracker_03_2_A1855E60
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_C.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_C
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_C.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_C
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_E.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_E
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_E.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_E
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_N.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_N
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_N.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_N
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_ORM.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_ORM
+  file ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeightVest_02_ORM
+  file ITR2/Art/Characters/Backpack/Textures/T_WeighterVest_C.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeighterVest_C
+  file ITR2/Art/Characters/Backpack/Textures/T_WeighterVest_C.ubulk pkg=/Game/ITR2/Art/Characters/Backpack/Textures/T_WeighterVest_C
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Material/Vest.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Material/Vest
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/SM_Vest_Base_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/SM_Vest_Base_01_a
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_C
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_C
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_N
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_N
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_ORM.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_ORM
+  file ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Base_01/Textures/T_Vest_01_ORM
+  file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a
+  file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a_LOD.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a_LOD
+  file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a
+  file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD
+  file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a
+filtered 334 files, 221 pkgs for variant pouch_knife_detector
+ keep ITR2/Art/Characters/Player/Detector/ABP_Detector_01.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/ABP_Detector_01
+ keep ITR2/Art/Characters/Player/Detector/Animation/A_Activate.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Animation/A_Activate
+ keep ITR2/Art/Characters/Player/Detector/Animation/A_Deactivate.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Animation/A_Deactivate
+ keep ITR2/Art/Characters/Player/Detector/Animation/A_Hook_end.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Animation/A_Hook_end
+ keep ITR2/Art/Characters/Player/Detector/Animation/A_Hook_loop.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Animation/A_Hook_loop
+ keep ITR2/Art/Characters/Player/Detector/Animation/A_Hook_start.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Animation/A_Hook_start
+ keep ITR2/Art/Characters/Player/Detector/Animation/A_Stand_Activated.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Animation/A_Stand_Activated
+ keep ITR2/Art/Characters/Player/Detector/Animation/A_Stand_Deactivated.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Animation/A_Stand_Deactivated
+ keep ITR2/Art/Characters/Player/Detector/Animation/A_Trigger_push.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Animation/A_Trigger_push
+ keep ITR2/Art/Characters/Player/Detector/BP_FlashReady_AnimNotify.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/BP_FlashReady_AnimNotify
+ keep ITR2/Art/Characters/Player/Detector/Material/MI_DetectorMaterial_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Material/MI_DetectorMaterial_01_a
+ keep ITR2/Art/Characters/Player/Detector/Material/MI_DetectorMaterial_02_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Material/MI_DetectorMaterial_02_a
+ keep ITR2/Art/Characters/Player/Detector/Material/M_DetectorMaterial.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Material/M_DetectorMaterial
+ keep ITR2/Art/Characters/Player/Detector/SKM_Detector_01_a_PhysicsAsset.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_01_a_PhysicsAsset
+ keep ITR2/Art/Characters/Player/Detector/SKM_Detector_1lvl.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_1lvl
+ keep ITR2/Art/Characters/Player/Detector/SKM_Detector_1lvl.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_1lvl
+ keep ITR2/Art/Characters/Player/Detector/SKM_Detector_2lvl.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_2lvl
+ keep ITR2/Art/Characters/Player/Detector/SKM_Detector_2lvl.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_2lvl
+ keep ITR2/Art/Characters/Player/Detector/SKM_Detector_Skeleton.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_Skeleton
+ keep ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_BaseColor.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_BaseColor
+ keep ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_BaseColor.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_BaseColor
+ keep ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_Emissive.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_Emissive
+ keep ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_Emissive.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_Emissive
+ keep ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_Normal.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_Normal
+ keep ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_Normal.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_Normal
+ keep ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_OcclusionRoughnessMetallic.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_OcclusionRoughnessMetallic
+ keep ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_OcclusionRoughnessMetallic.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/Detector_Texturing_Detector_OcclusionRoughnessMetallic
+ keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_C
+ keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_C
+ keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_E2.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_E2
+mod=OldGear_P container_id=33afc0ff00bfb63f
+write_container done: utoc=release/old-gear/OldGear_P.utoc ucas=release/old-gear/OldGear_P.ucas chunks=335
+no pak stub found, wrote empty pak at release/old-gear/OldGear_P.pak
+validate OK utoc=6feb9b50628c ucas=c58eb0efc92a chunks=335
+Traceback (most recent call last):
+  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 186, in <module>
+    main()
+  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 177, in main
+    write_deterministic_zip(out, zpath, mod)
+  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_gorka_mod.py", line 647, in write_deterministic_zip
+    archive.writestr(info, (output_dir / name).read_bytes())
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'release/old-gear/ReadMe_RU.txt'
+builder exit 1
+=== BUILD END ===
+total 253M
+-rw-r--r-- 1 runner runner    0 Oct 29 18:49 OldGear_P.pak
+-rw-r--r-- 1 runner runner 253M Oct 29 18:49 OldGear_P.ucas
+-rw-r--r-- 1 runner runner  85K Oct 29 18:49 OldGear_P.utoc
+-rw-r--r-- 1 runner runner  858 Oct 29 18:49 build-manifest.json
+-rw-r--r-- 1 runner runner  731 Oct 29 18:48 checkout-diag.log
+{
+  "utoc_sha256": "6feb9b50628ceba3a7976519638c2ddb26f8554944e5f18daead27f802f8aef9",
+  "ucas_sha256": "c58eb0efc92ac54f462bffdc1509a7b36862e44b2f7ba620b61909537096f674",
+  "utoc_size": 86335,
+  "ucas_size": 264410632,
+  "chunk_count": 335,
+  "file_count": 334,
+  "compression_block_count": 4272,
+  "perfect_hash_seed_count": 168,
+  "chunks_without_perfect_hash": 0,
+  "roundtrip_chunks_verified": 335,
+  "roundtrip_uncompressed_bytes": 264116508,
+  "roundtrip_payloads_byte_identical": true,
+  "container_header_byte_identical": true,
+  "container_header_uncompressed_for_ue_mount": true,
+  "container_header_ue_direct_read_verified": true,
+  "package_store_entries_verified": 221,
+  "soft_package_references_empty": true,
+  "package_chunk_ids_verified": true,
+  "blake3_iohashes_verified": true,
+  "variant": "pouch_knife_detector",
+  "mod": "OldGear_P"
+}-rw-r--r-- 1 runner runner 42M Oct 29 18:48 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 18:48 release/Gorka3_For_All_Brown_A_fixed.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 18:48 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 18:48 release/Gorka3_For_All_Khaki_A.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 18:48 release/Gorka3_For_All_Khaki_V2.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 18:48 release/Gorka3_For_All_Khaki_V3.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 18:48 release/Gorka3_For_All_Khaki_V4.zip
+-rw-r--r-- 1 runner runner 83M Oct 29 18:49 release/OldGear_Pouch_Knife_Detector.zip
