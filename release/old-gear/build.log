@@ -1,14 +1,9 @@
-=== DIAG HEAD=11af47aad1f32828cf12800b3b53cdc9c1e8e5ba ===
+=== DIAG HEAD=4bf8a1c23c866fe9f8946514698617da98f19698 ===
 #!/usr/bin/env python3
 """Build Old Gear IoStore container from extracted assets (debug/standalone)."""
 import argparse, json, shutil, sys
 from pathlib import Path
 # ensure repo root is on sys.path so `tools.*` imports work regardless of PYTHONPATH
-_repo_root = Path(__file__).resolve().parents[1]
-if str(_repo_root) not in sys.path:
-    sys.path.insert(0, str(_repo_root))
-# also support case where tools is a package dir itself
-_tools_parent = str(_repo_root / "tools")
 import ok
 === BUILD START ===
 START variant=pouch_knife_detector src=/tmp/old-assets out=release/old-gear verbose=True
@@ -103,40 +98,18 @@ output dir listing:
 DONE
 === BUILD END ===
 total 253M
--rw-r--r-- 1 runner runner  339 Oct 29 18:55 OldGear_P.pak
--rw-r--r-- 1 runner runner 253M Oct 29 18:55 OldGear_P.ucas
--rw-r--r-- 1 runner runner  85K Oct 29 18:55 OldGear_P.utoc
--rw-r--r-- 1 runner runner  278 Oct 29 18:55 ReadMe_RU.txt
--rw-r--r-- 1 runner runner  858 Oct 29 18:55 build-manifest.json
--rw-r--r-- 1 runner runner  14K Oct 29 18:54 build.log
--rw-r--r-- 1 runner runner  731 Oct 29 18:54 checkout-diag.log
-{
-  "utoc_sha256": "6feb9b50628ceba3a7976519638c2ddb26f8554944e5f18daead27f802f8aef9",
-  "ucas_sha256": "c58eb0efc92ac54f462bffdc1509a7b36862e44b2f7ba620b61909537096f674",
-  "utoc_size": 86335,
-  "ucas_size": 264410632,
-  "chunk_count": 335,
-  "file_count": 334,
-  "compression_block_count": 4272,
-  "perfect_hash_seed_count": 168,
-  "chunks_without_perfect_hash": 0,
-  "roundtrip_chunks_verified": 335,
-  "roundtrip_uncompressed_bytes": 264116508,
-  "roundtrip_payloads_byte_identical": true,
-  "container_header_byte_identical": true,
-  "container_header_uncompressed_for_ue_mount": true,
-  "container_header_ue_direct_read_verified": true,
-  "package_store_entries_verified": 221,
-  "soft_package_references_empty": true,
-  "package_chunk_ids_verified": true,
-  "blake3_iohashes_verified": true,
-  "variant": "pouch_knife_detector",
-  "mod": "OldGear_P"
-}-rw-r--r-- 1 runner runner 42M Oct 29 18:54 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
--rw-r--r-- 1 runner runner 45M Oct 29 18:54 release/Gorka3_For_All_Brown_A_fixed.zip
--rw-r--r-- 1 runner runner 45M Oct 29 18:54 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
--rw-r--r-- 1 runner runner 45M Oct 29 18:54 release/Gorka3_For_All_Khaki_A.zip
--rw-r--r-- 1 runner runner 45M Oct 29 18:54 release/Gorka3_For_All_Khaki_V2.zip
--rw-r--r-- 1 runner runner 45M Oct 29 18:54 release/Gorka3_For_All_Khaki_V3.zip
--rw-r--r-- 1 runner runner 45M Oct 29 18:54 release/Gorka3_For_All_Khaki_V4.zip
--rw-r--r-- 1 runner runner 83M Oct 29 18:55 release/OldGear_Pouch_Knife_Detector.zip
+-rw-r--r-- 1 runner runner  339 Oct 29 19:01 OldGear_P.pak
+-rw-r--r-- 1 runner runner 253M Oct 29 19:01 OldGear_P.ucas
+-rw-r--r-- 1 runner runner  85K Oct 29 19:01 OldGear_P.utoc
+-rw-r--r-- 1 runner runner  278 Oct 29 19:01 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner  858 Oct 29 19:01 build-manifest.json
+-rw-r--r-- 1 runner runner  14K Oct 29 19:01 build.log
+-rw-r--r-- 1 runner runner  731 Oct 29 19:01 checkout-diag.log
+-rw-r--r-- 1 runner runner 42M Oct 29 19:01 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:01 release/Gorka3_For_All_Brown_A_fixed.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:01 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:01 release/Gorka3_For_All_Khaki_A.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:01 release/Gorka3_For_All_Khaki_V2.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:01 release/Gorka3_For_All_Khaki_V3.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:01 release/Gorka3_For_All_Khaki_V4.zip
+-rw-r--r-- 1 runner runner 83M Oct 29 19:02 release/OldGear_Pouch_Knife_Detector.zip
