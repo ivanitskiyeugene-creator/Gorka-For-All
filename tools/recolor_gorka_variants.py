@@ -74,7 +74,7 @@ GLOVE_BASECOLOR_TEXTURES: dict[str, int] = {
     "T_Character_Gloves_01_c_right": 2048,
 }
 
-TARGET_UPPER_RGB = (0x74, 0x61, 0x4D)  # #74614D for jacket (requested after screenshot was off)
+TARGET_UPPER_RGB = (0x6E, 0x68, 0x5E)  # #6E685E whole jacket as requested - desaturated to fool engine
 TARGET_PANTS_RGB = (0x86, 0x6E, 0x53)  # #866E53 for pants
 TARGET_GLOVES_RGB = (0x23, 0x29, 0x28)  # #232928 keep from screenshot
 GLOVE_REGION_START_FRACTION = 0.5
@@ -93,8 +93,12 @@ VARIANTS = {
         "zip_name": "Gorka3_For_All_Khaki_V2.zip",
     },
     "Khaki_V3": {
-        "title": "Khaki_V3 — куртка #74614D, штаны #866E53, перчатки #232928",
+        "title": "Khaki_V3 — куртка #74614D/#6E685E, штаны #866E53, перчатки #232928 (legacy)",
         "zip_name": "Gorka3_For_All_Khaki_V3.zip",
+    },
+    "Khaki_V4": {
+        "title": "Khaki_V4 — вся куртка #6E685E, штаны #866E53, перчатки #232928 (надурить движок)",
+        "zip_name": "Gorka3_For_All_Khaki_V4.zip",
     },
 }
 

@@ -45,22 +45,23 @@ jobs:
           ls -R work/gorka-source/full | head -100
           PYTHONPATH=. python tools/recolor_gorka_variants.py
           ls -lh release/*.zip || true
-          ls -lh release/ && sha256sum release/Gorka3_For_All_Khaki_A.zip release/Gorka3_For_All_Khaki_V2.zip release/Gorka3_For_All_Khaki_V3.zip || true
+          ls -lh release/ && sha256sum release/Gorka3_For_All_Khaki_A.zip release/Gorka3_For_All_Khaki_V2.zip release/Gorka3_For_All_Khaki_V3.zip release/Gorka3_For_All_Khaki_V4.zip || true
       - name: Commit built
         run: |
           git config user.name "arena-bot"; git config user.email "arena@local"
-          git add -f release/Gorka3_For_All_Khaki_A.zip release/Gorka3_For_All_Khaki_V2.zip release/Gorka3_For_All_Khaki_V3.zip || true
+          git add -f release/Gorka3_For_All_Khaki_A.zip release/Gorka3_For_All_Khaki_V2.zip release/Gorka3_For_All_Khaki_V3.zip release/Gorka3_For_All_Khaki_V4.zip || true
           git status --porcelain | head -20
-          git commit -m "build Khaki_A/V2/V3 from TEST preserve sizes fix inline (V3 #74614D/#866E53)" || echo "no change"
+          git commit -m "build Khaki_A/V2/V3/V4 from TEST preserve sizes fix inline (V4 #6E685E whole jacket to fool engine)" || echo "no change"
           git push origin arena/fff81d6f-gorka-for-all || echo "push failed"
       - name: Publish to Releases
         uses: softprops/action-gh-release@v2
         with:
           tag_name: khaki-a-v1
           name: Gorka For All - Khaki_A v1
-          body: "Khaki_A #634F3C/#806546/#323831, Khaki_V2 #63513A/#806546/#232928, Khaki_V3 #74614D/#866E53/#232928. Собрано из TEST, размеры сохранены, фикс 12742x85."
+          body: "Khaki_A #634F3C/#806546/#323831, Khaki_V2 #63513A/#806546/#232928, Khaki_V3 #74614D/#866E53/#232928, Khaki_V4 #6E685E/#866E53/#232928 whole jacket. Собрано из TEST, размеры сохранены, фикс 12742x85."
           files: |
             release/Gorka3_For_All_Khaki_A.zip
             release/Gorka3_For_All_Khaki_V2.zip
             release/Gorka3_For_All_Khaki_V3.zip
+            release/Gorka3_For_All_Khaki_V4.zip
           token: ${{ secrets.GITHUB_TOKEN }}
