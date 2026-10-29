@@ -46,7 +46,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "arena-bot"; git config user.email "arena@local"
-          git add -f release/old-gear/*.zip release/old-gear/*.pak release/old-gear/*.utoc release/old-gear/*.ucas 2>&1 | head -20 || true
+          git add -f release/old-gear/*.zip release/old-gear/*.pak release/old-gear/*.utoc release/old-gear/*.ucas release/*.zip 2>&1 | head -20 || true
+          ls -lh release/*.zip | head -20
+          cat release/old-gear/build-manifest.json 2>&1 | head -40 || true
           git commit -m "build OldBag_Knife_Detector from old-assets-debug (519 files)" || echo "no change"
           git push origin arena/fff81d6f-gorka-for-all || echo "push failed"
           echo "commit step done"
