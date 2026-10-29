@@ -1,4 +1,4 @@
-=== DIAG HEAD=5c8c97d2f1cdb2bddb128a54234e588d145850ed ===
+=== DIAG HEAD=d7e6bf7aa8a1a832f005140e7d01850edeb2f5b8 ===
 #!/usr/bin/env python3
 """Build Old Gear IoStore container from extracted assets (debug/standalone)."""
 import argparse, json, shutil, sys
@@ -49,7 +49,7 @@ collected 519 files, 339 package store entries
   file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a
   file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD
   file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a
-filtered 334 files, 221 pkgs for variant pouch_knife_detector
+filtered 144 files, 95 pkgs for variant pouch_knife_detector
  keep ITR2/Art/Characters/Player/Detector/ABP_Detector_01.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/ABP_Detector_01
  keep ITR2/Art/Characters/Player/Detector/Animation/A_Activate.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Animation/A_Activate
  keep ITR2/Art/Characters/Player/Detector/Animation/A_Deactivate.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Animation/A_Deactivate
@@ -80,38 +80,40 @@ filtered 334 files, 221 pkgs for variant pouch_knife_detector
  keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_C
  keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_C
  keep ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_E2.uasset pkg=/Game/ITR2/Art/Characters/Player/Detector/Textures/T_Detector_01_E2
-mod=OldGear_P container_id=33afc0ff00bfb63f
-write_container done: utoc=release/old-gear/OldGear_P.utoc ucas=release/old-gear/OldGear_P.ucas chunks=335
-no pak stub found, wrote empty pak at release/old-gear/OldGear_P.pak
-validate OK utoc=6feb9b50628c ucas=c58eb0efc92a chunks=335
+mod=OldProbe_Detector_P container_id=00376b21b4e2d1e5
+write_container done: utoc=release/old-gear/OldProbe_Detector_P.utoc ucas=release/old-gear/OldProbe_Detector_P.ucas chunks=145
+no pak stub found, wrote empty pak at release/old-gear/OldProbe_Detector_P.pak
+validate OK utoc=4ab751b2aca6 ucas=ab9ea51aa760 chunks=145
 wrote release/old-gear/ReadMe_RU.txt
 replaced empty pak with Gorka3_For_All_P.pak from release/Gorka3_For_All_Brown_A_NO_GLOVES.zip size=339
-ZIP release/OldGear_Pouch_Knife_Detector.zip size=87017767 sha=1195c2ae99ab9387979d7e152af340f230782ceb695e6bc4f567ffa6d5fa7db5
+also copied to release/OldGear_Pouch_Knife_Detector.zip
+ZIP release/OldProbe_Detector.zip size=32467980 sha=af4bf8d47d0d087120af89ab356cf0cc346798877ff685e6af12b05d985c9993
 output dir listing:
-  OldGear_P.pak 339 bytes
-  OldGear_P.ucas 264410632 bytes
-  OldGear_P.utoc 86335 bytes
-  ReadMe_RU.txt 278 bytes
-  build-manifest.json 858 bytes
-  build.log 12357 bytes
+  OldProbe_Detector_P.pak 339 bytes
+  OldProbe_Detector_P.ucas 117698560 bytes
+  OldProbe_Detector_P.utoc 38161 bytes
+  ReadMe_RU.txt 297 bytes
+  build-manifest.json 866 bytes
+  build.log 12437 bytes
   checkout-diag.log 731 bytes
-  upload.log 1022 bytes
+  upload.log 843 bytes
 DONE
 === BUILD END ===
-total 253M
--rw-r--r-- 1 runner runner  339 Oct 29 19:06 OldGear_P.pak
--rw-r--r-- 1 runner runner 253M Oct 29 19:06 OldGear_P.ucas
--rw-r--r-- 1 runner runner  85K Oct 29 19:06 OldGear_P.utoc
--rw-r--r-- 1 runner runner  278 Oct 29 19:06 ReadMe_RU.txt
--rw-r--r-- 1 runner runner  858 Oct 29 19:06 build-manifest.json
--rw-r--r-- 1 runner runner  13K Oct 29 19:06 build.log
--rw-r--r-- 1 runner runner  731 Oct 29 19:06 checkout-diag.log
--rw-r--r-- 1 runner runner 1022 Oct 29 19:06 upload.log
--rw-r--r-- 1 runner runner 42M Oct 29 19:06 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:06 release/Gorka3_For_All_Brown_A_fixed.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:06 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:06 release/Gorka3_For_All_Khaki_A.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:06 release/Gorka3_For_All_Khaki_V2.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:06 release/Gorka3_For_All_Khaki_V3.zip
--rw-r--r-- 1 runner runner 45M Oct 29 19:06 release/Gorka3_For_All_Khaki_V4.zip
--rw-r--r-- 1 runner runner 83M Oct 29 19:06 release/OldGear_Pouch_Knife_Detector.zip
+total 113M
+-rw-r--r-- 1 runner runner  339 Oct 29 19:46 OldProbe_Detector_P.pak
+-rw-r--r-- 1 runner runner 113M Oct 29 19:46 OldProbe_Detector_P.ucas
+-rw-r--r-- 1 runner runner  38K Oct 29 19:46 OldProbe_Detector_P.utoc
+-rw-r--r-- 1 runner runner  297 Oct 29 19:46 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner  866 Oct 29 19:46 build-manifest.json
+-rw-r--r-- 1 runner runner  13K Oct 29 19:46 build.log
+-rw-r--r-- 1 runner runner  731 Oct 29 19:46 checkout-diag.log
+-rw-r--r-- 1 runner runner  843 Oct 29 19:46 upload.log
+-rw-r--r-- 1 runner runner 42M Oct 29 19:46 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:46 release/Gorka3_For_All_Brown_A_fixed.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:46 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:46 release/Gorka3_For_All_Khaki_A.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:46 release/Gorka3_For_All_Khaki_V2.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:46 release/Gorka3_For_All_Khaki_V3.zip
+-rw-r--r-- 1 runner runner 45M Oct 29 19:46 release/Gorka3_For_All_Khaki_V4.zip
+-rw-r--r-- 1 runner runner 31M Oct 29 19:46 release/OldGear_Pouch_Knife_Detector.zip
+-rw-r--r-- 1 runner runner 31M Oct 29 19:46 release/OldProbe_Detector.zip
