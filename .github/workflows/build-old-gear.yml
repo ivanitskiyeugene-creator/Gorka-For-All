@@ -37,9 +37,16 @@ jobs:
           find /tmp/old-assets -type f | head -40
       - name: Build OldPouch+Knife+Detector mod
         run: |
+          set -e
           set -x
           mkdir -p release/old-gear
-          PYTHONPATH=. python tools/build_old_gear.py --source /tmp/old-assets --variant pouch_knife_detector --output release/old-gear --verbose 2>&1 | tee /tmp/build.log; echo "builder exit code $?"
+          export PYTHONPATH="$PWD:$PYTHONPATH"
+          echo "PYTHONPATH=$PYTHONPATH"
+          ls tools/__init__.py 2>&1 | head -5
+          python -c "import tools.build_gorka_mod; print('tools import ok')" 2>&1 | head -5
+          set +e
+          set -o pipefail
+          python tools/build_old_gear.py --source /tmp/old-assets --variant pouch_knife_detector --output release/old-gear --verbose 2>&1 | tee /tmp/build.log; echo "builder exit code $?"
           cat /tmp/build.log
           mkdir -p release/old-gear
           cp /tmp/build.log release/old-gear/build.log || true
@@ -65,7 +72,8 @@ jobs:
       - name: Build Old Vest
         if: always()
         run: |
-          PYTHONPATH=. python tools/build_old_gear.py --source /tmp/old-assets --variant vest_old --output release/old-vest --verbose 2>&1 | tee /tmp/build-vest.log || true
+          export PYTHONPATH="$PWD:$PYTHONPATH"
+          python tools/build_old_gear.py --source /tmp/old-assets --variant vest_old --output release/old-vest --verbose 2>&1 | tee /tmp/build-vest.log || true
           cp /tmp/build-vest.log release/old-vest/build-vest.log || true
           ls -lh release/old-vest/ || true
           cat release/old-vest/build-manifest.json 2>&1 | head -60 || true
