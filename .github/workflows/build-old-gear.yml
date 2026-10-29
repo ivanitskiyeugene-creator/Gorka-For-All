@@ -6,6 +6,7 @@ on:
     paths:
       - .github/workflows/build-old-gear.yml
       - tools/build_old_gear.py
+      - tools/__init__.py
 permissions:
   contents: write
 jobs:
@@ -15,6 +16,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: arena/fff81d6f-gorka-for-all
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -37,30 +39,31 @@ jobs:
           find /tmp/old-assets -type f | head -40
       - name: Build OldPouch+Knife+Detector mod
         run: |
-          set -x
-          echo "HEAD=$(git rev-parse HEAD) short=$(git rev-parse --short HEAD)"
-          head -15 tools/build_old_gear.py
-          ls -lh tools/__init__.py 2>&1 | head -5
           mkdir -p release/old-gear
-          echo "diag: PYTHONPATH=$PYTHONPATH PWD=$PWD"
-          python -c "import sys; print(sys.path[:3])" 2>&1 | head -5
-          python -c "import tools.build_gorka_mod; print('tools import ok')" 2>&1 | head -5 || true
-          set -o pipefail
-          python tools/build_old_gear.py --source /tmp/old-assets --variant pouch_knife_detector --output release/old-gear --verbose 2>&1 | tee /tmp/build.log; echo "builder exit code $?"
-          echo "=== BUILD.LOG TAIL ==="; tail -20 /tmp/build.log; echo "=== END TAIL ==="
-          cat /tmp/build.log
-          mkdir -p release/old-gear
+          {
+            echo "=== DIAG HEAD=$(git rev-parse HEAD) ==="
+            echo "=== DIAG builder head ==="
+            head -20 tools/build_old_gear.py
+            echo "=== DIAG has __init__.py ==="
+            ls -lh tools/__init__.py 2>&1
+            echo "=== DIAG import test ==="
+            python -c "import sys; print(sys.path[:3])" 2>&1
+            python -c "import tools.build_gorka_mod; print('import ok')" 2>&1 || echo "import failed"
+            echo "=== BUILD START ==="
+            python tools/build_old_gear.py --source /tmp/old-assets --variant pouch_knife_detector --output release/old-gear --verbose 2>&1 || echo "builder exit $?"
+            echo "=== BUILD END ==="
+            ls -lh release/old-gear/ 2>&1
+            cat release/old-gear/build-manifest.json 2>&1 | head -40 || echo "no manifest"
+            ls -lh release/*.zip 2>&1 | head -20
+          } 2>&1 | tee /tmp/build.log
           cp /tmp/build.log release/old-gear/build.log || true
-          ls -lh release/old-gear/ || true
-          cat release/old-gear/build-manifest.json 2>&1 | head -80 || echo "no manifest"
-          ls -lh release/*.zip 2>&1 | head -20
+          echo "=== TAIL ==="; tail -30 /tmp/build.log
       - name: Commit and publish Old Gear
         if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "arena-bot"; git config user.email "arena@local"
-          # commit log even if builder failed, so we can diagnose
           git add -f release/old-gear/build.log 2>&1 | head -20 || true
           git add -f release/old-gear/*.pak release/old-gear/*.utoc release/old-gear/*.ucas 2>&1 | head -20 || true
           git add -f release/OldGear_Pouch_Knife_Detector.zip 2>&1 | head -20 || true
@@ -73,12 +76,12 @@ jobs:
       - name: Build Old Vest
         if: always()
         run: |
-          export PYTHONPATH="$PWD:$PYTHONPATH"
-          python tools/build_old_gear.py --source /tmp/old-assets --variant vest_old --output release/old-vest --verbose 2>&1 | tee /tmp/build-vest.log || true
+          mkdir -p release/old-vest
+          {
+            python tools/build_old_gear.py --source /tmp/old-assets --variant vest_old --output release/old-vest --verbose 2>&1 || true
+            ls -lh release/old-vest/ 2>&1
+          } 2>&1 | tee /tmp/build-vest.log
           cp /tmp/build-vest.log release/old-vest/build-vest.log || true
-          ls -lh release/old-vest/ || true
-          cat release/old-vest/build-manifest.json 2>&1 | head -60 || true
-          ls -lh release/*.zip 2>&1 | head -20
       - name: Commit Old Vest
         if: always()
         env:
