@@ -105,5 +105,5 @@ Traceback (most recent call last):
   File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/iostore_write.py", line 136, in build_container_header
     raise ValueError(f"Duplicate imported package ID in {item.package_name}")
 ValueError: Duplicate imported package ID in /Game/Sound/Player/Footsteps/Vest/A_Player_VestBase_Movement
-total 52K
--rw-r--r-- 1 runner runner 52K Oct 29 20:03 build-vest.log
+total 16K
+-rw-r--r-- 1 runner runner 14K Oct 29 20:21 build-vest.log
