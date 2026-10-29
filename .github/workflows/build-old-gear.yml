@@ -37,16 +37,17 @@ jobs:
           find /tmp/old-assets -type f | head -40
       - name: Build OldPouch+Knife+Detector mod
         run: |
-          set -e
           set -x
+          echo "HEAD=$(git rev-parse HEAD) short=$(git rev-parse --short HEAD)"
+          head -15 tools/build_old_gear.py
+          ls -lh tools/__init__.py 2>&1 | head -5
           mkdir -p release/old-gear
-          export PYTHONPATH="$PWD:$PYTHONPATH"
-          echo "PYTHONPATH=$PYTHONPATH"
-          ls tools/__init__.py 2>&1 | head -5
-          python -c "import tools.build_gorka_mod; print('tools import ok')" 2>&1 | head -5
-          set +e
+          echo "diag: PYTHONPATH=$PYTHONPATH PWD=$PWD"
+          python -c "import sys; print(sys.path[:3])" 2>&1 | head -5
+          python -c "import tools.build_gorka_mod; print('tools import ok')" 2>&1 | head -5 || true
           set -o pipefail
           python tools/build_old_gear.py --source /tmp/old-assets --variant pouch_knife_detector --output release/old-gear --verbose 2>&1 | tee /tmp/build.log; echo "builder exit code $?"
+          echo "=== BUILD.LOG TAIL ==="; tail -20 /tmp/build.log; echo "=== END TAIL ==="
           cat /tmp/build.log
           mkdir -p release/old-gear
           cp /tmp/build.log release/old-gear/build.log || true
