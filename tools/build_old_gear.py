@@ -119,9 +119,9 @@ def main():
         n=f.package_name.lower()
         hay = s + " " + n
         if args.variant=="pouch_knife_detector":
-            # Узкий: probe_sack = мешок для гильз (аналог болтов), detector/geiger = детектор
-            # knife оставляем только если явно нужен, иначе только эти два
-            keys=["probe_sack", "detector", "geiger"]
+            # Узкий: probe* = мешок для гильз (аналог болтов), detector/geiger = детектор
+            # probe_sack в игре может быть как Probe_Sack, ProbeSack, Sack_Probe — ловим все
+            keys=["probe", "detector", "geiger"]
             return any(k in hay for k in keys)
         if args.variant=="vest_old":
             keys=["vest","armor","platecarrier","bodyarmor","vest_base","vest_module"]
