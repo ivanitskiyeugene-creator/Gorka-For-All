@@ -74,9 +74,9 @@ GLOVE_BASECOLOR_TEXTURES: dict[str, int] = {
     "T_Character_Gloves_01_c_right": 2048,
 }
 
-TARGET_UPPER_RGB = (0x63, 0x4F, 0x3C)  # #634F3C
-TARGET_PANTS_RGB = (0x80, 0x65, 0x46)  # #806546
-TARGET_GLOVES_RGB = (0x32, 0x38, 0x31)  # #323831
+TARGET_UPPER_RGB = (0x63, 0x51, 0x3A)  # #63513A from screenshot bright patch (was #634F3C)
+TARGET_PANTS_RGB = (0x80, 0x65, 0x46)  # #806546 keep as pants not visible in screenshot
+TARGET_GLOVES_RGB = (0x23, 0x29, 0x28)  # #232928 from screenshot glove_palm (was #323831)
 GLOVE_REGION_START_FRACTION = 0.5
 A_DARK_LIFT_STRENGTH = 1.0
 A_DARK_LIFT_CUTOFF = 0.005
@@ -87,6 +87,10 @@ VARIANTS = {
     "Khaki_A": {
         "title": "Khaki_A — верх #634F3C, штаны #806546, перчатки #323831",
         "zip_name": "Gorka3_For_All_Khaki_A.zip",
+    },
+    "Khaki_V2": {
+        "title": "Khaki_V2 — верх #63513A, штаны #806546, перчатки #232928 (точный оттенок со скрина)",
+        "zip_name": "Gorka3_For_All_Khaki_V2.zip",
     },
 }
 
