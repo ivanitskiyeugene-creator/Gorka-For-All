@@ -1,0 +1,39 @@
+name: Build Old Gear from old-assets-debug
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - arena/fff81d6f-gorka-for-all
+    paths:
+      - .github/workflows/build-old-gear.yml
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: arena/fff81d6f-gorka-for-all
+      - name: Download old-assets rar
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download old-assets-debug --pattern "gorka-assets.rar" --dir /tmp --clobber
+          ls -lh /tmp/*.rar
+          sha256sum /tmp/*.rar || true
+      - name: Extract rar and inspect
+        run: |
+          sudo apt-get update && sudo apt-get install -y unrar
+          mkdir -p /tmp/old-assets
+          unrar x /tmp/gorka-assets.rar /tmp/old-assets/ || unrar e /tmp/gorka-assets.rar /tmp/old-assets/ || 7z x /tmp/gorka-assets.rar -o/tmp/old-assets
+          find /tmp/old-assets -type f | head -100
+          ls -lh /tmp/old-assets | head -40
+          echo "--- count ---"
+          find /tmp/old-assets -type f | wc -l
+      - name: Publish inspect log
+        run: |
+          gh release upload old-assets-debug /tmp/gorka-assets.rar --clobber || true
+          echo "inspect done"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
