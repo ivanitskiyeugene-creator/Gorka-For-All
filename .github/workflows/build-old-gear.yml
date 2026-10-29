@@ -49,8 +49,10 @@ jobs:
           git add -f release/old-gear/*.zip release/old-gear/*.pak release/old-gear/*.utoc release/old-gear/*.ucas 2>&1 | head -20 || true
           git commit -m "build OldBag_Knife_Detector from old-assets-debug (519 files)" || echo "no change"
           git push origin arena/fff81d6f-gorka-for-all || echo "push failed"
-          gh release upload old-gear-mod release/old-gear/*.zip --clobber || gh release upload old-gear-mod release/old-gear/*.pak --clobber || true
-          gh release upload old-gear-mod release/old-gear/*.zip --clobber
+          echo "commit step done"
+          ls -lh release/old-gear/ || true
+          gh release upload old-gear-mod release/old-gear/*.zip --clobber || echo "upload zip failed"
+          gh release upload old-gear-mod release/old-gear/*.pak --clobber || echo "upload pak failed"
       - name: Build Old Vest separate (debug)
         run: |
           python tools/build_old_gear.py --source /tmp/old-assets --variant vest_old --output release/old-vest || echo "vest builder failed, continuing"
