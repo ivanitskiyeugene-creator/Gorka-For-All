@@ -35,53 +35,42 @@ jobs:
           mkdir -p /tmp/old-assets
           sudo apt-get update && sudo apt-get install -y unrar
           unrar x /tmp/gorka-assets.rar /tmp/old-assets/ || 7z x /tmp/gorka-assets.rar -o/tmp/old-assets
-          echo "=== TREE TOP ==="; ls -lh /tmp/old-assets/ | head -30
           echo "=== FIND Content ==="; find /tmp/old-assets -type d -name Content | head -20
-          echo "=== FIND ITR2 ==="; find /tmp/old-assets -type d -name ITR2 | head -20
           echo "=== COUNT ==="; find /tmp/old-assets -type f | wc -l
-          find /tmp/old-assets -type f | head -80
+          find /tmp/old-assets -type f | head -20
       - name: Build OldPouch+Knife+Detector mod
         run: |
           mkdir -p release/old-gear
           {
             echo "=== DIAG HEAD=$(git rev-parse HEAD) ==="
-            head -10 tools/build_old_gear.py
+            head -5 tools/build_old_gear.py
             python -c "import tools.build_gorka_mod; print('import ok')" 2>&1 || echo "import check failed"
             echo "=== BUILD START ==="
             python tools/build_old_gear.py --source /tmp/old-assets --variant pouch_knife_detector --output release/old-gear --verbose 2>&1 || echo "builder exit $?"
             echo "=== BUILD END ==="
             ls -lh release/old-gear/ 2>&1
-            cat release/old-gear/build-manifest.json 2>&1 | head -60 || echo "no manifest"
+            cat release/old-gear/build-manifest.json 2>&1 | head -20 || echo "no manifest"
             ls -lh release/*.zip 2>&1 | head -20
           } 2>&1 | tee /tmp/build.log
           cp /tmp/build.log release/old-gear/build.log || true
-          cat /tmp/build.log | tail -40
-      - name: Push build log (always)
+          cat /tmp/build.log | tail -20
+      - name: Commit and publish Old Gear (single atomic push)
         if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "arena-bot"; git config user.email "arena@local"
+          git fetch origin arena/fff81d6f-gorka-for-all || true
+          git rebase origin/arena/fff81d6f-gorka-for-all || git reset --hard origin/arena/fff81d6f-gorka-for-all || true
           mkdir -p release/old-gear
-          cp /tmp/build.log release/old-gear/build.log 2>&1 || echo "no /tmp/build.log"
-          git add -f release/old-gear/build.log 2>&1 | head -20 || true
-          git status --short
-          git diff --cached --stat
-          git commit -m "update build log" || echo "no log change"
-          git push origin arena/fff81d6f-gorka-for-all || echo "push failed"
-      - name: Commit and publish Old Gear
-        if: always()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config user.name "arena-bot"; git config user.email "arena@local"
-          git add -f release/old-gear/*.pak release/old-gear/*.utoc release/old-gear/*.ucas 2>&1 | head -20 || true
+          cp /tmp/build.log release/old-gear/build.log 2>&1 || true
+          git add -f release/old-gear/build.log release/old-gear/*.pak release/old-gear/*.utoc release/old-gear/*.ucas release/old-gear/*.json release/old-gear/ReadMe_RU.txt 2>&1 | head -20 || true
           git add -f release/OldGear_Pouch_Knife_Detector.zip 2>&1 | head -20 || true
-          git add -f release/old-gear/build-manifest.json 2>&1 | head -20 || true
           git status --short
           git diff --cached --stat
           git commit -m "build OldBag_Knife_Detector from old-assets-debug" || echo "no change to commit"
-          git push origin arena/fff81d6f-gorka-for-all || echo "push failed"
+          git push origin arena/fff81d6f-gorka-for-all || git push origin HEAD:arena/fff81d6f-gorka-for-all --force-with-lease 2>&1 | head -20 || echo "push failed"
+          ls -lh release/OldGear_Pouch_Knife_Detector.zip 2>&1 | head -5 || true
           gh release upload old-gear-mod release/OldGear_Pouch_Knife_Detector.zip --clobber 2>&1 | head -20 || echo "upload zip failed"
           gh release upload old-gear-mod release/old-gear/build.log --clobber 2>&1 | head -20 || echo "upload log failed"
       - name: Build Old Vest
@@ -98,6 +87,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git config user.name "arena-bot"; git config user.email "arena@local"
+          git fetch origin arena/fff81d6f-gorka-for-all || true
+          git rebase origin/arena/fff81d6f-gorka-for-all 2>&1 | head -20 || true
           git add -f release/old-vest/build-vest.log release/OldVest_P.zip release/old-vest/*.pak release/old-vest/*.utoc release/old-vest/*.ucas 2>&1 | head -20 || true
           git commit -m "build OldVest_P from old-assets-debug" || echo "no change"
           git push origin arena/fff81d6f-gorka-for-all || echo "push failed"
