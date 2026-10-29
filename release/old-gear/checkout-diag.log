@@ -1,0 +1,14 @@
+manual-checkout HEAD=b786cd5ef7e422424d2c4c7fb643a34c695aa657
+b786cd5 manual git clone to bypass checkout cache completely
+57c0ee0 workaround checkout cache: fetch+reset+gh api raw download
+0cbe7b8 force restore builder from git show to bypass checkout cache
+#!/usr/bin/env python3
+"""Build Old Gear IoStore container from extracted assets (debug/standalone)."""
+import argparse, json, shutil, sys
+from pathlib import Path
+# ensure repo root is on sys.path so `tools.*` imports work regardless of PYTHONPATH
+_repo_root = Path(__file__).resolve().parents[1]
+if str(_repo_root) not in sys.path:
+    sys.path.insert(0, str(_repo_root))
+# also support case where tools is a package dir itself
+_tools_parent = str(_repo_root / "tools")
