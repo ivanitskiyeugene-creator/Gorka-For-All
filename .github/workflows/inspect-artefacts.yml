@@ -1,0 +1,39 @@
+name: Inspect Artefacts
+on:
+  push:
+    branches: [arena/fff81d6f-gorka-for-all]
+    paths: [.github/workflows/inspect-artefacts.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Download Artefacts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download old-assets-debug --pattern "Artefacts.rar" --dir /tmp --clobber
+          ls -lh /tmp/*.rar
+          sudo apt-get update -qq && sudo apt-get install -y -qq unrar 2>&1 | tail -3
+          mkdir -p /tmp/artefacts
+          unrar x /tmp/Artefacts.rar /tmp/artefacts/ || 7z x /tmp/Artefacts.rar -o/tmp/artefacts || bsdtar -xf /tmp/Artefacts.rar -C /tmp/artefacts || true
+          echo "=== TREE ==="
+          find /tmp/artefacts -type f | head -100
+          echo "=== COUNT ==="
+          find /tmp/artefacts -type f | wc -l
+          ls -R /tmp/artefacts | head -300
+          # Also check gorka-assets for probe list
+          echo "=== PROBE SACK FILES IN GORKA-ASSETS ==="
+          gh release download old-assets-debug --pattern "gorka-assets.rar" --dir /tmp --clobber 2>&1 | tail -3 || true
+          mkdir -p /tmp/old-assets2
+          unrar x /tmp/gorka-assets.rar /tmp/old-assets2/ 2>&1 | tail -3 || 7z x /tmp/gorka-assets.rar -o/tmp/old-assets2 2>&1 | tail -3 || true
+          find /tmp/old-assets2 -type f | xargs grep -l "Probe" 2>/dev/null | head -20 || find /tmp/old-assets2 -type d -iname "*probe*" 2>&1 | head -20
+          find /tmp/old-assets2 -type f | wc -l
+          ls /tmp/old-assets2/gorka-assets/IntoTheRadius2/Content/ 2>&1 | head -20
