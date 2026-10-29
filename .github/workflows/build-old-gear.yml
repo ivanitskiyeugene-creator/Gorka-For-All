@@ -37,7 +37,8 @@ jobs:
           ls -R /tmp/old-assets | head -120
       - name: Build OldPouch+Knife+Detector mod
         run: |
-          python tools/build_old_gear.py --source /tmp/old-assets --variant pouch_knife_detector --output release/old-gear || echo "builder failed, continuing"
+          python tools/build_old_gear.py --source /tmp/old-assets --variant pouch_knife_detector --output release/old-gear --verbose 2>&1 | tee /tmp/build.log || echo "builder failed"
+          cat /tmp/build.log || true
           ls -lh release/old-gear/ || true
           sha256sum release/old-gear/*.zip 2>/dev/null | head -20 || true
           ls -lh release/*.zip | head -20
