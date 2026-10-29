@@ -41,7 +41,15 @@ collected 519 files, 339 package store entries
   file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a
   file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD
   file ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a
-filtered 291 files, 186 pkgs for variant vest_old
+ remap ITR2/Art/Characters/Player/Body/Vest_ITR1/Materials/M_Vest_ITR1_01_a.uasset -> ITR2/Art/Characters/Player/Body/Vest_ITR1/Materials/M_Vest_ITR1_01_a.uasset
+ remap ITR2/Art/Characters/Player/Body/Vest_ITR1/SM_Vest_ITR1_01_a.uasset -> ITR2/Art/Characters/Player/Body/Vest_ITR1/SM_Vest_ITR1_01_a.uasset
+ remap ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_01_C.uasset -> ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_01_C.uasset
+ remap ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_01_C.ubulk -> ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_01_C.ubulk
+ remap ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_01_N.uasset -> ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_01_N.uasset
+ remap ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_01_N.ubulk -> ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_01_N.ubulk
+ remap ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_AO_01_a_ORM.uasset -> ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_AO_01_a_ORM.uasset
+ remap ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_AO_01_a_ORM.ubulk -> ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_AO_01_a_ORM.ubulk
+remapped filtered 291 files, 186 pkgs (ITR1->vanilla)
  keep ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_01_a.uasset pkg=/Game/ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_01_a
  keep ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_02_a.uasset pkg=/Game/ITR2/Art/Characters/ArmorPlates/SM_Vest_Armor_Plates_02_a
  keep ITR2/Art/Characters/Backpack/Material/MI_WeighterVest.uasset pkg=/Game/ITR2/Art/Characters/Backpack/Material/MI_WeighterVest
@@ -94,9 +102,9 @@ filtered 291 files, 186 pkgs for variant vest_old
  keep ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_AO_01_a_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_ITR1/Textures/T_Vest_ITR1_AO_01_a_ORM
 mod=OldVest_P container_id=80bb7883e86626aa
 Traceback (most recent call last):
-  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 233, in <module>
+  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 264, in <module>
     main()
-  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 156, in main
+  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 187, in main
     written=write_container(base, chunks, filt_pkgs, mount_point=MOUNT_POINT, container_id=cid, oodle=None)
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/iostore_write.py", line 496, in write_container
@@ -106,4 +114,4 @@ Traceback (most recent call last):
     raise ValueError(f"Duplicate imported package ID in {item.package_name}")
 ValueError: Duplicate imported package ID in /Game/Sound/Player/Footsteps/Vest/A_Player_VestBase_Movement
 total 16K
--rw-r--r-- 1 runner runner 14K Oct 29 20:21 build-vest.log
+-rw-r--r-- 1 runner runner 14K Oct 29 20:25 build-vest.log
