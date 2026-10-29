@@ -1,21 +1,19 @@
 === UPLOAD DIAG ===
 total 253M
--rw-r--r-- 1 runner runner  339 Oct 29 19:04 OldGear_P.pak
--rw-r--r-- 1 runner runner 253M Oct 29 19:04 OldGear_P.ucas
--rw-r--r-- 1 runner runner  85K Oct 29 19:04 OldGear_P.utoc
--rw-r--r-- 1 runner runner  278 Oct 29 19:04 ReadMe_RU.txt
--rw-r--r-- 1 runner runner  858 Oct 29 19:04 build-manifest.json
--rw-r--r-- 1 runner runner  13K Oct 29 19:04 build.log
--rw-r--r-- 1 runner runner  731 Oct 29 19:04 checkout-diag.log
--rw-r--r-- 1 runner runner 83M Oct 29 19:04 release/OldGear_Pouch_Knife_Detector.zip
+-rw-r--r-- 1 runner runner  339 Oct 29 19:06 OldGear_P.pak
+-rw-r--r-- 1 runner runner 253M Oct 29 19:06 OldGear_P.ucas
+-rw-r--r-- 1 runner runner  85K Oct 29 19:06 OldGear_P.utoc
+-rw-r--r-- 1 runner runner  278 Oct 29 19:06 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner  858 Oct 29 19:06 build-manifest.json
+-rw-r--r-- 1 runner runner  13K Oct 29 19:06 build.log
+-rw-r--r-- 1 runner runner  731 Oct 29 19:06 checkout-diag.log
+-rw-r--r-- 1 runner runner 1022 Oct 29 19:06 upload.log
+-rw-r--r-- 1 runner runner 83M Oct 29 19:06 release/OldGear_Pouch_Knife_Detector.zip
 release assets before:
 build.log
-OldGear_pouch_knife_detector.zip
 uploading zip to old-gear-mod...
-HTTP 422: Validation Failed (https://uploads.github.com/repos/ivanitskiyeugene-creator/Gorka-For-All/releases/428155107/assets?label=&name=OldGear_Pouch_Knife_Detector.zip)
-ReleaseAsset.name already exists
 upload exit code 0
--rw-r--r-- 1 runner runner 83M Oct 29 19:04 release/OldGear_Pouch_Knife_Detector.zip
+-rw-r--r-- 1 runner runner 83M Oct 29 19:06 release/OldGear_Pouch_Knife_Detector.zip
 release assets after:
 build.log 12357
-OldGear_pouch_knife_detector.zip 5738
+OldGear_Pouch_Knife_Detector.zip 87017767
