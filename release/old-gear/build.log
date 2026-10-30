@@ -1,4 +1,4 @@
-=== DIAG HEAD=db59aa689736cbd948c199a0ca64d7176569c22d ===
+=== DIAG HEAD=cfc22327a26e857243df4c6ae302f0f45decaccf ===
 #!/usr/bin/env python3
 """Proper old->vanilla replacement: patch package headers, not just paths."""
 import struct, json
@@ -22,25 +22,25 @@ with knife+probes+vest 36 (+0)
  skip import collect ITR2/Art/Characters/Player/Probes_ITR1/T_ProbesBag_ITR1_01_C.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
  skip import collect ITR2/Art/Characters/Player/Probes_ITR1/T_ProbesBag_ITR1_01_N.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
  skip import collect ITR2/Art/Characters/Player/Probes_ITR1/T_ProbesBag_ITR1_01_ORM.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
- import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/PA_Detector_IR1_01_a -> /Game/ITR2/Art/Characters/Player/Detector/PA_Detector_IR1_01_a
- import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/T_ProbesBag_ITR1_01_ORM -> /Game/ITR2/Art/Characters/Player/Probes/T_ProbesBag_ITR1_01_ORM
- import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_N
- import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_C
- import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a -> /Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a
- import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/SKM_ShellSack_ITR1_01_a_PhysicsAsset -> /Game/ITR2/Art/Characters/Player/Probes/SKM_ShellSack_ITR1_01_a_PhysicsAsset
- import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/MI_ProbesBag_ITR1_01_a -> /Game/ITR2/Art/Characters/Player/Probes/MI_ProbesBag_ITR1_01_a
- import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_E
- import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/SKM_ShellSack_ITR1_01_a_Skeleton -> /Game/ITR2/Art/Characters/Player/Probes/SKM_ShellSack_ITR1_01_a_Skeleton
- import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/T_ProbesBag_ITR1_01_C -> /Game/ITR2/Art/Characters/Player/Probes/T_ProbesBag_ITR1_01_C
- import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/Animation/A_Stand_Close -> /Game/ITR2/Art/Characters/Player/Probes/Animation/A_Stand_Close
- import remap /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle_ITR1/MI_ProbesMissle_ITR1 -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/MI_ProbesMissle_ITR1
- import remap /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle_ITR1/T_ProbesMissle_ITR1_01_C -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_ITR1_01_C
- import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/T_ProbesBag_ITR1_01_N -> /Game/ITR2/Art/Characters/Player/Probes/T_ProbesBag_ITR1_01_N
- import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_ORM -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM
- import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/Animation/A_Stand_Open -> /Game/ITR2/Art/Characters/Player/Probes/Animation/A_Stand_Open
- import remap /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle_ITR1/T_ProbesMissle_ITR1_01_ORM -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_ITR1_01_ORM
+ import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/SKM_ShellSack_ITR1_01_a_Skeleton -> /Game/ITR2/Art/Characters/Player/Probes/SKM_ShellSack_01_a_Skeleton
  import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/MI_Detector_ITR1_01_a -> /Game/ITR2/Art/Characters/Player/Detector/MI_Detector_01_a
- import remap /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle_ITR1/T_ProbesMissle_ITR1_01_N -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_ITR1_01_N
+ import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/Animation/A_Stand_Open -> /Game/ITR2/Art/Characters/Player/Probes/Animation/A_Stand_Open
+ import remap /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle_ITR1/T_ProbesMissle_ITR1_01_N -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_01_N
+ import remap /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle_ITR1/T_ProbesMissle_ITR1_01_ORM -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_01_ORM
+ import remap /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle_ITR1/MI_ProbesMissle_ITR1 -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/MI_ProbesMissle
+ import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/T_ProbesBag_ITR1_01_N -> /Game/ITR2/Art/Characters/Player/Probes/T_ProbesBag_01_N
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_ORM -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_C
+ import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/T_ProbesBag_ITR1_01_ORM -> /Game/ITR2/Art/Characters/Player/Probes/T_ProbesBag_01_ORM
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a -> /Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_E
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_N
+ import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/MI_ProbesBag_ITR1_01_a -> /Game/ITR2/Art/Characters/Player/Probes/MI_ProbesBag_01_a
+ import remap /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle_ITR1/T_ProbesMissle_ITR1_01_C -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_01_C
+ import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/T_ProbesBag_ITR1_01_C -> /Game/ITR2/Art/Characters/Player/Probes/T_ProbesBag_01_C
+ import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/SKM_ShellSack_ITR1_01_a_PhysicsAsset -> /Game/ITR2/Art/Characters/Player/Probes/SKM_ShellSack_01_a_PhysicsAsset
+ import remap /Game/ITR2/Art/Characters/Player/Probes_ITR1/Animation/A_Stand_Close -> /Game/ITR2/Art/Characters/Player/Probes/Animation/A_Stand_Close
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/PA_Detector_IR1_01_a -> /Game/ITR2/Art/Characters/Player/Detector/PA_Detector_IR1_01_a
 remap dict 19
 remapped 36 files 23 pkgs
   ITR2/Art/Characters/Player/Detector/MI_Detector_01_a.uasset -> /Game/ITR2/Art/Characters/Player/Detector/MI_Detector_01_a
@@ -56,33 +56,33 @@ remapped 36 files 23 pkgs
   ITR2/Art/Characters/Player/Detector/T_Detector_01_N.ubulk -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_N
   ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM.uasset -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM
   ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM.ubulk -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM
-  ITR2/Art/Characters/Player/Probes/Probes_Missle2/MI_ProbesMissle_ITR1.uasset -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/MI_ProbesMissle_ITR1
+  ITR2/Art/Characters/Player/Probes/Probes_Missle2/MI_ProbesMissle.uasset -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/MI_ProbesMissle
   ITR2/Art/Characters/Player/Probes/Probes_Missle2/SKM_Probes_Missle2_01_a.uasset -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/SKM_Probes_Missle2_01_a
   ITR2/Art/Characters/Player/Probes/Probes_Missle2/SKM_Probes_Missle2_01_a.ubulk -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/SKM_Probes_Missle2_01_a
-  ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_ITR1_01_C.uasset -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_ITR1_01_C
-  ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_ITR1_01_C.ubulk -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_ITR1_01_C
-  ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_ITR1_01_N.uasset -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_ITR1_01_N
-  ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_ITR1_01_N.ubulk -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_ITR1_01_N
+  ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_01_C.uasset -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_01_C
+  ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_01_C.ubulk -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_01_C
+  ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_01_N.uasset -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_01_N
+  ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_01_N.ubulk -> /Game/ITR2/Art/Characters/Player/Probes/Probes_Missle2/T_ProbesMissle_01_N
 written release/old-gear/DLC-Black_P.utoc release/old-gear/DLC-Black_P.ucas chunks=37 mount=../../../IntoTheRadius2/Content/
-validate OK utoc=3d7cafabc011
-ZIP release/DLC-Black.zip 9541056
+validate OK utoc=f6a3cce9b65f
+ZIP release/DLC-Black.zip 9541009
 === BUILD END ===
 total 27M
--rw-r--r-- 1 runner runner  339 Oct 30 16:39 DLC-Black_P.pak
--rw-r--r-- 1 runner runner  27M Oct 30 16:39 DLC-Black_P.ucas
--rw-r--r-- 1 runner runner 9.1K Oct 30 16:39 DLC-Black_P.utoc
--rw-r--r-- 1 runner runner  174 Oct 30 16:39 ReadMe_RU.txt
--rw-r--r-- 1 runner runner  814 Oct 30 16:39 build-manifest.json
--rw-r--r-- 1 runner runner 9.4K Oct 30 16:39 build.log
--rw-r--r-- 1 runner runner  731 Oct 30 16:39 checkout-diag.log
--rw-r--r-- 1 runner runner  871 Oct 30 16:39 upload.log
--rw-r--r-- 1 runner runner 9.1M Oct 30 16:39 release/DLC-Black.zip
--rw-r--r-- 1 runner runner  42M Oct 30 16:39 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
--rw-r--r-- 1 runner runner  45M Oct 30 16:39 release/Gorka3_For_All_Brown_A_fixed.zip
--rw-r--r-- 1 runner runner  45M Oct 30 16:39 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
--rw-r--r-- 1 runner runner  45M Oct 30 16:39 release/Gorka3_For_All_Khaki_A.zip
--rw-r--r-- 1 runner runner  45M Oct 30 16:39 release/Gorka3_For_All_Khaki_V2.zip
--rw-r--r-- 1 runner runner  45M Oct 30 16:39 release/Gorka3_For_All_Khaki_V3.zip
--rw-r--r-- 1 runner runner  45M Oct 30 16:39 release/Gorka3_For_All_Khaki_V4.zip
--rw-r--r-- 1 runner runner 9.1M Oct 30 16:39 release/OldGear_Pouch_Knife_Detector.zip
--rw-r--r-- 1 runner runner 9.1M Oct 30 16:39 release/OldProbe_Detector_Patched.zip
+-rw-r--r-- 1 runner runner  339 Oct 30 16:41 DLC-Black_P.pak
+-rw-r--r-- 1 runner runner  27M Oct 30 16:41 DLC-Black_P.ucas
+-rw-r--r-- 1 runner runner 9.0K Oct 30 16:41 DLC-Black_P.utoc
+-rw-r--r-- 1 runner runner  174 Oct 30 16:41 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner  814 Oct 30 16:41 build-manifest.json
+-rw-r--r-- 1 runner runner 9.4K Oct 30 16:41 build.log
+-rw-r--r-- 1 runner runner  731 Oct 30 16:41 checkout-diag.log
+-rw-r--r-- 1 runner runner  952 Oct 30 16:41 upload.log
+-rw-r--r-- 1 runner runner 9.1M Oct 30 16:41 release/DLC-Black.zip
+-rw-r--r-- 1 runner runner  42M Oct 30 16:41 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
+-rw-r--r-- 1 runner runner  45M Oct 30 16:41 release/Gorka3_For_All_Brown_A_fixed.zip
+-rw-r--r-- 1 runner runner  45M Oct 30 16:41 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
+-rw-r--r-- 1 runner runner  45M Oct 30 16:41 release/Gorka3_For_All_Khaki_A.zip
+-rw-r--r-- 1 runner runner  45M Oct 30 16:41 release/Gorka3_For_All_Khaki_V2.zip
+-rw-r--r-- 1 runner runner  45M Oct 30 16:41 release/Gorka3_For_All_Khaki_V3.zip
+-rw-r--r-- 1 runner runner  45M Oct 30 16:41 release/Gorka3_For_All_Khaki_V4.zip
+-rw-r--r-- 1 runner runner 9.1M Oct 30 16:41 release/OldGear_Pouch_Knife_Detector.zip
+-rw-r--r-- 1 runner runner 9.1M Oct 30 16:41 release/OldProbe_Detector_Patched.zip
