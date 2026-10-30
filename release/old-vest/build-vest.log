@@ -72,12 +72,12 @@ output dir listing:
   OldVest_P.utoc 18839 bytes
   ReadMe_RU.txt 275 bytes
   build-manifest.json 838 bytes
-  build-vest.log 825 bytes
+  build-vest.log 9367 bytes
 DONE
 total 88M
--rw-r--r-- 1 runner runner 339 Oct 30 16:38 OldVest_P.pak
--rw-r--r-- 1 runner runner 88M Oct 30 16:38 OldVest_P.ucas
--rw-r--r-- 1 runner runner 19K Oct 30 16:38 OldVest_P.utoc
--rw-r--r-- 1 runner runner 275 Oct 30 16:38 ReadMe_RU.txt
--rw-r--r-- 1 runner runner 838 Oct 30 16:38 build-manifest.json
--rw-r--r-- 1 runner runner 825 Oct 30 16:38 build-vest.log
+-rw-r--r-- 1 runner runner  339 Oct 30 16:39 OldVest_P.pak
+-rw-r--r-- 1 runner runner  88M Oct 30 16:39 OldVest_P.ucas
+-rw-r--r-- 1 runner runner  19K Oct 30 16:39 OldVest_P.utoc
+-rw-r--r-- 1 runner runner  275 Oct 30 16:39 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner  838 Oct 30 16:39 build-manifest.json
+-rw-r--r-- 1 runner runner 9.2K Oct 30 16:39 build-vest.log
