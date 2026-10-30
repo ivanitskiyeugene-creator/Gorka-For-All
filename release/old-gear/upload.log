@@ -1,13 +1,20 @@
 === UPLOAD DIAG ===
-total 20K
--rw-r--r-- 1 runner runner 8.3K Oct 30 16:36 build.log
--rw-r--r-- 1 runner runner  731 Oct 30 16:36 checkout-diag.log
--rw-r--r-- 1 runner runner  929 Oct 30 16:36 upload.log
-ls: cannot access 'release/DLC-Black.zip': No such file or directory
-ls: cannot access 'release/OldGear_Pouch_Knife_Detector.zip': No such file or directory
+total 27M
+-rw-r--r-- 1 runner runner  339 Oct 30 16:38 DLC-Black_P.pak
+-rw-r--r-- 1 runner runner  27M Oct 30 16:38 DLC-Black_P.ucas
+-rw-r--r-- 1 runner runner 9.1K Oct 30 16:38 DLC-Black_P.utoc
+-rw-r--r-- 1 runner runner  174 Oct 30 16:38 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner  814 Oct 30 16:38 build-manifest.json
+-rw-r--r-- 1 runner runner 9.4K Oct 30 16:38 build.log
+-rw-r--r-- 1 runner runner  731 Oct 30 16:38 checkout-diag.log
+-rw-r--r-- 1 runner runner  507 Oct 30 16:38 upload.log
+-rw-r--r-- 1 runner runner 9.1M Oct 30 16:38 release/DLC-Black.zip
+-rw-r--r-- 1 runner runner 9.1M Oct 30 16:38 release/OldGear_Pouch_Knife_Detector.zip
 release assets before:
 build.log
 OldGear_Pouch_Knife_Detector.zip
 release assets after:
 build.log 12357
-OldGear_Pouch_Knife_Detector.zip 10576662
+DLC-Black.zip 9541061
+OldGear_Pouch_Knife_Detector.zip 9541061
+OldProbe_Detector_Patched.zip 9541061
