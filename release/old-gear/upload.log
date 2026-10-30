@@ -1,15 +1,15 @@
 === UPLOAD DIAG ===
 total 27M
--rw-r--r-- 1 runner runner  339 Oct 30 16:39 DLC-Black_P.pak
--rw-r--r-- 1 runner runner  27M Oct 30 16:39 DLC-Black_P.ucas
--rw-r--r-- 1 runner runner 9.1K Oct 30 16:39 DLC-Black_P.utoc
--rw-r--r-- 1 runner runner  174 Oct 30 16:39 ReadMe_RU.txt
--rw-r--r-- 1 runner runner  814 Oct 30 16:39 build-manifest.json
--rw-r--r-- 1 runner runner 9.4K Oct 30 16:39 build.log
--rw-r--r-- 1 runner runner  731 Oct 30 16:39 checkout-diag.log
--rw-r--r-- 1 runner runner  871 Oct 30 16:39 upload.log
--rw-r--r-- 1 runner runner 9.1M Oct 30 16:39 release/DLC-Black.zip
--rw-r--r-- 1 runner runner 9.1M Oct 30 16:39 release/OldGear_Pouch_Knife_Detector.zip
+-rw-r--r-- 1 runner runner  339 Oct 30 16:41 DLC-Black_P.pak
+-rw-r--r-- 1 runner runner  27M Oct 30 16:41 DLC-Black_P.ucas
+-rw-r--r-- 1 runner runner 9.0K Oct 30 16:41 DLC-Black_P.utoc
+-rw-r--r-- 1 runner runner  174 Oct 30 16:41 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner  814 Oct 30 16:41 build-manifest.json
+-rw-r--r-- 1 runner runner 9.3K Oct 30 16:41 build.log
+-rw-r--r-- 1 runner runner  731 Oct 30 16:41 checkout-diag.log
+-rw-r--r-- 1 runner runner  952 Oct 30 16:41 upload.log
+-rw-r--r-- 1 runner runner 9.1M Oct 30 16:41 release/DLC-Black.zip
+-rw-r--r-- 1 runner runner 9.1M Oct 30 16:41 release/OldGear_Pouch_Knife_Detector.zip
 release assets before:
 build.log
 DLC-Black.zip
@@ -18,7 +18,7 @@ OldProbe_Detector_Patched.zip
 OldVest_P.zip
 release assets after:
 build.log 12357
-DLC-Black.zip 9541056
-OldGear_Pouch_Knife_Detector.zip 9541056
-OldProbe_Detector_Patched.zip 9541056
+DLC-Black.zip 9541009
+OldGear_Pouch_Knife_Detector.zip 9541009
+OldProbe_Detector_Patched.zip 9541009
 OldVest_P.zip 44805287
