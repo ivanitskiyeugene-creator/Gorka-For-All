@@ -217,8 +217,15 @@ if __name__ == "__main__":
     from tools.iostore_write import make_chunk_id
     chunks=[Chunk(make_chunk_id(f.package_name,f.chunk_type), f.data, f.relative_path) for f in out_files]
     written=write_container(base, chunks, out_pkgs, mount_point=MOUNT_POINT, container_id=cid, oodle=None)
-    print(f"written {written.utoc} {written.ucas} chunks={written.chunk_count}")
-    v=validate_container(written.utoc, written.ucas, out_files, out_pkgs, cid)
+    print(f"written {written.utoc} {written.ucas} chunks={written.chunk_count} mount={MOUNT_POINT}")
+    # patch validator mount for IntoTheRadius2 override
+    import tools.build_gorka_mod as _bgm
+    _orig_mount=_bgm.MOUNT_POINT
+    _bgm.MOUNT_POINT=MOUNT_POINT
+    try:
+        v=validate_container(written.utoc, written.ucas, out_files, out_pkgs, cid)
+    finally:
+        _bgm.MOUNT_POINT=_orig_mount
     print(f"validate OK utoc={v['utoc_sha256'][:12]}")
     (out/"build-manifest.json").write_text(json.dumps({**v,"mod":mod}, ensure_ascii=False, indent=2))
     # Pak stub
