@@ -1,4 +1,4 @@
-=== DIAG HEAD=c30b237aa8cf9bb9380b07c1693e65ea24cad820 ===
+=== DIAG HEAD=eb46f22170767e0e28cd9b63facb4cf152b17fb2 ===
 #!/usr/bin/env python3
 """Proper old->vanilla replacement: patch package headers, not just paths."""
 import struct, json
@@ -26,18 +26,18 @@ with knife+casing 44 (+14)
  skip import collect ITR2/Art/Items/Weapons/Melee/Knife01/Knife_Normal.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
  skip import collect ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_knife1.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
  skip import collect ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_knife_SP.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
- import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_E
  import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1 -> /Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1
+ import remap /Game/Sound/SFX/Detector_MS/Detector_ITR1/A_SFX_Detector_Click_B3 -> /Game/Sound/SFX/Detector_MS/Detector/A_SFX_Detector_Click_B3
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_E
  import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/PA_Detector_IR1_01_a -> /Game/ITR2/Art/Characters/Player/Detector/PA_Detector_IR1_01_a
  import remap /Game/Sound/SFX/Detector_MS/Detector_ITR1/cargeUP -> /Game/Sound/SFX/Detector_MS/Detector/cargeUP
- import remap /Game/Sound/SFX/Detector_MS/MS_Detector_ITR1_ART_Detection -> /Game/Sound/SFX/Detector_MS/MS_Detector_ART_Detection
- import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_C
- import remap /Game/Sound/SFX/Detector_MS/Detector_ITR1/A_SFX_Detector_Click_B3 -> /Game/Sound/SFX/Detector_MS/Detector/A_SFX_Detector_Click_B3
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_N
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/MI_Detector_ITR1_01_a -> /Game/ITR2/Art/Characters/Player/Detector/MI_Detector_01_a
  import remap /Game/Sound/SFX/Detector_MS/MS_Detector_ITR1 -> /Game/Sound/SFX/Detector_MS/MS_Detector
  import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_ORM -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM
- import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_N
  import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a -> /Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a
- import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/MI_Detector_ITR1_01_a -> /Game/ITR2/Art/Characters/Player/Detector/MI_Detector_01_a
+ import remap /Game/Sound/SFX/Detector_MS/MS_Detector_ITR1_ART_Detection -> /Game/Sound/SFX/Detector_MS/MS_Detector_ART_Detection
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_C
 remap dict 12
 remapped 44 files 27 pkgs
   ITR2/Art/Characters/Player/Detector/MI_Detector_01_a.uasset -> /Game/ITR2/Art/Characters/Player/Detector/MI_Detector_01_a
@@ -60,26 +60,25 @@ remapped 44 files 27 pkgs
   Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.ubulk -> /Game/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01
   Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.uasset -> /Game/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02
   Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.ubulk -> /Game/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02
-written release/old-gear/OldProbe_Detector_Patched_P.utoc release/old-gear/OldProbe_Detector_Patched_P.ucas chunks=45
-Traceback (most recent call last):
-  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear_proper.py", line 221, in <module>
-    v=validate_container(written.utoc, written.ucas, out_files, out_pkgs, cid)
-      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_gorka_mod.py", line 484, in validate_container
-    raise ValueError(f"Directory-index path mismatch: missing={set(expected_by_path)-actual_paths}, extra={actual_paths-set(expected_by_path)}")
-ValueError: Directory-index path mismatch: missing={'ITR2_Gorka3/Content/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_knife1.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Items/Weapons/Melee/Knife01/MI_Knife01.uasset', 'ITR2_Gorka3/Content/Sound/SFX/Detector_MS/Detector/cargeUP.uasset', 'ITR2_Gorka3/Content/ITR2/BPs/Items/Melee/BP_knife.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_N.ubulk', 'ITR2_Gorka3/Content/Sound/SFX/Detector_MS/Detector/A_SFX_Detector_Click_B3.ubulk', 'ITR2_Gorka3/Content/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife_Normal.ubulk', 'ITR2_Gorka3/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM.ubulk', 'ITR2_Gorka3/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_C.ubulk', 'ITR2_Gorka3/Content/Sound/SFX/Detector_MS/Detector/A_SFX_Detector_Click_B3.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1.ubulk', 'ITR2_Gorka3/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_N.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife01_ORM.uasset', 'ITR2_Gorka3/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04.ubulk', 'ITR2_Gorka3/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife01_ORM.ubulk', 'ITR2_Gorka3/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_E.uasset', 'ITR2_Gorka3/Content/Sound/SFX/Detector_MS/MS_Detector_ART_Detection.uasset', 'ITR2_Gorka3/Content/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_knife_SP.uasset', 'ITR2_Gorka3/Content/Sound/SFX/Detector_MS/MS_Detector.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife_BaseColor.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_E.ubulk', 'ITR2_Gorka3/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1.uasset', 'ITR2_Gorka3/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.ubulk', 'ITR2_Gorka3/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_C.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Characters/Player/Detector/MI_Detector_01_a.uasset', 'ITR2_Gorka3/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04.uasset', 'ITR2_Gorka3/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife_Normal.uasset', 'ITR2_Gorka3/Content/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector.ubulk', 'ITR2_Gorka3/Content/ITR2/BPs/Items/Artefacts/BP_Detector.uasset', 'ITR2_Gorka3/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.ubulk', 'ITR2_Gorka3/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife_BaseColor.ubulk', 'ITR2_Gorka3/Content/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_knife_SP.ubulk', 'ITR2_Gorka3/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.uasset', 'ITR2_Gorka3/Content/Sound/SFX/Detector_MS/Detector/cargeUP.ubulk', 'ITR2_Gorka3/Content/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_knife1.ubulk', 'ITR2_Gorka3/Content/ITR2/BPs/Items/Melee/BP_knife_SP.uasset', 'ITR2_Gorka3/Content/ITR2/Art/Characters/Player/Detector/PA_Detector_IR1_01_a.uasset', 'ITR2_Gorka3/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03.ubulk'}, extra={'IntoTheRadius2/Content/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector.uasset', 'IntoTheRadius2/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.uasset', 'IntoTheRadius2/Content/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector.ubulk', 'IntoTheRadius2/Content/ITR2/Art/Characters/Player/Detector/MI_Detector_01_a.uasset', 'IntoTheRadius2/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03.ubulk', 'IntoTheRadius2/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_N.uasset', 'IntoTheRadius2/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_E.uasset', 'IntoTheRadius2/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife_BaseColor.ubulk', 'IntoTheRadius2/Content/Sound/SFX/Detector_MS/Detector/A_SFX_Detector_Click_B3.ubulk', 'IntoTheRadius2/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife01_ORM.ubulk', 'IntoTheRadius2/Content/Sound/SFX/Detector_MS/Detector/cargeUP.ubulk', 'IntoTheRadius2/Content/Sound/SFX/Detector_MS/Detector/cargeUP.uasset', 'IntoTheRadius2/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_C.ubulk', 'IntoTheRadius2/Content/Sound/SFX/Detector_MS/MS_Detector_ART_Detection.uasset', 'IntoTheRadius2/Content/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_knife1.uasset', 'IntoTheRadius2/Content/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_knife_SP.uasset', 'IntoTheRadius2/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04.ubulk', 'IntoTheRadius2/Content/ITR2/BPs/Items/Melee/BP_knife.uasset', 'IntoTheRadius2/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_C.uasset', 'IntoTheRadius2/Content/ITR2/BPs/Items/Melee/BP_knife_SP.uasset', 'IntoTheRadius2/Content/ITR2/Art/Characters/Player/Detector/PA_Detector_IR1_01_a.uasset', 'IntoTheRadius2/Content/ITR2/BPs/Items/Artefacts/BP_Detector.uasset', 'IntoTheRadius2/Content/Sound/SFX/Detector_MS/MS_Detector.uasset', 'IntoTheRadius2/Content/Sound/SFX/Detector_MS/Detector/A_SFX_Detector_Click_B3.uasset', 'IntoTheRadius2/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03.uasset', 'IntoTheRadius2/Content/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1.uasset', 'IntoTheRadius2/Content/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a.uasset', 'IntoTheRadius2/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife_Normal.ubulk', 'IntoTheRadius2/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.ubulk', 'IntoTheRadius2/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04.uasset', 'IntoTheRadius2/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife_BaseColor.uasset', 'IntoTheRadius2/Content/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_knife1.ubulk', 'IntoTheRadius2/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_N.ubulk', 'IntoTheRadius2/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.uasset', 'IntoTheRadius2/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM.uasset', 'IntoTheRadius2/Content/ITR2/Art/Items/Weapons/Melee/Knife01/MI_Knife01.uasset', 'IntoTheRadius2/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_E.ubulk', 'IntoTheRadius2/Content/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_knife_SP.ubulk', 'IntoTheRadius2/Content/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.ubulk', 'IntoTheRadius2/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife01_ORM.uasset', 'IntoTheRadius2/Content/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1.ubulk', 'IntoTheRadius2/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife_Normal.uasset', 'IntoTheRadius2/Content/ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM.ubulk', 'IntoTheRadius2/Content/ITR2/Art/Items/Weapons/Melee/Knife01/Knife.uasset'}
-builder exit 1
+written release/old-gear/OldProbe_Detector_Patched_P.utoc release/old-gear/OldProbe_Detector_Patched_P.ucas chunks=45 mount=../../../IntoTheRadius2/Content/
+validate OK utoc=d74ebf309ad2
+ZIP release/OldProbe_Detector_Patched.zip 10576662
 === BUILD END ===
 total 42M
--rw-r--r-- 1 runner runner  42M Oct 30 14:12 OldProbe_Detector_Patched_P.ucas
--rw-r--r-- 1 runner runner  13K Oct 30 14:12 OldProbe_Detector_Patched_P.utoc
--rw-r--r-- 1 runner runner 9.4K Oct 30 14:11 build.log
--rw-r--r-- 1 runner runner  731 Oct 30 14:11 checkout-diag.log
--rw-r--r-- 1 runner runner  930 Oct 30 14:11 upload.log
--rw-r--r-- 1 runner runner 42M Oct 30 14:11 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
--rw-r--r-- 1 runner runner 45M Oct 30 14:11 release/Gorka3_For_All_Brown_A_fixed.zip
--rw-r--r-- 1 runner runner 45M Oct 30 14:11 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
--rw-r--r-- 1 runner runner 45M Oct 30 14:11 release/Gorka3_For_All_Khaki_A.zip
--rw-r--r-- 1 runner runner 45M Oct 30 14:11 release/Gorka3_For_All_Khaki_V2.zip
--rw-r--r-- 1 runner runner 45M Oct 30 14:11 release/Gorka3_For_All_Khaki_V3.zip
--rw-r--r-- 1 runner runner 45M Oct 30 14:11 release/Gorka3_For_All_Khaki_V4.zip
+-rw-r--r-- 1 runner runner 339 Oct 30 14:13 OldProbe_Detector_Patched_P.pak
+-rw-r--r-- 1 runner runner 42M Oct 30 14:13 OldProbe_Detector_Patched_P.ucas
+-rw-r--r-- 1 runner runner 13K Oct 30 14:13 OldProbe_Detector_Patched_P.utoc
+-rw-r--r-- 1 runner runner  98 Oct 30 14:13 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner 831 Oct 30 14:13 build-manifest.json
+-rw-r--r-- 1 runner runner 16K Oct 30 14:12 build.log
+-rw-r--r-- 1 runner runner 731 Oct 30 14:12 checkout-diag.log
+-rw-r--r-- 1 runner runner 619 Oct 30 14:12 upload.log
+-rw-r--r-- 1 runner runner 42M Oct 30 14:12 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
+-rw-r--r-- 1 runner runner 45M Oct 30 14:12 release/Gorka3_For_All_Brown_A_fixed.zip
+-rw-r--r-- 1 runner runner 45M Oct 30 14:12 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
+-rw-r--r-- 1 runner runner 45M Oct 30 14:12 release/Gorka3_For_All_Khaki_A.zip
+-rw-r--r-- 1 runner runner 45M Oct 30 14:12 release/Gorka3_For_All_Khaki_V2.zip
+-rw-r--r-- 1 runner runner 45M Oct 30 14:12 release/Gorka3_For_All_Khaki_V3.zip
+-rw-r--r-- 1 runner runner 45M Oct 30 14:12 release/Gorka3_For_All_Khaki_V4.zip
+-rw-r--r-- 1 runner runner 11M Oct 30 14:13 release/OldGear_Pouch_Knife_Detector.zip
+-rw-r--r-- 1 runner runner 11M Oct 30 14:13 release/OldProbe_Detector_Patched.zip
