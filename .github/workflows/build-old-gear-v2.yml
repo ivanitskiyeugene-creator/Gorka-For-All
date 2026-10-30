@@ -26,11 +26,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Prefer new IntoTheRadius2.rar (contains vanilla+ITR for Detector/Probes/Vest), fallback to old gorka-assets.rar
-          gh release download old-assets-debug --pattern "IntoTheRadius2.rar" --dir /tmp --clobber || gh release download old-assets-debug --pattern "gorka-assets.rar" --dir /tmp --clobber
+          for i in 1 2 3 4 5; do
+            gh release download old-assets-debug --pattern "IntoTheRadius2.rar" --dir /tmp --clobber && break
+            echo "retry $i for IntoTheRadius2.rar"
+            sleep 3
+          done
+          if [ ! -f /tmp/IntoTheRadius2.rar ]; then
+            gh release download old-assets-debug --pattern "gorka-assets.rar" --dir /tmp --clobber
+          fi
           ls -lh /tmp/*.rar
           mkdir -p /tmp/old-assets
           sudo apt-get update && sudo apt-get install -y unrar
-          for rar in /tmp/*.rar; do echo \"=== extracting $rar ===\"; unrar x \"$rar\" /tmp/old-assets/ || 7z x \"$rar\" -o/tmp/old-assets; done
+          for rar in /tmp/*.rar; do echo "=== extracting $rar ==="; unrar x "$rar" /tmp/old-assets/ || 7z x "$rar" -o/tmp/old-assets; done
           find /tmp/old-assets -type f | wc -l
           find /tmp/old-assets -type d | head -20
       - name: Build OldPouch+Knife+Detector mod
