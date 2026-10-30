@@ -141,10 +141,14 @@ if __name__ == "__main__":
         # Build remap dict for imports: any import containing ITR1 -> vanilla
         # We need to collect all unique imports first
         pass
-    # Collect all imports to build remap
+    # Collect all imports to build remap (skip versioned packages gracefully)
     all_imports=set()
     for f in filt:
-        pkg=parse_package(f.data)
+        try:
+            pkg=parse_package(f.data)
+        except Exception as e:
+            print(f" skip import collect {f.relative_path}: {e}")
+            continue
         for n in pkg.imported_package_names:
             all_imports.add(n)
     remap_dict={}
@@ -161,18 +165,33 @@ if __name__ == "__main__":
     for f in filt:
         new_rel = f.relative_path.replace("Detector_ITR1","Detector").replace("Probe_Sack_ITR1","Probe_Sack")
         new_pkg_name = f.package_name.replace("Detector_ITR1","Detector").replace("Probe_Sack_ITR1","Probe_Sack")
-        # Skip if already have vanilla file with same new name (we want old to overwrite)
-        # Patch package data
+        # Skip versioned BP packages that we can't patch – keep original bytes but with new path/name
         try:
-            new_data = patch_package_to_new_name(f.data, new_pkg_name, remap_dict)
-        except Exception as e:
-            print(f"patch fail {f.relative_path}: {e}")
+            parse_package(f.data)
+            can_patch = True
+        except:
+            can_patch = False
+        if can_patch:
+            try:
+                new_data = patch_package_to_new_name(f.data, new_pkg_name, remap_dict)
+            except Exception as e:
+                print(f"patch fail {f.relative_path}: {e}")
+                new_data=f.data
+        else:
+            print(f" versioned, copy raw {f.relative_path} -> {new_rel}")
             new_data=f.data
         out_files.append(SourceFile(relative_path=new_rel, package_name=new_pkg_name, chunk_type=f.chunk_type, data=new_data))
         if new_pkg_name not in seen_pkgs:
-            # For package store, use remapped imports
-            pkg=parse_package(new_data)
-            out_pkgs.append(PackageStoreInfo(new_pkg_name, [remap_dict.get(n,n) for n in pkg.imported_package_names]))
+            try:
+                pkg2=parse_package(new_data)
+                out_pkgs.append(PackageStoreInfo(new_pkg_name, [remap_dict.get(n,n) for n in pkg2.imported_package_names]))
+            except:
+                # versioned: use original imports with remap
+                try:
+                    orig=parse_package(f.data)
+                    out_pkgs.append(PackageStoreInfo(new_pkg_name, [remap_dict.get(n,n) for n in orig.imported_package_names]))
+                except:
+                    out_pkgs.append(PackageStoreInfo(new_pkg_name, []))
             seen_pkgs.add(new_pkg_name)
     print(f"remapped {len(out_files)} files {len(out_pkgs)} pkgs")
     for f in out_files[:20]:
