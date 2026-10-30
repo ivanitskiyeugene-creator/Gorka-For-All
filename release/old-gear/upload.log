@@ -1,20 +1,15 @@
 === UPLOAD DIAG ===
-total 15M
--rw-r--r-- 1 runner runner  339 Oct 30 14:09 OldProbe_Detector_Patched_P.pak
--rw-r--r-- 1 runner runner  15M Oct 30 14:09 OldProbe_Detector_Patched_P.ucas
--rw-r--r-- 1 runner runner 6.3K Oct 30 14:09 OldProbe_Detector_Patched_P.utoc
--rw-r--r-- 1 runner runner   98 Oct 30 14:09 ReadMe_RU.txt
--rw-r--r-- 1 runner runner  830 Oct 30 14:09 build-manifest.json
--rw-r--r-- 1 runner runner 9.4K Oct 30 14:09 build.log
--rw-r--r-- 1 runner runner  731 Oct 30 14:09 checkout-diag.log
--rw-r--r-- 1 runner runner  469 Oct 30 14:09 upload.log
--rw-r--r-- 1 runner runner 3.3M Oct 30 14:09 release/OldGear_Pouch_Knife_Detector.zip
+total 42M
+-rw-r--r-- 1 runner runner 42M Oct 30 14:12 OldProbe_Detector_Patched_P.ucas
+-rw-r--r-- 1 runner runner 13K Oct 30 14:12 OldProbe_Detector_Patched_P.utoc
+-rw-r--r-- 1 runner runner 16K Oct 30 14:12 build.log
+-rw-r--r-- 1 runner runner 731 Oct 30 14:11 checkout-diag.log
+-rw-r--r-- 1 runner runner 930 Oct 30 14:11 upload.log
+ls: cannot access 'release/OldGear_Pouch_Knife_Detector.zip': No such file or directory
 release assets before:
 build.log
 OldGear_Pouch_Knife_Detector.zip
-uploading zip to old-gear-mod...
-upload exit code 0
--rw-r--r-- 1 runner runner 3.3M Oct 30 14:09 release/OldGear_Pouch_Knife_Detector.zip
+ZIP not found — build failed
 release assets after:
 build.log 12357
 OldGear_Pouch_Knife_Detector.zip 3400563
