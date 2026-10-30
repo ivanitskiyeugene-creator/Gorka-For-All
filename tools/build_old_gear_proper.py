@@ -97,13 +97,33 @@ def collect(content_root: Path):
 REMAPPINGS = {
     "Detector_ITR1": "Detector",
     "Probe_Sack_ITR1": "Probe_Sack",
-    "Probe_Sack": "Probe_Sack",  # keep
+    "Probe_Sack": "Probe_Sack",
+    "Probes_Missle_ITR1": "Probes_Missle2",
+    "Probes_Missle_ITR1": "Probes_Missle2",
+    "ShellSack_ITR1": "ShellSack",
+    "ProbesBag_ITR1": "ProbesBag",
+    "Vest_ITR1": "Vest",
 }
 
 def remap_name(name: str) -> str:
-    for old, new in [("Detector_ITR1","Detector"), ("Probe_Sack_ITR1","Probe_Sack")]:
+    # specific first
+    for old, new in [
+        ("Probes_Missle_ITR1","Probes_Missle2"),
+        ("Detector_ITR1","Detector"),
+        ("Probe_Sack_ITR1","Probe_Sack"),
+        ("ShellSack_ITR1","ShellSack"),
+        ("ProbesBag_ITR1","ProbesBag"),
+        ("Vest_ITR1","Vest"),
+    ]:
         if old in name:
             return name.replace(old, new)
+    # generic fallback: strip _ITR1 -> "" (covers any missed ITR1)
+    if "_ITR1" in name:
+        return name.replace("_ITR1","")
+    if "_itr1" in name.lower():
+        # case-insensitive strip
+        import re
+        return re.sub(r"_ITR1","", name, flags=re.IGNORECASE)
     return name
 
 if __name__ == "__main__":
@@ -118,37 +138,44 @@ if __name__ == "__main__":
     print(f"Content root {cr}")
     files, pkgs = collect(cr)
     print(f"collected {len(files)}")
-    # Filter to old sources: detector_itr1, probe_sack_itr1 + knife + casings
+    # Filter to old sources: any _ITR1 + specific old bags/probes/vest
     filt=[]
     for f in files:
         hay=(f.relative_path+" "+f.package_name).lower()
-        if "detector_itr1" in hay or "probe_sack_itr1" in hay or "bp_detector_itr1" in hay:
+        # generic _itr1 catch-all: detector, probes missile, shellsack, vest, etc.
+        if "_itr1" in hay or "itr1" in hay:
             filt.append(f)
-        elif "detector" in hay and "detector_itr1" not in hay and False:
-            pass
-    print(f"old files filtered {len(filt)}")
+        elif "shellsack" in hay and "itr1" in hay:
+            filt.append(f)
+        elif "probesbag" in hay and "itr1" in hay:
+            filt.append(f)
+    # dedup
+    filt = list({id(x):x for x in filt}.values())
+    print(f"old files filtered {len(filt)} (generic _ITR1)")
     # Knife: old knife is ITR2/BPs/Items/Melee/BP_knife.uasset (no ITR1 suffix, but old version in dump)
     # Include any knife asset from old dump – it will override vanilla directly (no remap needed)
     knife_added=0
     for f in files:
         low=f.package_name.lower()
+        low_rel=f.relative_path.lower()
         if "knife" in low:
             if f not in filt:
                 filt.append(f); knife_added+=1
-        # Also casings: гильзы – try casing/cartridge/shell/ammo related to probe sack
-        # User wants "мешочек гильз + старые гильзы" – include casing families if present
-        if any(k in low for k in ["casing","cartridge","shell_casing","ammo_casing"]):
-            if f not in filt:
+        # Probes / shellsack explicit extra (in case _itr1 filter missed due to naming)
+        if any(k in low for k in ["probes_missle","probes_missile","shellsack","probesbag","probes_01","vest_itr1"]):
+            if "itr1" in low and f not in filt:
                 filt.append(f); knife_added+=1
-    print(f"with knife+casing {len(filt)} (+{knife_added})")
+        # Old vest Gorka etc – include if ITR1
+        if "vest" in low and "itr1" in low and f not in filt:
+            filt.append(f); knife_added+=1
+    print(f"with knife+probes+vest {len(filt)} (+{knife_added})")
     # Now remap each to vanilla path and patch data
     remapped_files=[]
     remap_imports={}
     for f in filt:
-        new_rel = f.relative_path.replace("Detector_ITR1","Detector").replace("Probe_Sack_ITR1","Probe_Sack")
-        new_pkg_name = f.package_name.replace("Detector_ITR1","Detector").replace("Probe_Sack_ITR1","Probe_Sack")
-        # Build remap dict for imports: any import containing ITR1 -> vanilla
-        # We need to collect all unique imports first
+        # build preview of remap via remap_name on path/pkg
+        new_rel = remap_name(f.relative_path)
+        new_pkg_name = remap_name(f.package_name)
         pass
     # Collect all imports to build remap (skip versioned packages gracefully)
     all_imports=set()
@@ -173,8 +200,8 @@ if __name__ == "__main__":
     seen_pkgs=set()
     for f in filt:
         is_bulk = f.relative_path.lower().endswith((".ubulk",".uexp"))
-        new_rel = f.relative_path.replace("Detector_ITR1","Detector").replace("Probe_Sack_ITR1","Probe_Sack")
-        new_pkg_name = f.package_name.replace("Detector_ITR1","Detector").replace("Probe_Sack_ITR1","Probe_Sack")
+        new_rel = remap_name(f.relative_path)
+        new_pkg_name = remap_name(f.package_name)
         if is_bulk:
             # bulk has no header – just rename, keep data verbatim, don't store as package
             out_files.append(SourceFile(relative_path=new_rel, package_name=new_pkg_name, chunk_type=f.chunk_type, data=f.data))
@@ -209,8 +236,8 @@ if __name__ == "__main__":
     print(f"remapped {len(out_files)} files {len(out_pkgs)} pkgs")
     for f in out_files[:20]:
         print(f"  {f.relative_path} -> {f.package_name}")
-    # Write container
-    mod="OldProbe_Detector_Patched_P"
+    # Write container - DLC-Black pirate mod (private)
+    mod="DLC-Black_P"
     cid=container_id_from_name(mod)
     base=out/mod
     chunks=[Chunk(__import__('tools.iostore_write', fromlist=['make_chunk_id']).make_chunk_id(f.package_name,f.chunk_type), f.data, f.relative_path) for f in out_files]
@@ -245,10 +272,11 @@ if __name__ == "__main__":
     if not pak_dst.exists() or pak_dst.stat().st_size==0:
         pak_dst.write_bytes(b"")
     readme=out/"ReadMe_RU.txt"
-    readme.write_text(f"Patched OldGear: vanilla ITR2 Detector/Probe_Sack replaced with old ITR1 models (patched headers)\n", encoding="utf-8")
-    zipname="OldProbe_Detector_Patched.zip"
+    readme.write_text(f"DLC-Black (private): vanilla Detector/Probes/ShellSack/Vest replaced with ITR1 originals (patched headers) - IntoTheRadius2/Content override\nНе для публикации\n", encoding="utf-8")
+    zipname="DLC-Black.zip"
     zpath=Path("release")/zipname
     write_deterministic_zip(out, zpath, mod)
     import shutil as _sh
     _sh.copyfile(zpath, Path("release")/"OldGear_Pouch_Knife_Detector.zip")
+    _sh.copyfile(zpath, Path("release")/"OldProbe_Detector_Patched.zip")
     print(f"ZIP {zpath} {zpath.stat().st_size}")

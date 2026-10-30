@@ -25,12 +25,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release download old-assets-debug --pattern "gorka-assets.rar" --dir /tmp --clobber
+          # Prefer new IntoTheRadius2.rar (contains vanilla+ITR for Detector/Probes/Vest), fallback to old gorka-assets.rar
+          gh release download old-assets-debug --pattern "IntoTheRadius2.rar" --dir /tmp --clobber || gh release download old-assets-debug --pattern "gorka-assets.rar" --dir /tmp --clobber
           ls -lh /tmp/*.rar
           mkdir -p /tmp/old-assets
           sudo apt-get update && sudo apt-get install -y unrar
-          unrar x /tmp/gorka-assets.rar /tmp/old-assets/ || 7z x /tmp/gorka-assets.rar -o/tmp/old-assets
+          for rar in /tmp/*.rar; do echo \"=== extracting $rar ===\"; unrar x \"$rar\" /tmp/old-assets/ || 7z x \"$rar\" -o/tmp/old-assets; done
           find /tmp/old-assets -type f | wc -l
+          find /tmp/old-assets -type d | head -20
       - name: Build OldPouch+Knife+Detector mod
         run: |
           mkdir -p release/old-gear
@@ -53,17 +55,13 @@ jobs:
           {
             echo "=== UPLOAD DIAG ==="
             ls -lh release/old-gear/ 2>&1 | head -20
-            ls -lh release/OldGear_Pouch_Knife_Detector.zip 2>&1 | head -5 || echo "no zip"
+            ls -lh release/DLC-Black.zip release/OldGear_Pouch_Knife_Detector.zip 2>&1 | head -10 || echo "no zip"
             echo "release assets before:"
             gh release view old-gear-mod --json assets --jq '.assets[].name' 2>&1 | head -10 || true
-            if [ -f release/OldGear_Pouch_Knife_Detector.zip ]; then
-              echo "uploading zip to old-gear-mod..."
-              gh release upload old-gear-mod release/OldGear_Pouch_Knife_Detector.zip --clobber 2>&1 | head -40 || echo "upload zip failed"
-              echo "upload exit code $?"
-              ls -lh release/OldGear_Pouch_Knife_Detector.zip
-            else
-              echo "ZIP not found — build failed"
-            fi
+            # Upload DLC-Black as primary (private pirate mod), keep legacy name for compat
+            for z in release/DLC-Black.zip release/OldGear_Pouch_Knife_Detector.zip release/OldProbe_Detector_Patched.zip; do
+              if [ -f "$z" ]; then gh release upload old-gear-mod "$z" --clobber 2>&1 | head -20 || echo "upload $z failed"; fi
+            done
             echo "release assets after:"
             gh release view old-gear-mod --json assets --jq '.assets[] | "\(.name) \(.size)"' 2>&1 | head -10 || true
           } 2>&1 | tee /tmp/upload.log
