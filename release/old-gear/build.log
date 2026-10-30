@@ -1,4 +1,4 @@
-=== DIAG HEAD=50340a9f3a5bdc417a8ecafaf04d2d94bf2227f6 ===
+=== DIAG HEAD=8754f2e764608fdbf13088136376fa8d609f9f50 ===
 #!/usr/bin/env python3
 """Proper old->vanilla replacement: patch package headers, not just paths."""
 import struct, json
@@ -10,23 +10,82 @@ Content root /tmp/old-assets/gorka-assets/IntoTheRadius2/Content
 collected 519
 old files filtered 30
 with knife 30
-Traceback (most recent call last):
-  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear_proper.py", line 147, in <module>
-    pkg=parse_package(f.data)
-        ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/zen_asset.py", line 181, in parse_package
-    raise ValueError("Versioned Zen packages are outside this reader's ITR2 scope")
-ValueError: Versioned Zen packages are outside this reader's ITR2 scope
-builder exit 1
+ skip import collect ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
+ skip import collect ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
+ skip import collect ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
+ skip import collect ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_ORM.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
+ skip import collect ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector_ITR1.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
+ skip import collect Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
+ skip import collect Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
+ skip import collect Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
+ skip import collect Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
+ skip import collect Sound/SFX/Detector_MS/Detector_ITR1/A_SFX_Detector_Click_B3.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
+ skip import collect Sound/SFX/Detector_MS/Detector_ITR1/cargeUP.ubulk: Versioned Zen packages are outside this reader's ITR2 scope
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a -> /Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a
+ import remap /Game/Sound/SFX/Detector_MS/Detector_ITR1/cargeUP -> /Game/Sound/SFX/Detector_MS/Detector/cargeUP
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/MI_Detector_ITR1_01_a -> /Game/ITR2/Art/Characters/Player/Detector/MI_Detector_01_a
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/PA_Detector_IR1_01_a -> /Game/ITR2/Art/Characters/Player/Detector/PA_Detector_IR1_01_a
+ import remap /Game/Sound/SFX/Detector_MS/MS_Detector_ITR1_ART_Detection -> /Game/Sound/SFX/Detector_MS/MS_Detector_ART_Detection
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_ORM -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_E
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_N
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_C
+ import remap /Game/ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1 -> /Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1
+ import remap /Game/Sound/SFX/Detector_MS/MS_Detector_ITR1 -> /Game/Sound/SFX/Detector_MS/MS_Detector
+ import remap /Game/Sound/SFX/Detector_MS/Detector_ITR1/A_SFX_Detector_Click_B3 -> /Game/Sound/SFX/Detector_MS/Detector/A_SFX_Detector_Click_B3
+remap dict 12
+ versioned, copy raw ITR2/Art/Characters/Player/Detector_ITR1/SKM_Detector_IR1_01_a1.ubulk -> ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1.ubulk
+ versioned, copy raw ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_C.ubulk -> ITR2/Art/Characters/Player/Detector/T_Detector_01_C.ubulk
+patch fail ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_E.ubulk: Name index 0 outside 0-entry name map
+ versioned, copy raw ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_N.ubulk -> ITR2/Art/Characters/Player/Detector/T_Detector_01_N.ubulk
+ versioned, copy raw ITR2/Art/Characters/Player/Detector_ITR1/T_Detector_ITR1_01_ORM.ubulk -> ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM.ubulk
+ versioned, copy raw ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector_ITR1.ubulk -> ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector.ubulk
+ versioned, copy raw Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.ubulk -> Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.ubulk
+ versioned, copy raw Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.ubulk -> Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.ubulk
+ versioned, copy raw Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03.ubulk -> Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_03.ubulk
+ versioned, copy raw Sound/Probe_Sack_ITR1/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04.ubulk -> Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_04.ubulk
+ versioned, copy raw Sound/SFX/Detector_MS/Detector_ITR1/A_SFX_Detector_Click_B3.ubulk -> Sound/SFX/Detector_MS/Detector/A_SFX_Detector_Click_B3.ubulk
+ versioned, copy raw Sound/SFX/Detector_MS/Detector_ITR1/cargeUP.ubulk -> Sound/SFX/Detector_MS/Detector/cargeUP.ubulk
+remapped 30 files 18 pkgs
+  ITR2/Art/Characters/Player/Detector/MI_Detector_01_a.uasset -> /Game/ITR2/Art/Characters/Player/Detector/MI_Detector_01_a
+  ITR2/Art/Characters/Player/Detector/PA_Detector_IR1_01_a.uasset -> /Game/ITR2/Art/Characters/Player/Detector/PA_Detector_IR1_01_a
+  ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a.uasset -> /Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a
+  ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1.uasset -> /Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1
+  ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1.ubulk -> /Game/ITR2/Art/Characters/Player/Detector/SKM_Detector_IR1_01_a1
+  ITR2/Art/Characters/Player/Detector/T_Detector_01_C.uasset -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_C
+  ITR2/Art/Characters/Player/Detector/T_Detector_01_C.ubulk -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_C
+  ITR2/Art/Characters/Player/Detector/T_Detector_01_E.uasset -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_E
+  ITR2/Art/Characters/Player/Detector/T_Detector_01_E.ubulk -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_E
+  ITR2/Art/Characters/Player/Detector/T_Detector_01_N.uasset -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_N
+  ITR2/Art/Characters/Player/Detector/T_Detector_01_N.ubulk -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_N
+  ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM.uasset -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM
+  ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM.ubulk -> /Game/ITR2/Art/Characters/Player/Detector/T_Detector_01_ORM
+  ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector.uasset -> /Game/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector
+  ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector.ubulk -> /Game/ITR2/Art/UI/ItemPreview/T_ItemPreview_BP_Detector
+  ITR2/BPs/Items/Artefacts/BP_Detector.uasset -> /Game/ITR2/BPs/Items/Artefacts/BP_Detector
+  Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.uasset -> /Game/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01
+  Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01.ubulk -> /Game/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_01
+  Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.uasset -> /Game/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02
+  Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02.ubulk -> /Game/Sound/Probe_Sack/Probes_Pouch_Drop/A_SFX_Probe_Sack_Drop_02
+written release/old-gear/OldProbe_Detector_Patched_P.utoc release/old-gear/OldProbe_Detector_Patched_P.ucas chunks=31
+validate OK utoc=25f3119daeb2
+ZIP release/OldProbe_Detector_Patched.zip 3400563
 === BUILD END ===
-total 28K
--rw-r--r-- 1 runner runner 20K Oct 29 20:35 build.log
--rw-r--r-- 1 runner runner 731 Oct 29 20:35 checkout-diag.log
--rw-r--r-- 1 runner runner 906 Oct 29 20:35 upload.log
--rw-r--r-- 1 runner runner 42M Oct 29 20:35 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
--rw-r--r-- 1 runner runner 45M Oct 29 20:35 release/Gorka3_For_All_Brown_A_fixed.zip
--rw-r--r-- 1 runner runner 45M Oct 29 20:35 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
--rw-r--r-- 1 runner runner 45M Oct 29 20:35 release/Gorka3_For_All_Khaki_A.zip
--rw-r--r-- 1 runner runner 45M Oct 29 20:35 release/Gorka3_For_All_Khaki_V2.zip
--rw-r--r-- 1 runner runner 45M Oct 29 20:35 release/Gorka3_For_All_Khaki_V3.zip
--rw-r--r-- 1 runner runner 45M Oct 29 20:35 release/Gorka3_For_All_Khaki_V4.zip
+total 15M
+-rw-r--r-- 1 runner runner  339 Oct 30 14:09 OldProbe_Detector_Patched_P.pak
+-rw-r--r-- 1 runner runner  15M Oct 30 14:09 OldProbe_Detector_Patched_P.ucas
+-rw-r--r-- 1 runner runner 6.3K Oct 30 14:09 OldProbe_Detector_Patched_P.utoc
+-rw-r--r-- 1 runner runner   98 Oct 30 14:09 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner  830 Oct 30 14:09 build-manifest.json
+-rw-r--r-- 1 runner runner 1.7K Oct 30 14:09 build.log
+-rw-r--r-- 1 runner runner  731 Oct 30 14:09 checkout-diag.log
+-rw-r--r-- 1 runner runner  469 Oct 30 14:09 upload.log
+-rw-r--r-- 1 runner runner  42M Oct 30 14:09 release/Gorka3_For_All_Brown_A_NO_GLOVES.zip
+-rw-r--r-- 1 runner runner  45M Oct 30 14:09 release/Gorka3_For_All_Brown_A_fixed.zip
+-rw-r--r-- 1 runner runner  45M Oct 30 14:09 release/Gorka3_For_All_Brown_A_fixed_gloves.zip
+-rw-r--r-- 1 runner runner  45M Oct 30 14:09 release/Gorka3_For_All_Khaki_A.zip
+-rw-r--r-- 1 runner runner  45M Oct 30 14:09 release/Gorka3_For_All_Khaki_V2.zip
+-rw-r--r-- 1 runner runner  45M Oct 30 14:09 release/Gorka3_For_All_Khaki_V3.zip
+-rw-r--r-- 1 runner runner  45M Oct 30 14:09 release/Gorka3_For_All_Khaki_V4.zip
+-rw-r--r-- 1 runner runner 3.3M Oct 30 14:09 release/OldGear_Pouch_Knife_Detector.zip
+-rw-r--r-- 1 runner runner 3.3M Oct 30 14:09 release/OldProbe_Detector_Patched.zip
