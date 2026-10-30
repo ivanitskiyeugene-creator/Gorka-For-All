@@ -106,9 +106,11 @@ REMAPPINGS = {
 }
 
 def remap_name(name: str) -> str:
-    # specific first
+    # specific first - longest first
     for old, new in [
         ("Probes_Missle_ITR1","Probes_Missle2"),
+        ("T_ProbesMissle_ITR1","T_ProbesMissle"),
+        ("Probes_ITR1","Probes"),
         ("Detector_ITR1","Detector"),
         ("Probe_Sack_ITR1","Probe_Sack"),
         ("ShellSack_ITR1","ShellSack"),
