@@ -141,8 +141,17 @@ REMAPPINGS = {
 }
 
 def remap_name(name: str) -> str:
-    # apply all replacements sequentially (longest first)
+    # apply all replacements sequentially (longest first) - specific file maps for Heavy/2lvl
     for old, new in [
+        ("SM_Vest_ITR1_01_a","SM_Vest_Heavy_01_a"),
+        ("SKM_Detector_IR1_01_a1","SKM_Detector_2lvl"),
+        ("SKM_Detector_IR1_01_a","SKM_Detector_01_a"),
+        ("MI_Detector_ITR1_01_a","MI_Detector_01_a"),
+        ("PA_Detector_IR1_01_a","PA_Detector_01_a"),
+        ("T_Detector_ITR1_01_C","T_Detector_01_C"),
+        ("T_Detector_ITR1_01_E","T_Detector_01_E"),
+        ("T_Detector_ITR1_01_N","T_Detector_01_N"),
+        ("T_Detector_ITR1_01_ORM","T_Detector_01_ORM"),
         ("Probes_Missle_ITR1","Probes_Missle2"),
         ("T_ProbesMissle_ITR1","T_ProbesMissle"),
         ("Probes_ITR1","Probes"),
@@ -150,7 +159,7 @@ def remap_name(name: str) -> str:
         ("Probe_Sack_ITR1","Probe_Sack"),
         ("ShellSack_ITR1","ShellSack"),
         ("ProbesBag_ITR1","ProbesBag"),
-        ("Vest_ITR1","Vest"),
+        ("Vest_ITR1","Vest_Heavy_01"),
     ]:
         if old in name:
             name = name.replace(old, new)
