@@ -106,7 +106,7 @@ REMAPPINGS = {
 }
 
 def remap_name(name: str) -> str:
-    # specific first - longest first
+    # apply all replacements sequentially (longest first)
     for old, new in [
         ("Probes_Missle_ITR1","Probes_Missle2"),
         ("T_ProbesMissle_ITR1","T_ProbesMissle"),
@@ -118,7 +118,7 @@ def remap_name(name: str) -> str:
         ("Vest_ITR1","Vest"),
     ]:
         if old in name:
-            return name.replace(old, new)
+            name = name.replace(old, new)
     # generic fallback: strip _ITR1 -> "" (covers any missed ITR1)
     if "_ITR1" in name:
         return name.replace("_ITR1","")
