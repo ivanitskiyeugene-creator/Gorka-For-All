@@ -12,58 +12,93 @@ from tools.build_gorka_mod import SourceFile, validate_container, write_determin
 from tools.iostore_write import EXPORT_BUNDLE_CHUNK_TYPE, BULK_DATA_CHUNK_TYPE
 MOUNT_POINT = "../../../IntoTheRadius2/Content/"
 
+def _patch_primary_name_batch(data: bytes, new_package_name: str) -> bytes:
+    """Properly add new_package_name to primary name batch and update all header offsets."""
+    pkg = parse_package(data)
+    if pkg.package_name == new_package_name:
+        return data
+    from tools.zen_asset import read_name_batch, Reader
+    r = Reader(data)
+    r.seek(52)
+    batch_start = r.pos
+    batch = read_name_batch(r)
+    batch_end = r.pos
+    old_len = batch_end - batch_start
+    new_names = list(pkg.names)
+    if new_package_name not in new_names:
+        new_names.append(new_package_name)
+        new_idx = len(new_names) - 1
+    else:
+        new_idx = new_names.index(new_package_name)
+    # If already correct index, no need to shift, just patch index
+    old_idx = pkg.summary["name"]
+    if old_idx == new_idx and new_package_name in pkg.names:
+        return data
+    new_batch_bytes = write_name_batch(new_names, batch["hash_version"])
+    delta = len(new_batch_bytes) - old_len
+    if delta == 0:
+        # No size change, just patch index
+        d = bytearray(data)
+        struct.pack_into("<I", d, 8, new_idx)
+        struct.pack_into("<I", d, 12, 0)
+        return bytes(d)
+    old_header_size = pkg.summary["header_size"]
+    # Build new file: summary placeholder + new batch + rest of header + body
+    # Rest of header is data[batch_end:old_header_size]
+    rest_header = data[batch_end:old_header_size]
+    after = data[old_header_size:]
+    # New header size
+    new_header_size = old_header_size + delta
+    # Reconstruct file with placeholder summary
+    new_data = bytearray(52 + len(new_batch_bytes) + len(rest_header) + len(after))
+    # Copy new batch after summary
+    new_data[52:52+len(new_batch_bytes)] = new_batch_bytes
+    new_data[52+len(new_batch_bytes):52+len(new_batch_bytes)+len(rest_header)] = rest_header
+    new_data[52+len(new_batch_bytes)+len(rest_header):] = after
+    # Now patch summary fields (copy original summary and adjust offsets)
+    # Original summary bytes are data[0:52]
+    orig_summary = data[0:52]
+    # Unpack summary for delta adjustments
+    # Offsets to increase if they point after name batch (>= batch_end)
+    # These are at file offsets 20,24,28,32,36,40,44, plus header_size at 4, cooked_header_size at 20
+    # Read original values
+    has_ver, hdr_sz, name, name_num, pkg_flags, cooked_sz, off_pub, off_imp, off_exp, off_bun, off_dep_h, off_dep_e, off_imp_names = struct.unpack("<III III iiii iii", orig_summary[:52])
+    # Actually struct is <I I I I I I i i i i i i i> = 13 values
+    # Let's unpack properly
+    vals = struct.unpack("<III III iiii iii", orig_summary)
+    # vals indices: 0 has_ver,1 hdr_sz,2 name,3 name_num,4 pkg_flags,5 cooked_sz,6 off_pub,7 off_imp,8 off_exp,9 off_bun,10 off_dep_h,11 off_dep_e,12 off_imp_names
+    # Build new summary
+    new_vals = list(vals)
+    new_vals[1] = new_header_size
+    new_vals[2] = new_idx
+    new_vals[3] = 0
+    new_vals[5] = new_vals[5] + delta if new_vals[5] else new_vals[5]  # cooked_header_size
+    for idx in [6,7,8,9,10,11,12]:
+        if new_vals[idx] > 0:
+            # All these offsets are after name batch (they are >52), so add delta
+            # Check if offset >= batch_end (which is 52+old_len) - but all header offsets are after name batch, so yes
+            new_vals[idx] += delta
+    # Pack back
+    new_summary = struct.pack("<III III iiii iii", *new_vals)
+    new_data[0:52] = new_summary
+    return bytes(new_data)
+
 def patch_package_to_new_name(data: bytes, new_package_name: str, remap_imports: dict) -> bytes:
     """Patch Zen package to have new package_name and remapped imports. Returns new bytes."""
     pkg = parse_package(data)
-    # Build new names for own package + imports
-    # Own name is pkg.package_name -> new_package_name
-    # We need to rebuild name batch for the header
-    # Steps: 1) rebuild imported_package_names batch
-    # 2) rebuild main name batch if own name not in it
-    
-    # For now, we do minimal: keep own name batch, just patch imported names via existing helper
-    # and patch package_name via adding new name to name batch and updating summary name index
-    # This is simplified but matches what Unreal expects for IoStore override
     from tools.iostore_write import patch_imported_package_names
-    # First handle imports
+    # First handle own package name (primary name batch) properly
+    if pkg.package_name != new_package_name:
+        data = _patch_primary_name_batch(data, new_package_name)
+        pkg = parse_package(data)
+    # Now handle imports
     old_imports = list(pkg.imported_package_names)
     new_imports = [remap_imports.get(n, n) for n in old_imports]
     if old_imports != new_imports:
         data, new_header_size = patch_imported_package_names(data, pkg.summary["imported_package_names_offset"], pkg.summary["header_size"], new_imports, pkg.imported_package_name_numbers)
-        # Update header_size in data
         data = bytearray(data)
         struct.pack_into("<I", data, 4, new_header_size)
         data = bytes(data)
-        pkg = parse_package(data)  # re-parse after import patch
-    
-    # Now patch own package name if needed
-    if pkg.package_name != new_package_name:
-        # Need to add new_package_name to name batch
-        # Name batch is at offset after summary (cooked_header_size)
-        # We have pkg.names list - add new name
-        new_names = list(pkg.names)
-        if new_package_name not in new_names:
-            new_names.append(new_package_name)
-            new_name_idx = len(new_names) - 1
-        else:
-            new_name_idx = new_names.index(new_package_name)
-        # Rebuild name batch
-        # We need hash_version from original batch
-        # Re-parse original batch to get hash_version
-        from tools.zen_asset import read_name_batch, Reader
-        r = Reader(data)
-        r.seek(28)  # after summary (has_versioning_info 4 + header_size 4 + name 4 + name_number 4 + flags 4 + cooked_header_size 4 + 3 offsets 12 = 32? Adjust)
-        # Simpler: use write_name_batch with current names
-        # But we need exact layout: after summary header (variable)
-        # Instead, rebuild entire header prefix up to bulk_data
-        # For now, just patch summary name index
-        old_name_idx = pkg.summary["name"]
-        if old_name_idx != new_name_idx:
-            data = bytearray(data)
-            struct.pack_into("<I", data, 8, new_name_idx)  # summary name at offset 8
-            struct.pack_into("<I", data, 12, 0)  # name_number 0
-            # Also need to update export's outer? Not needed for top-level
-            data = bytes(data)
     return data
 
 def find_content_root(src: Path):
