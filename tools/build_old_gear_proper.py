@@ -8,8 +8,9 @@ if str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 from tools.zen_asset import parse_package
 from tools.iostore_write import write_name_batch, container_id_from_name, Chunk, PackageStoreInfo, write_container
-from tools.build_gorka_mod import SourceFile, validate_container, write_deterministic_zip, MOUNT_POINT
+from tools.build_gorka_mod import SourceFile, validate_container, write_deterministic_zip
 from tools.iostore_write import EXPORT_BUNDLE_CHUNK_TYPE, BULK_DATA_CHUNK_TYPE
+MOUNT_POINT = "../../../IntoTheRadius2/Content/"
 
 def patch_package_to_new_name(data: bytes, new_package_name: str, remap_imports: dict) -> bytes:
     """Patch Zen package to have new package_name and remapped imports. Returns new bytes."""
@@ -85,7 +86,7 @@ def collect(content_root: Path):
         store.append(PackageStoreInfo(pkg.package_name, list(pkg.imported_package_names)))
     files=[]
     for p in sorted(content_root.rglob("*")):
-        if not p.is_file() or p.suffix not in (".uasset",".ubulk"): continue
+        if not p.is_file() or p.suffix not in (".uasset",".ubulk",".uexp"): continue
         rel=p.relative_to(content_root).as_posix()
         stem=rel[:-len(p.suffix)]
         pkg=pkgs.get(stem)
@@ -117,21 +118,29 @@ if __name__ == "__main__":
     print(f"Content root {cr}")
     files, pkgs = collect(cr)
     print(f"collected {len(files)}")
-    # Filter to old sources only (those containing ITR1 or Detector old path)
+    # Filter to old sources: detector_itr1, probe_sack_itr1 + knife + casings
     filt=[]
     for f in files:
         hay=(f.relative_path+" "+f.package_name).lower()
         if "detector_itr1" in hay or "probe_sack_itr1" in hay or "bp_detector_itr1" in hay:
             filt.append(f)
-        elif "detector" in hay and "detector_itr1" not in hay and False: # skip vanilla for now
+        elif "detector" in hay and "detector_itr1" not in hay and False:
             pass
     print(f"old files filtered {len(filt)}")
-    # Also add knife old - search for knife ITR1?
-    # Knife: look for BP_knife with ITR1 or old
+    # Knife: old knife is ITR2/BPs/Items/Melee/BP_knife.uasset (no ITR1 suffix, but old version in dump)
+    # Include any knife asset from old dump – it will override vanilla directly (no remap needed)
+    knife_added=0
     for f in files:
-        if "knife" in f.package_name.lower() and "itr1" in f.package_name.lower():
-            if f not in filt: filt.append(f)
-    print(f"with knife {len(filt)}")
+        low=f.package_name.lower()
+        if "knife" in low:
+            if f not in filt:
+                filt.append(f); knife_added+=1
+        # Also casings: гильзы – try casing/cartridge/shell/ammo related to probe sack
+        # User wants "мешочек гильз + старые гильзы" – include casing families if present
+        if any(k in low for k in ["casing","cartridge","shell_casing","ammo_casing"]):
+            if f not in filt:
+                filt.append(f); knife_added+=1
+    print(f"with knife+casing {len(filt)} (+{knife_added})")
     # Now remap each to vanilla path and patch data
     remapped_files=[]
     remap_imports={}
@@ -163,9 +172,14 @@ if __name__ == "__main__":
     out_pkgs=[]
     seen_pkgs=set()
     for f in filt:
+        is_bulk = f.relative_path.lower().endswith((".ubulk",".uexp"))
         new_rel = f.relative_path.replace("Detector_ITR1","Detector").replace("Probe_Sack_ITR1","Probe_Sack")
         new_pkg_name = f.package_name.replace("Detector_ITR1","Detector").replace("Probe_Sack_ITR1","Probe_Sack")
-        # Skip versioned BP packages that we can't patch – keep original bytes but with new path/name
+        if is_bulk:
+            # bulk has no header – just rename, keep data verbatim, don't store as package
+            out_files.append(SourceFile(relative_path=new_rel, package_name=new_pkg_name, chunk_type=f.chunk_type, data=f.data))
+            continue
+        # uasset – try patch
         try:
             parse_package(f.data)
             can_patch = True
@@ -186,7 +200,6 @@ if __name__ == "__main__":
                 pkg2=parse_package(new_data)
                 out_pkgs.append(PackageStoreInfo(new_pkg_name, [remap_dict.get(n,n) for n in pkg2.imported_package_names]))
             except:
-                # versioned: use original imports with remap
                 try:
                     orig=parse_package(f.data)
                     out_pkgs.append(PackageStoreInfo(new_pkg_name, [remap_dict.get(n,n) for n in orig.imported_package_names]))
