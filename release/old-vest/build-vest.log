@@ -1,17 +1,83 @@
 START variant=vest_old src=/tmp/old-assets out=release/old-vest verbose=True
-src top: []
- walk /tmp/old-assets: dirs=[] files=[]
+src top: [PosixPath('/tmp/old-assets/IntoTheRadius2')]
+ walk /tmp/old-assets: dirs=['IntoTheRadius2'] files=[]
+ walk /tmp/old-assets/IntoTheRadius2: dirs=['Content'] files=[]
+ walk /tmp/old-assets/IntoTheRadius2/Content: dirs=['ITR2'] files=[]
+ walk /tmp/old-assets/IntoTheRadius2/Content/ITR2: dirs=['Art'] files=[]
 [find_content_root] src=/tmp/old-assets exists=True is_dir=True
-rglob Content candidates: []
-src top listing:
-Traceback (most recent call last):
-  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 264, in <module>
-    main()
-  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 109, in main
-    cr=find_content_root(src)
-       ^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/Gorka-For-All/Gorka-For-All/tools/build_old_gear.py", line 44, in find_content_root
-    raise FileNotFoundError(f"No Content in {src}")
-FileNotFoundError: No Content in /tmp/old-assets
-total 16K
--rw-r--r-- 1 runner runner 16K Oct 30 16:36 build-vest.log
+rglob Content candidates: [PosixPath('/tmp/old-assets/IntoTheRadius2/Content')]
+selected Content with ITR2: /tmp/old-assets/IntoTheRadius2/Content
+Content root = /tmp/old-assets/IntoTheRadius2/Content
+collect: found 186 .uasset under /tmp/old-assets/IntoTheRadius2/Content
+collect: total rglob * = 319
+collected 290 files, 186 package store entries
+  file ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Body_LODX_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Body_LODX_01_C
+  file ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Body_LODX_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Body_LODX_01_C
+  file ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Body_LODX_01_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Body_LODX_01_N
+  file ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Body_LODX_01_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Body_LODX_01_N
+  file ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Body_LODX_01_ORM.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Body_LODX_01_ORM
+  file ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Body_LODX_01_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Body_LODX_01_ORM
+  file ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Head_LODX_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Head_LODX_01_C
+  file ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Head_LODX_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Head_LODX_01_C
+  file ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Head_LODX_01_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Head_LODX_01_N
+  file ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Head_LODX_01_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Head_LODX_01_N
+  file ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Head_LODX_01_ORM.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Head_LODX_01_ORM
+  file ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Head_LODX_01_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/LODX/T_Player_Head_LODX_01_ORM
+  file ITR2/Art/Characters/Player/Body/Body_01/Male_Body_Test_01.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Male_Body_Test_01
+  file ITR2/Art/Characters/Player/Body/Body_01/Male_Body_Test_01.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Male_Body_Test_01
+  file ITR2/Art/Characters/Player/Body/Body_01/Male_Head_Test_01.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Male_Head_Test_01
+  file ITR2/Art/Characters/Player/Body/Body_01/Male_Head_Test_01.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Male_Head_Test_01
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/Arms.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/Arms
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/BValacl.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/BValacl
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/BaseMaterial.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/BaseMaterial
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/BaseMaterial1.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/BaseMaterial1
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/BaseMaterial_PyotrEffect.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/BaseMaterial_PyotrEffect
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/BaseMaterial_Watch.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/BaseMaterial_Watch
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/Boots.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/Boots
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/EnemyBaseMaterial.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/EnemyBaseMaterial
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/Eye.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/Eye
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/EyeShadow.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/EyeShadow
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/EyeShadow_Inst.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/EyeShadow_Inst
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/Face.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/Face
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/Face_PyotrEffect.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/Face_PyotrEffect
+  file ITR2/Art/Characters/Player/Body/Body_01/Material/Glasses.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Body_01/Material/Glasses
+remapped filtered 17 files, 11 pkgs (ITR1->vanilla)
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a_LOD.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_01_a_LOD
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Materials/M_Vest_Heavy_02_a_LOD
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/SM_Vest_Heavy_01_a
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_01_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_01_C
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_01_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_01_C
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_01_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_01_N
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_01_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_01_N
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_01_ORM.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_01_ORM
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_01_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_01_ORM
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_02_C.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_02_C
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_02_C.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_02_C
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_02_N.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_02_N
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_02_N.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_02_N
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_02_ORM.uasset pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_02_ORM
+ keep ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_02_ORM.ubulk pkg=/Game/ITR2/Art/Characters/Player/Body/Vest_Heavy_01/Textures/T_Vest_Heavy_02_ORM
+mod=OldVest_P container_id=80bb7883e86626aa
+write_container done: utoc=release/old-vest/OldVest_P.utoc ucas=release/old-vest/OldVest_P.ucas chunks=18
+no pak stub found, wrote empty pak at release/old-vest/OldVest_P.pak
+validate OK utoc=bfe1c5da1fb8 ucas=340939831b71 chunks=18
+wrote release/old-vest/ReadMe_RU.txt
+replaced empty pak with DLC-Black_P.pak from release/DLC-Black.zip size=339
+ZIP release/OldVest_P.zip size=44805287 sha=268beee15b837bc5e38f987d308bd453de8cb0bb795937a445c166358a5dec0a
+output dir listing:
+  OldVest_P.pak 339 bytes
+  OldVest_P.ucas 91234776 bytes
+  OldVest_P.utoc 18839 bytes
+  ReadMe_RU.txt 275 bytes
+  build-manifest.json 838 bytes
+  build-vest.log 825 bytes
+DONE
+total 88M
+-rw-r--r-- 1 runner runner 339 Oct 30 16:38 OldVest_P.pak
+-rw-r--r-- 1 runner runner 88M Oct 30 16:38 OldVest_P.ucas
+-rw-r--r-- 1 runner runner 19K Oct 30 16:38 OldVest_P.utoc
+-rw-r--r-- 1 runner runner 275 Oct 30 16:38 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner 838 Oct 30 16:38 build-manifest.json
+-rw-r--r-- 1 runner runner 825 Oct 30 16:38 build-vest.log
