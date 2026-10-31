@@ -14,3 +14,4 @@ release/
 # Python
 __pycache__/
 *.py[cod]
+!release/ak74-left-bolt/
