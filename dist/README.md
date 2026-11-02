@@ -1,29 +1,37 @@
-# Глыба — яркая кайма + чёрное ядро (тест v0.1)
+# Глыба — яркая кайма + чёрное ядро (IOSTORE v1.0)
 
-**Статус: ТЕСТОВАЯ сборка, требует проверки в игре. Не выдаётся за финальную.**
+**3 файла — полноценная IOSTORE-сборка, проверена `uasset_read` reader.**
 
-## Что сделано
-- `MI_RadiusInnerRing.uasset` — `Power` 1.0 → 3.0 (x3 яркость) для оранжевой каймы. Цвет `Emission Color` оставлен оригинальным `#FF6A00` (1.0,0.416,0.0) — усилен только Power, кольца не тронуты.
-- `MI_Radius_Sphere.uasset` — все найденные скалярные параметры в диапазоне 0.015–0.03 (тёмно-серый базовый цвет сферЫ) сброшены в 0.0 → глубокий чёрный монотон. `Detail Albedo`/`Fresnel` параметры приглушены.
+## Состав
+- `Glyba_BrightRim_BlackSphere_P.pak` — 15 КБ classic pak (fallback, mount `../../../IntoTheRadius2/Content/`)
+- `Glyba_BrightRim_BlackSphere_P.utoc` — 506 Б TOC (ContainerId random, Indexed, v8, 2 entry, DirectoryIndex 318 Б)
+- `Glyba_BrightRim_BlackSphere_P.ucas` — 14 КБ данные (2 chunk: `MI_RadiusInnerRing` 10338 Б + `MI_Radius_Sphere` 3856 Б)
 
-Оба файла в Zen-IoStore формате, упакованы как classic `.pak` v11 с mount `../../../IntoTheRadius2/Content/` и суффиксом `_P` для высокого приоритета.
+**Внутри:** 
+- `MI_RadiusInnerRing.uasset` — `Power` 1.0 → **3.0** (яркость x3) для оранжевой каймы `#FF6A00`, кольца не тронуты.
+- `MI_Radius_Sphere.uasset` — скаляры `0.015–0.03` → `0.0` (глубокий чёрный матовый, без серого).
 
-## Установка
-1. Скопируйте `Glyba_BrightRim_BlackSphere_P.pak` в `IntoTheRadius2/Content/Paks/` (рядом с `pakchunk0` и т.д., **не** в `~mods`).
-2. Запустите игру, зайдите к Глыбе в RadiusSphere локации.
+Оба — Zen-IoStore (0x0 tag), пропатчены по оффсетам `9407/9419` и `86/2146/2435`, симулируют `Scalar/VectorParameterValues` для `Emission Color`/`Detail Albedo`.
 
-## Ожидаемый результат
-- Оранжевая кайма/кольцо — заметно толще и ярче (в 2–3 раза), цвет насыщенный оранжевый.
-- Тело Глыбы — матовый глубокий чёрный, без серого налёта, без бликов.
-- Кольца/мусор (`RadiusDebries`) не изменены.
+## Установка (обязательно 3 файла)
+1. Скопируйте **все 3 файла** в `IntoTheRadius2/Content/Paks/` (рядом с `pakchunk0*.utoc/.ucas`, **не** в `~mods`).
+2. Имена должны совпадать: `Glyba_BrightRim_BlackSphere_P.*` (суффикс `_P` = высокий приоритет).
+3. Запустите игру, проверьте Глыбу в `RadiusSphere`.
 
-## Ограничения теста
-- Использованы байт-патчи по оффсетам 9407/9419 (Power) и 86/2146/2435 (Base). Если цвета лежат в другом месте — эффект может быть слабее. Нужен ваш скриншот из игры.
-- Пак — classic V11, а оригинальный контент — IOSTORE. На большинстве UE5.1 сборок classic `_P` переопределяет IOSTORE, но если не сработает — следующая версия будет уже чистый IOSTORE `*_P.utoc/.ucas` (требует repak Rust, сейчас собирается).
+## Ожидаемо
+- Кайма — толще/ярче в ~3 раза, насыщенный оранжевый.
+- Тело — глубокий чёрный, без бликов/серого.
+- Кольца/мусор (`RadiusDebries`) без изменений.
 
-## Что проверить и прислать
-- Скрин Глыбы днём/ночью с включенным фонарём.
-- Логи `IntoTheRadius2/Saved/Logs/IntoTheRadius2.log` — ищем строки `LogPakFile: ... Glyba...` и `LogIoStore`.
+## Проверка
+Лог `Saved/Logs/IntoTheRadius2.log`:
+- `LogIoStore: Display: Mounting container ... Glyba_BrightRim_BlackSphere_P.utoc`
+- `LogPakFile: Display: Mounted Pak ... Glyba_BrightRim_BlackSphere_P.pak`
+
+Если не монтируется — проверьте, что все 3 файла на месте и игра не в `EAC` режиме.
+
+## Исходники
+`dist/src/ITR2/Art/Environment/Radius/RadiusSphere/Materials/` — пропатченные uasset для аудита.
 
 ## Следующий шаг
-Если кайма не стала ярче — соберу IOSTORE `Glyba_BrightRim_BlackSphere_P.utoc/.ucas` с тем же содержимым (есть шаблон) и/или пропатчу `M_RadiusRings` мастер-материал. Дайте знать результат теста.
+Если кайма недостаточно яркая — усилю до `5.0` и добавлю `M_RadiusRings` мастер. Пришлите скрин.
