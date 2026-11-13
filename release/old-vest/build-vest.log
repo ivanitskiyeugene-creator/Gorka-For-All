@@ -75,9 +75,9 @@ output dir listing:
   build-vest.log 9374 bytes
 DONE
 total 88M
--rw-r--r-- 1 runner runner  339 Nov 13 19:34 OldVest_P.pak
--rw-r--r-- 1 runner runner  88M Nov 13 19:34 OldVest_P.ucas
--rw-r--r-- 1 runner runner  19K Nov 13 19:34 OldVest_P.utoc
--rw-r--r-- 1 runner runner  275 Nov 13 19:34 ReadMe_RU.txt
--rw-r--r-- 1 runner runner  838 Nov 13 19:34 build-manifest.json
--rw-r--r-- 1 runner runner 9.2K Nov 13 19:34 build-vest.log
+-rw-r--r-- 1 runner runner  339 Nov 13 19:57 OldVest_P.pak
+-rw-r--r-- 1 runner runner  88M Nov 13 19:57 OldVest_P.ucas
+-rw-r--r-- 1 runner runner  19K Nov 13 19:57 OldVest_P.utoc
+-rw-r--r-- 1 runner runner  275 Nov 13 19:57 ReadMe_RU.txt
+-rw-r--r-- 1 runner runner  838 Nov 13 19:57 build-manifest.json
+-rw-r--r-- 1 runner runner 9.2K Nov 13 19:56 build-vest.log
